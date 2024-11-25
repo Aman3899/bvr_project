@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Image from 'next/image';
 import { FaSearch } from 'react-icons/fa';
+import Link from 'next/link';
+
 
 const Page = () => {
   const [selectedDistrict, setSelectedDistrict] = useState('');
@@ -92,21 +94,23 @@ const Page = () => {
             { name: "Clothing Market", image: "/marketplace-image.jpeg" },
             { name: "Food Market", image: "/marketplace-image.jpeg" },
           ].map((market, index) => (
-            <div
-              key={index}
-              className="rounded-lg overflow-hidden shadow-md hover:shadow-lg"
-            >
-              <Image
-                src={market.image}
-                alt={market.name}
-                width={300}
-                height={200}
-                className="w-full h-40 object-cover max-sm:h-20"
-              />
-              <div className="p-4 text-center">
-                <h3 className="text-md font-semibold">{market.name}</h3>
+              <div
+                key={index}
+                className="rounded-lg overflow-hidden shadow-md hover:shadow-lg"
+              >
+              <Link href={"/product/grain"}>
+                <Image
+                  src={market.image}
+                  alt={market.name}
+                  width={300}
+                  height={200}
+                  className="w-full h-40 object-cover max-sm:h-20"
+                />
+                <div className="p-4 text-center">
+                  <h3 className="text-md font-semibold">{market.name}</h3>
+                </div>
+              </Link>
               </div>
-            </div>
           ))}
         </div>
       </div>

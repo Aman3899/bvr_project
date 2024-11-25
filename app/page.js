@@ -12,6 +12,7 @@ export default function Home() {
 
       <h1 className="text-4xl text-center py-5 font-bold">DealBank</h1>
 
+
       {/* Hero Section */}
       <div className="relative">
         <Image
@@ -60,10 +61,8 @@ export default function Home() {
             { name: "Clothing Market", image: "/marketplace-image.jpeg" },
             { name: "Food Market", image: "/marketplace-image.jpeg" },
           ].map((market, index) => (
-            <div
-              key={index}
-              className="rounded-lg overflow-hidden shadow-md hover:shadow-lg"
-            >
+            <Link href={"/product/grain"} key={index}>
+            <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg cursor-pointer">
               <Image
                 src={market.image}
                 alt={market.name}
@@ -75,10 +74,10 @@ export default function Home() {
                 <h3 className="text-md font-semibold">{market.name}</h3>
               </div>
             </div>
-          ))}
-        </div>
+          </Link>
+        ))}
       </div>
-
+    </div>
       
       <Footer />
     </div>
