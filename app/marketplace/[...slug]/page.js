@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 function getMarketplaceNameForRouting(marketplaceName) {
     let arr = marketplaceName.split(" ");
     let Str = "";
-    
-    
+
+
     for (let i = 0; i < arr.length; i++) {
-        if ( arr.length - 1 === i) {
+        if (arr.length - 1 === i) {
             Str = Str + arr[i];
         }
         else {
@@ -25,7 +25,7 @@ function getMarketplaceNameForRouting(marketplaceName) {
 
 
 const Marketplace = () => {
-    
+
     const products = [
         {
             id: 1,
@@ -68,42 +68,42 @@ const Marketplace = () => {
 
     const categories = [
         {
-          title: "Utilities",
-          options: [
-            { name: "Electricity", checked: true },
-            { name: "Water Supply", checked: false },
-            { name: "Parking", checked: false },
-            { name: "Security", checked: false },
-          ],
+            title: "Utilities",
+            options: [
+                { name: "Electricity", checked: true },
+                { name: "Water Supply", checked: false },
+                { name: "Parking", checked: false },
+                { name: "Security", checked: false },
+            ],
         },
         {
-          title: "Amenities",
-          options: [
-            { name: "Restrooms", checked: true },
-            { name: "Food Court", checked: false },
-            { name: "Wi-Fi", checked: false },
-            { name: "ATM", checked: false },
-          ],
+            title: "Amenities",
+            options: [
+                { name: "Restrooms", checked: true },
+                { name: "Food Court", checked: false },
+                { name: "Wi-Fi", checked: false },
+                { name: "ATM", checked: false },
+            ],
         },
         {
-          title: "Compliance",
-          options: [
-            { name: "Fire Safety", checked: true },
-            { name: "Health Regulations", checked: false },
-            { name: "Accessibility", checked: false },
-            { name: "Licensing", checked: false },
-          ],
+            title: "Compliance",
+            options: [
+                { name: "Fire Safety", checked: true },
+                { name: "Health Regulations", checked: false },
+                { name: "Accessibility", checked: false },
+                { name: "Licensing", checked: false },
+            ],
         },
         {
-          title: "Sanitation",
-          options: [
-            { name: "Waste Disposal", checked: true },
-            { name: "Cleaning Services", checked: false },
-            { name: "Pest Control", checked: false },
-            { name: "Recycling", checked: false },
-          ],
+            title: "Sanitation",
+            options: [
+                { name: "Waste Disposal", checked: true },
+                { name: "Cleaning Services", checked: false },
+                { name: "Pest Control", checked: false },
+                { name: "Recycling", checked: false },
+            ],
         },
-      ];
+    ];
 
 
 
@@ -121,7 +121,7 @@ const Marketplace = () => {
                 <button onClick={() => { router.back() }} className="text-xl text-gray-600"><FaBackward /></button>
                 <h1 className="text-2xl font-bold text-center flex-1">Lilongwe Flea Market</h1>
             </div>
-            
+
             <Image
                 width={1000}
                 height={1000}
@@ -130,19 +130,22 @@ const Marketplace = () => {
                 className="w-full rounded-lg mb-4 h-[500px] max-sm:h-[200px]"
             />
 
+            
             {/* Search Bar */}
-            <input
-                type="text"
-                placeholder="🔍 Search for products"
-                className="w-full p-2 mb-6 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
-            />
+            <div className="flex justify-center items-center">
+                <input
+                    type="text"
+                    placeholder="🔍 Search for products"
+                    className="w-5/6 p-2 mt-10 max-sm:mt-4 max-sm:mb-1 mb-6 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+                />
+            </div>
 
             {/* Product Cards */}
             <h2 className="text-xl font-semibold mb-2">Current Deals</h2>
             <div className="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-2">
 
                 {products.map((product, index) => (
-                    <Link href={"/marketplace/" + getMarketplaceNameForRouting(product.name)} key={product.id}>
+                    <Link href={"/product/" + getMarketplaceNameForRouting(product.name)} key={product.id}>
                         <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
 
                             <Image
@@ -252,7 +255,7 @@ const Marketplace = () => {
                 {nearbyMarkets.map((market) => (
                     <div
                         key={market.id}
-                        
+
                         className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer"
                     >
                         <Image
@@ -267,7 +270,7 @@ const Marketplace = () => {
                 ))}
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };
