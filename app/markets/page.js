@@ -7,10 +7,10 @@ import Link from 'next/link';
 
 
 const Page = () => {
+
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
 
-  // Data for districts and cities
   const districts = [
     'Blantyre', 'Lilongwe', 'Mzimba', 'Zomba', 'Mangochi', 'Mulanje', 'Salima',
   ];
@@ -29,6 +29,24 @@ const Page = () => {
     setSelectedDistrict(e.target.value);
     setSelectedCity(''); // Reset city when district changes
   };
+
+  function getMarketplaceNameForRouting(marketplaceName) {
+    let arr = marketplaceName.split(" ");
+    let Str = "";
+    
+    
+    for (let i = 0; i < arr.length; i++) {
+      if ( arr.length - 1 === i) {
+        Str = Str + arr[i];
+      }
+      else {
+        Str = Str + arr[i] + "-";
+      }
+    }
+    return Str;
+  }
+
+
 
   return (
     <div className="font-sans">
@@ -98,7 +116,7 @@ const Page = () => {
                 key={index}
                 className="rounded-lg overflow-hidden shadow-md hover:shadow-lg"
               >
-              <Link href={"/product/grain"}>
+              <Link href={"/marketplace/" + getMarketplaceNameForRouting(market.name)}>
                 <Image
                   src={market.image}
                   alt={market.name}

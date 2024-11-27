@@ -7,6 +7,23 @@ import Footer from "./components/Footer";
 
 
 export default function Home() {
+
+  function getMarketplaceNameForRouting(marketplaceName) {
+    let arr = marketplaceName.split(" ");
+    let Str = "";
+    
+    
+    for (let i = 0; i < arr.length; i++) {
+      if ( arr.length - 1 === i) {
+        Str = Str + arr[i];
+      }
+      else {
+        Str = Str + arr[i] + "-";
+      }
+    }
+    return Str;
+  }
+
   return (
     <div className="font-sans">
 
@@ -61,7 +78,7 @@ export default function Home() {
             { name: "Clothing Market", image: "/marketplace-image.jpeg" },
             { name: "Food Market", image: "/marketplace-image.jpeg" },
           ].map((market, index) => (
-            <Link href={"/product/grain"} key={index}>
+            <Link href={"/marketplace/" + getMarketplaceNameForRouting(market.name)} key={index}>
             <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg cursor-pointer">
               <Image
                 src={market.image}
