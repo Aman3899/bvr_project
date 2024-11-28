@@ -1,67 +1,96 @@
-import React from 'react';
-import Image from 'next/image';
-import Footer from '../components/Footer';
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import { FaBackward } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 const UserProfile = () => {
 
+    let router = useRouter();
+
+    const [profile, setProfile] = useState({
+        name: "Aman Ullah",
+        birthday: "2004-01-10", // Default date value in 'YYYY-MM-DD' format
+        phone: "+92 309 1297936",
+        instagram: "@amanullah0830",
+        email: "m.amanullah0830@gmail.com",
+        password: "***********",
+    });
+
+    const handleChange = (e, field) => {
+        setProfile({ ...profile, [field]: e.target.value });
+    };
+
+    const handleSave = () => {
+        // Add logic to handle saving the edited info
+        console.log("Profile saved:", profile);
+        alert("Profile information saved successfully!");
+    };
+
     return (
         <>
-        <div className="flex justify-center items-center h-[85vh]">
-            
-            <div className="w-80 bg-white rounded-lg shadow-lg overflow-hidden">
-                
-                <div className="bg-gradient-to-r from-purple-500 to-indigo-500 p-6 text-center">
-                    <div className="w-20 h-20 bg-white rounded-full mx-auto border-4 border-white">
+        <div className="flex items-center justify-between py-7 px-8">
+            <button onClick={() => { router.back() }} className="text-xl text-gray-600"><FaBackward /></button>
+            <h1 className="text-2xl font-bold text-center flex-1">User Profile</h1>
+        </div>
+
+        <div className="flex flex-col justify-center items-center h-5/6">
+
+            <div className="max-w-sm mx-auto bg-white shadow-lg rounded-xl overflow-hidden p-6">
+                {/* Header with Image and Name */}
+                <div className="text-center">
+                    <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-blue-500 mb-4">
                         <Image
                             width={1920}
                             height={1080}
                             src="/marketplace-hero.jpeg"
-                            alt="User Avatar" 
-                            className="rounded-full w-full h-full"
+                            alt="Profile"
+                            className="object-cover w-full h-full"
                         />
                     </div>
-                    <h2 className="text-white text-xl font-semibold mt-3">Anna Avetisyan</h2>
+                    <input
+                        type="text"
+                        value={profile.name}
+                        onChange={(e) => handleChange(e, "name")}
+                        className="text-xl font-bold text-gray-700 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+                    />
                 </div>
 
-                
-                <div className="p-4 space-y-4">
-                    <div className="flex items-center gap-3 border-b pb-2">
-                        <i className="fas fa-user text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">Anna Avetisyan</span>
-                    </div>
-                    <div className="flex items-center gap-3 border-b pb-2">
-                        <i className="fas fa-calendar text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">Birthday</span>
-                    </div>
-                    <div className="flex items-center gap-3 border-b pb-2">
-                        <i className="fas fa-phone text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">+123 456 789</span>
-                    </div>
-                    <div className="flex items-center gap-3 border-b pb-2">
-                        <i className="fas fa-instagram text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">Instagram account</span>
-                    </div>
-                    <div className="flex items-center gap-3 border-b pb-2">
-                        <i className="fas fa-envelope text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">info@example.com</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <i className="fas fa-lock text-purple-500"></i>
-                        <span className="text-gray-700 text-sm flex-grow">Password</span>
-                    </div>
+                {/* Profile Details */}
+                <div className="mt-6 space-y-4">
+                    {Object.keys(profile).map((field, index) =>
+                        field !== "name" ? (
+                            <div key={index} className="flex justify-between items-center">
+                                <label
+                                    className="text-gray-600 font-medium capitalize"
+                                    htmlFor={field}
+                                >
+                                    {field}
+                                </label>
+                                <input
+                                    type={field === "birthday" ? "date" : "text"}
+                                    id={field}
+                                    value={profile[field]}
+                                    onChange={(e) => handleChange(e, field)}
+                                    className="flex-1 ml-4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 w-80 max-sm:w-fit"
+                                />
+                            </div>
+                        ) : null
+                    )}
                 </div>
 
-                {/* Edit Profile Button */}
-                <div className="p-4">
-                    <button className="w-full bg-purple-500 text-white py-2 rounded-lg font-semibold hover:bg-purple-600 transition duration-300">
-                        Edit Profile
+                {/* Save Button */}
+                <div className="mt-6 text-center">
+                    <button
+                        onClick={handleSave}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                        Save
                     </button>
                 </div>
             </div>
-
         </div>
-        <Footer />
         </>
     );
 };
