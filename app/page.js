@@ -4,6 +4,18 @@ import Link from "next/link";
 import { FaHome, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 import Footer from "./components/Footer";
 import { useState } from "react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import Universities from "./components/Parters/Universities";
+import Financial_Institutes from "./components/Parters/Financial_Institutes";
+import MobileNetworksSlideshow from "./components/Parters/Mobile_Network";
+import Nearby_Markets from "./components/Nearby_Markets";
+import Expolre_Our_Sites from "./components/Parters/Expolre_Our_Sites";
+import Screen_Printers from "./components/Parters/Screen_Printers";
+import Hero_Section from "./components/Hero_Section";
+
+
 
 export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -12,22 +24,11 @@ export default function Home() {
     setIsDrawerOpen(!isDrawerOpen);
   }
 
-  function getMarketplaceNameForRouting(marketplaceName) {
-    let arr = marketplaceName.split(" ");
-    let Str = "";
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr.length - 1 === i) {
-        Str = Str + arr[i];
-      } else {
-        Str = Str + arr[i] + "-";
-      }
-    }
-    return Str;
-  }
 
   return (
     <div className="font-sans relative">
+
+
       {/* Drawer Menu */}
       {isDrawerOpen && (
         <div className="fixed top-0 left-0 w-64 h-full bg-gray-800 text-white shadow-lg z-50">
@@ -86,38 +87,7 @@ export default function Home() {
 
       <h1 className="text-4xl text-center py-5 font-bold">DealBank</h1>
 
-      {/* Hero Section */}
-      <div className="relative">
-        <Image
-          src="/marketplace-hero.jpeg"
-          alt="Marketplace Hero"
-          width={1920}
-          height={1080}
-          className="w-full h-[400px] object-cover rounded-3xl bg-none max-sm:h-[275px] max-sm:px-5"
-        />
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white bg-black/20 max-sm:px-5">
-          <h1 className="text-4xl font-bold mb-2 max-sm:text-3xl">
-            Discover, Trade, Connect
-          </h1>
-          <p className="text-lg mb-4 max-sm:text-sm">
-            Explore the vibrant markets of Malawi
-          </p>
-          <div className="flex gap-4">
-            <Link
-              href={"/postRequest"}
-              className="bg-white text-blue-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100"
-            >
-              Post Request
-            </Link>
-            <Link
-              href={"/listMarket"}
-              className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700"
-            >
-              List Market
-            </Link>
-          </div>
-        </div>
-      </div>
+      <Hero_Section/>
 
       {/* Search Bar */}
       <div className="flex justify-center items-center">
@@ -130,34 +100,22 @@ export default function Home() {
 
       {/* Nearby Markets Section */}
       <div className="mt-8 px-20 max-sm:px-3">
-        <h2 className="text-xl font-bold mb-4">Nearby Markets</h2>
-        <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-2">
-          {[
-            { name: "Farmer's Market", image: "/marketplace-image.jpeg" },
-            { name: "Crafts Market", image: "/marketplace-image.jpeg" },
-            { name: "Fish Market", image: "/marketplace-image.jpeg" },
-            { name: "Spice Market", image: "/marketplace-image.jpeg" },
-            { name: "Clothing Market", image: "/marketplace-image.jpeg" },
-            { name: "Food Market", image: "/marketplace-image.jpeg" },
-          ].map((market, index) => (
-            <Link
-              href={"/marketplace/" + getMarketplaceNameForRouting(market.name)}
-              key={index}
-            >
-              <div className="rounded-lg overflow-hidden shadow-md hover:shadow-lg cursor-pointer">
-                <Image
-                  src={market.image}
-                  alt={market.name}
-                  width={300}
-                  height={200}
-                  className="w-full h-40 object-cover max-sm:h-20"
-                />
-                <div className="p-4 text-center">
-                  <h3 className="text-md font-semibold">{market.name}</h3>
-                </div>
-              </div>
-            </Link>
-          ))}
+        <Nearby_Markets/>
+
+        <div className="p-6 space-y-12">
+          {/* Partners Header */}
+          <h1 className="text-2xl font-bold text-center py-4">Our Partners</h1>
+
+          <Universities/>
+
+          <Financial_Institutes/>
+
+          <MobileNetworksSlideshow/>
+
+          <Screen_Printers/>
+
+          <Expolre_Our_Sites/>
+
         </div>
       </div>
 
