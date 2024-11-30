@@ -37,10 +37,10 @@ const Page = () => {
         
         <div className='flex justify-center items-center h-screen bg-white'>
             
-            <div className='text-center border-2 border-black rounded-lg px-16 max-sm:px-4'>
-                <h1 className='text-4xl font-bold py-10 max-sm:py-5'>DealBank</h1>
-                <h2 className='text-xl pt-10'>Welcome Back</h2>
-                <p className='text-sm text-gray-500 py-5'>Please enter your email id and password to Sign in</p>
+            <div className='text-center border-2 border-black rounded-lg px-16 max-sm:px-2'>
+                <h1 className='text-4xl font-bold py-10'>DealBank</h1>
+                <h2 className='text-xl pt-10 max-sm:pt-5'>Welcome Back</h2>
+                <p className='text-sm text-gray-500 py-5 max-sm:py-3'>Please enter your email id and password to Sign in</p>
 
                 <form action="" onSubmit={handleSubmit(getLoginCredentials)} className="flex flex-col items-center space-y-2">
                     <input
@@ -60,7 +60,7 @@ const Page = () => {
 
                     <Link href="/forgetpassword" className="text-blue-500 text-sm hover:underline">Forgot Password?</Link>
 
-                    <div className='py-16 max-sm:10'>
+                    <div className='py-16 max-sm:py-8'>
                         <button 
                             type="submit" 
                             className=" py-2 rounded-full text-blue-600 border-4 border-blue-600 px-16 

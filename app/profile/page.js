@@ -11,7 +11,7 @@ const UserProfile = () => {
 
     const [profile, setProfile] = useState({
         name: "Aman Ullah",
-        birthday: "2004-01-10", // Default date value in 'YYYY-MM-DD' format
+        birthday: "2004-01-10",
         phone: "+92 309 1297936",
         instagram: "@amanullah0830",
         email: "m.amanullah0830@gmail.com",
