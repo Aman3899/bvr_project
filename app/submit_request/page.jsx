@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { FaTrashAlt } from "react-icons/fa";
+import Link from "next/link";
 
 
 
@@ -46,6 +47,7 @@ const SubmitAnCreateShoppingListRequest = () => {
     const handleRemoveProduct = (productName) => {
         setSelectedProducts(selectedProducts.filter((item) => item.name !== productName));
     };
+
 
     return (
         <div className="min-h-screen px-48 py-6 max-sm:px-4">
@@ -101,14 +103,14 @@ const SubmitAnCreateShoppingListRequest = () => {
                         key={product.name}
                         className="flex items-center bg-white shadow p-4 rounded-md mb-2"
                     >
-                    <button onClick={() => handleRemoveProduct(product.name)} className="font-semibold p-3 bg-gray-200 rounded-lg">
-                        <FaTrashAlt className="text-xl" />
-                    </button>
-                    <div className="ml-5">
-                        <p className="text-gray-800 font-medium">{product.name}</p>
-                        <p className="text-sm text-gray-500">Quantity: {product.quantity}</p>
+                        <button onClick={() => handleRemoveProduct(product.name)} className="font-semibold p-3 bg-gray-200 rounded-lg">
+                            <FaTrashAlt className="text-xl" />
+                        </button>
+                        <div className="ml-5">
+                            <p className="text-gray-800 font-medium">{product.name}</p>
+                            <p className="text-sm text-gray-500">Quantity: {product.quantity}</p>
+                        </div>
                     </div>
-                </div>
                 ))}
             </div>
 
@@ -150,9 +152,11 @@ const SubmitAnCreateShoppingListRequest = () => {
             </div>
 
             {/* Submit Button */}
-            <button className="w-full bg-cyan-500 text-white py-2 rounded-md font-medium">
-                Post Shopping List
-            </button>
+            <Link href="/add_marketplace" passHref>
+                <button className="w-full bg-cyan-500 text-white py-2 rounded-md font-medium">
+                    Post Shopping List
+                </button>
+            </Link>
         </div>
     );
 };
