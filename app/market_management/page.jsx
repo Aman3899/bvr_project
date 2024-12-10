@@ -12,7 +12,7 @@ const MarketManagement = () => {
         {
             name: "Edit Market Details",
             icon: <FaEdit/>,
-            link: "/",
+            link: "/add_marketplace",
         },
         {
             name: "Manage Products",
