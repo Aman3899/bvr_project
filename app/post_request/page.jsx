@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { FaUser, FaBars } from "react-icons/fa";
+import Navbar from "../components/Navbar";
 
 
 
@@ -8,17 +9,9 @@ const PostRequestPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 px-48 py-6 max-sm:px-4">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-6 px-5 py-4 max-sm:px-1">
-                <button className="text-gray-700">
-                    <FaUser />
-                </button>
-                <h1 className="text-xl font-semibold text-gray-800">Customer Dashboard</h1>
-                <button className="text-gray-700">
-                    <FaBars/>
-                </button>
-            </div>
 
+            <Navbar heading="Customer Dashboard" />
+            
             {/* Post Activity Section */}
             <section className="mb-6">
                 <h2 className="text-lg font-semibold text-gray-800 mb-4">Post Activity</h2>
