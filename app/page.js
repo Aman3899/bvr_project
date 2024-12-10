@@ -1,9 +1,5 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { FaHome, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 import Footer from "./components/Footer";
-import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -15,6 +11,7 @@ import Expolre_Our_Sites from "./components/Parters/Expolre_Our_Sites";
 import Screen_Printers from "./components/Parters/Screen_Printers";
 import Hero_Section from "./components/Hero_Section";
 import Navbar from "./components/Navbar";
+
 
 export default function Home() {
 
@@ -34,12 +31,10 @@ export default function Home() {
           />
         </div>
 
-        {/* Nearby Markets Section */}
         <div className="mt-8 px-20 max-sm:px-3">
           <Nearby_Markets />
 
           <div className="p-6 space-y-12">
-            {/* Partners Header */}
             <h1 className="text-2xl font-bold text-center py-4">
               Our Partners
             </h1>
