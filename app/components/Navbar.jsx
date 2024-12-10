@@ -37,7 +37,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/marketplace/Hello"
+                                    href="/markets"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaShoppingCart className="inline-block mr-2" /> Markets
@@ -73,7 +73,7 @@ const Navbar = (Props) => {
                     </button>
                 )}
 
-                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">{Props.heading}</h1>
+                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">{Props.heading}(<span className='text-lg max-sm:text-sm'>{Props.SubHeading}</span>)</h1>
             </div>
         </div>
     )

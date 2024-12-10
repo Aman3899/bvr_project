@@ -3,8 +3,8 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import Footer from "@/app/components/Footer";
-import { FaBackward } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Navbar from "@/app/components/Navbar";
 
 
 function getMarketplaceNameForRouting(marketplaceName) {
@@ -24,7 +24,10 @@ function getMarketplaceNameForRouting(marketplaceName) {
 }
 
 
-const Marketplace = () => {
+const Marketplace = ({params}) => {
+
+    console.log(params.slug[0]);
+    
 
     const products = [
         {
@@ -116,19 +119,20 @@ const Marketplace = () => {
 
     return (
         <div className="font-sans p-4 mx-auto bg-gray-50">
-            {/* Header */}
-            <div className="flex items-center justify-between py-5">
-                <button onClick={() => { router.back() }} className="text-xl text-gray-600"><FaBackward /></button>
-                <h1 className="text-2xl font-bold text-center flex-1">Lilongwe Flea Market</h1>
-            </div>
+            <Navbar heading="DealBank" SubHeading={params.slug[0]} />
 
             <Image
-                width={1000}
-                height={1000}
                 src="/marketplace-hero.jpeg"
-                alt="Market Banner"
-                className="w-full rounded-lg mb-4 h-[500px] max-sm:h-[200px]"
+                alt="Marketplace Hero"
+                width={1920}
+                height={1080}
+                className="px-12 max-sm:px-1 w-full h-[500px] object-cover rounded-3xl bg-none max-sm:h-[250px]"
             />
+
+            <div className="mx-16 max-sm:mx-5 h-[500px] mt-[115px] max-sm:mt-[100px] max-sm:h-[250px] absolute inset-0 
+                            flex flex-col justify-center items-center text-white bg-black/30 rounded-3xl max-sm:px-3">
+                <h1 className="text-3xl font-bold mb-2 sm:text-3xl text-center">{params.slug[0]}</h1>
+            </div>
 
             
             {/* Search Bar */}
@@ -193,9 +197,9 @@ const Marketplace = () => {
                 <Image
                     width={1000}
                     height={1000}
-                    src="/marketplace-hero.jpeg"
+                    src="/PriceChart.png"
                     alt="Chart"
-                    className="w-[500px] rounded"
+                    className="w-[400px] rounded"
                 />
             </div>
 

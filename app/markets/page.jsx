@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Image from 'next/image';
 import { FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
+import Navbar from '../components/Navbar';
 
 
 const Page = () => {
@@ -50,6 +51,7 @@ const Page = () => {
 
   return (
     <div className="font-sans">
+      <Navbar heading="DealBank" SubHeading="Nearby Markets" />
 
       <div
         className="flex flex-col items-center justify-center h-[400px] bg-cover bg-center bg-[url('https://th.bing.com/th/id/OIP.klafwZiq4OvQC15BEEsqBgHaJn?pid=ImgDet&w=184&h=239&c=7&dpr=1.3')]"

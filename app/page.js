@@ -13,12 +13,13 @@ import Hero_Section from "./components/Hero_Section";
 import Navbar from "./components/Navbar";
 
 
+
 export default function Home() {
 
   return (
     <div>
 
-        <Navbar heading="DealBank" />
+        <Navbar heading="DealBank" SubHeading="Home" />
 
         <Hero_Section />
 
