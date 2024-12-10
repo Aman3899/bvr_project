@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { FaEdit, FaNotesMedical, FaBackward } from "react-icons/fa";
+import Link from "next/link";
 
 
 const MarketManagement = () => {
@@ -17,7 +18,7 @@ const MarketManagement = () => {
         {
             name: "Manage Products",
             icon: <FaNotesMedical/>,
-            link: "/",
+            link: "/manage_products",
         },
     ];
 
@@ -46,11 +47,13 @@ const MarketManagement = () => {
                             key={index}
                             className="flex items-center justify-between py-4 px-4 border-b text-gray-700 hover:bg-gray-50 cursor-pointer"
                         >
+                        <Link href={option.link}>
                             <div className="flex items-center space-x-3">
                                 <span className="text-lg">{option.icon}</span>
                                 <span className="font-medium">{option.name}</span>
                             </div>
                             <i className="fas fa-chevron-right text-gray-400"></i>
+                        </Link>
                         </li>
                     ))}
                 </ul>
