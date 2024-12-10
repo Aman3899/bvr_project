@@ -44,7 +44,7 @@ const ManageProducts = () => {
     let router = useRouter();
 
     return (
-        <div className="min-h-screen bg-gray-100 p-4">
+        <div className="w-full px-64 max-sm:px-4 min-h-screen bg-gray-100 p-4">
             <header className="flex items-center mb-6">
                 <div className="flex border-b border-gray-400 w-full">
                     <button onClick={() => { router.back() }} className="pb-3 px-1"><FaBackward/></button>
