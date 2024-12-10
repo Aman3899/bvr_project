@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FaBars, FaHome, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 
-const Navbar = () => {
+const Navbar = (Props) => {
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -14,7 +14,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-200">
+        <div className="flex flex-col justify-center items-center bg-gray-200 border-b border-gray-400 mb-4">
 
             <div className="font-sans relative w-full max-sm:w-full bg-white">
                 {/* Drawer Menu */}
@@ -67,13 +67,13 @@ const Navbar = () => {
                 {!isDrawerOpen && (
                     <button
                         onClick={toggleDrawer}
-                        className="absolute top-5 left-5 text-2xl z-50 text-gray-800 bg-gray-200 rounded-md p-2 hover:bg-gray-300"
+                        className="absolute top-5 left-5 text-xl z-50 text-gray-800 bg-gray-200 rounded-md p-2 hover:bg-gray-300"
                     >
                         <FaBars />
                     </button>
                 )}
 
-                <h1 className="text-4xl text-center py-5 font-bold">DealBank</h1>
+                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">{Props.heading}</h1>
             </div>
         </div>
     )

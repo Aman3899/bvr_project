@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div>
 
-        <Navbar />
+        <Navbar heading="DealBank" />
 
         <Hero_Section />
 

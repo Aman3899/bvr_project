@@ -80,7 +80,7 @@ const PostRequestPage = () => {
             </section>
 
             {/* Buttons */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col text-center gap-4">
                 <Link href="/" className="bg-red-500 text-white py-2 rounded-md font-medium">Subscribe</Link>
                 <Link href="/submit_request" className="bg-cyan-500 text-white py-2 rounded-md font-medium">Submit Request</Link>
             </div>
