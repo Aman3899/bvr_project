@@ -1,61 +1,74 @@
 "use client";
 import React from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import Image from 'next/image';
-
 
 
 const Universities = () => {
 
     const universities = [
-        { name: "Harvard", logo: "/marketplace-hero.jpeg", alt: "Harvard Logo" },
+        { name: "Harvard", logo: "https://logo.clearbit.com/harvard.com", alt: "Harvard Logo" },
         { name: "Stanford", logo: "/marketplace-hero.jpeg", alt: "Stanford Logo" },
-        { name: "MIT", logo: "/marketplace-hero.jpeg", alt: "MIT Logo" },
-        { name: "Hailey", logo: "/marketplace-hero.jpeg", alt: "Hailey Logo" },
-        { name: "Facebook", logo: "/marketplace-hero.jpeg", alt: "Facebook Logo" },
-        { name: "Microsoft", logo: "/marketplace-hero.jpeg", alt: "Microsoft Logo" },
+        { name: "MIT", logo: "/marketplace-image.jpeg", alt: "MIT Logo" },
+        { name: "Hailey", logo: "https://logo.clearbit.com/hailey.com", alt: "Hailey Logo" },
+        { name: "Facebook", logo: "https://logo.clearbit.com/facebook.com", alt: "Facebook Logo" },
+        { name: "Microsoft", logo: "https://logo.clearbit.com/microsoft.com", alt: "Microsoft Logo" },
     ];
 
+    const settings = {
+        dots: true, // Show dots for navigation
+        infinite: true, // Infinite scrolling
+        speed: 500, // Transition speed
+        slidesToShow: 4, // Number of slides visible
+        slidesToScroll: 1, // Number of slides to scroll per swipe
+        autoplay: true, // Enable auto-slide
+        autoplaySpeed: 2000, // Auto-slide every 3 seconds
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                },
+            },
+        ],
+    };
 
     return (
         <div>
             {/* Universities Section */}
             <h2 className="text-xl font-semibold">Universities</h2>
-            <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                spaceBetween={20}
-                slidesPerView={1} // Number of slides visible
-                breakpoints={{
-                    640: { slidesPerView: 2 }, // 2 slides on small screens
-                    768: { slidesPerView: 3 }, // 3 slides on medium screens
-                    1024: { slidesPerView: 4 }, // 4 slides on large screens
-                }}
-                autoplay={{ delay: 3000 }} // Auto-slide every 3 seconds
-                navigation // Show navigation arrows
-                pagination={{ clickable: true }} // Add pagination dots
-                className="w-full"
-            >
+            <Slider {...settings} className="w-full">
                 {universities.map((university, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="bg-white shadow-md rounded-md p-4 flex flex-col items-center">
+                    <div key={index} className="p-4">
+                        <div className="bg-white shadow-md rounded-md p-4 flex flex-col items-center h-[260px]">
                             <Image
-                                width={1920}
-                                height={1080}
+                                width={200}
+                                height={200}
                                 src={university.logo}
                                 alt={university.alt}
-                                className="object-contain mb-2 rounded-xl"
+                                className="object-cover mb-2 rounded-xl"
                             />
                             <p className="font-medium text-center max-sm:py-4">{university.name}</p>
                         </div>
-                    </SwiperSlide>
+                    </div>
                 ))}
-            </Swiper>
+            </Slider>
         </div>
-    )
-}
+    );
+};
 
 export default Universities;

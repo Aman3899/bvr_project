@@ -32,7 +32,7 @@ const ReactChartJS = () => {
     const formatPrice = (value) => {
         const unitMultiplier = unitMappings[unitOptions.find(option => option.value === unit).label.split("G")[1] === "KG" ? "KG" : "G"];
         const formattedValue = value * unitMultiplier;
-        return `${formattedValue.toFixed(1)} ${unit === 1 ? "KG" : "G"}`;
+        return `${formattedValue.toFixed(1)} ${unit === 1000 ? "KG" : "G"}`;
     };    
 
     const handleUnitChange = (event) => {
