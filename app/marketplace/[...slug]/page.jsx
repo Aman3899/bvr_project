@@ -143,7 +143,7 @@ const Marketplace = ({ params }) => {
                         placeholder="🔍 Search for products"
                         className="flex-grow p-2 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
                     />
-                    <button className="bg-blue-500 text-white font-bold px-6 py-2 rounded-md hover:bg-blue-700 ml-4">
+                    <button className="bg-blue-500 text-white font-bold px-6 py-2 rounded-md hover:bg-blue-700 ml-4 max-sm:px-4">
                         Search
                     </button>
                 </div>

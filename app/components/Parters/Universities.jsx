@@ -54,7 +54,7 @@ const Universities = () => {
             <Slider {...settings} className="w-full">
                 {universities.map((university, index) => (
                     <div key={index} className="p-4">
-                        <div className="bg-white shadow-md rounded-md p-4 flex flex-col items-center h-[260px]">
+                        <div key={index} className="bg-white shadow-md rounded-md p-4 flex flex-col items-center h-[260px]">
                             <Image
                                 width={200}
                                 height={200}
