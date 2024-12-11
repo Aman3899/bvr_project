@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div>
 
-        <Navbar heading="DealBank" SubHeading="Home" />
+        <Navbar heading="DealBank"/>
 
         <Hero_Section />
 

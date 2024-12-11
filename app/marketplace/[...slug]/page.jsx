@@ -5,6 +5,8 @@ import Link from "next/link";
 import Footer from "@/app/components/Footer";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
+import ReactChartJS from "@/app/components/ReactChartJS";
+
 
 
 function getMarketplaceNameForRouting(marketplaceName) {
@@ -24,102 +26,49 @@ function getMarketplaceNameForRouting(marketplaceName) {
 }
 
 
-const Marketplace = ({params}) => {
 
-    console.log(params.slug[0]);
+const Marketplace = ({ params }) => {
     
-
     const products = [
-        {
-            id: 1,
-            name: "Apple",
-            price: "MWK 5000",
-            img: "/marketplace-hero.jpeg",
-        },
-        {
-            id: 2,
-            name: "Banana",
-            price: "MWK 3000",
-            img: "/marketplace-hero.jpeg",
-        },
-        {
-            id: 3,
-            name: "Handmade Crafts",
-            price: "MWK 5000",
-            img: "/marketplace-hero.jpeg",
-        },
-        {
-            id: 4,
-            name: "Fresh Produce",
-            price: "MWK 3000",
-            img: "/marketplace-hero.jpeg",
-        },
-        {
-            id: 5,
-            name: "cenjisrehi",
-            price: "MWK 3000",
-            img: "/marketplace-hero.jpeg",
-        },
-        {
-            id: 6,
-            name: "aw rjnjik jb",
-            price: "MWK 3000",
-            img: "/marketplace-hero.jpeg",
-        },
+        { id: 1, name: "Apple", price: "MWK 5000", img: "/marketplace-hero.jpeg", },
+        { id: 2, name: "Banana", price: "MWK 3000", img: "/marketplace-hero.jpeg", },
+        { id: 3, name: "Handmade Crafts", price: "MWK 5000", img: "/marketplace-hero.jpeg", },
+        { id: 4, name: "Fresh Produce", price: "MWK 3000", img: "/marketplace-hero.jpeg", },
+        { id: 5, name: "cenjisrehi", price: "MWK 3000", img: "/marketplace-hero.jpeg", },
+        { id: 6, name: "aw rjnjik jb", price: "MWK 3000", img: "/marketplace-hero.jpeg", },
     ];
 
 
     const categories = [
         {
             title: "Utilities",
-            options: [
-                { name: "Electricity", checked: true },
-                { name: "Water Supply", checked: false },
-                { name: "Parking", checked: false },
-                { name: "Security", checked: false },
-            ],
+            options: [{ name: "Electricity", checked: true }, { name: "Water Supply", checked: false }, { name: "Parking", checked: false }, { name: "Security", checked: false },],
         },
         {
             title: "Amenities",
-            options: [
-                { name: "Restrooms", checked: true },
-                { name: "Food Court", checked: false },
-                { name: "Wi-Fi", checked: false },
-                { name: "ATM", checked: false },
-            ],
+            options: [{ name: "Restrooms", checked: true }, { name: "Food Court", checked: false }, { name: "Wi-Fi", checked: false }, { name: "ATM", checked: false },],
         },
         {
             title: "Compliance",
-            options: [
-                { name: "Fire Safety", checked: true },
-                { name: "Health Regulations", checked: false },
-                { name: "Accessibility", checked: false },
-                { name: "Licensing", checked: false },
-            ],
+            options: [{ name: "Fire Safety", checked: true }, { name: "Health Regulations", checked: false }, { name: "Accessibility", checked: false }, { name: "Licensing", checked: true },],
         },
         {
             title: "Sanitation",
-            options: [
-                { name: "Waste Disposal", checked: true },
-                { name: "Cleaning Services", checked: false },
-                { name: "Pest Control", checked: false },
-                { name: "Recycling", checked: false },
-            ],
+            options: [{ name: "Waste Disposal", checked: true }, { name: "Cleaning Services", checked: false }, { name: "Pest Control", checked: true }, { name: "Recycling", checked: false },],
         },
     ];
 
 
-
     const nearbyMarkets = [
         { id: 1, name: "Market A", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Market B", img: "/marketplace-hero.jpeg" },
+        { id: 2, name: "Market B", img: "/marketplace-image.jpeg" },
     ];
 
     let router = useRouter();
 
     return (
-        <div className="font-sans p-4 mx-auto bg-gray-50">
-            <Navbar heading="DealBank" SubHeading={params.slug[0]} />
+        <div className="font-sans p-4 mx-auto bg-gray-50 px-20 max-sm:px-4">
+            <Navbar heading="DealBank" />
 
             <Image
                 src="/marketplace-hero.jpeg"
@@ -129,12 +78,12 @@ const Marketplace = ({params}) => {
                 className="px-12 max-sm:px-1 w-full h-[500px] object-cover rounded-3xl bg-none max-sm:h-[250px]"
             />
 
-            <div className="mx-16 max-sm:mx-5 h-[500px] mt-[115px] max-sm:mt-[100px] max-sm:h-[250px] absolute inset-0 
+            <div className="mx-32 max-sm:mx-5 h-[500px] mt-[113px] max-sm:mt-[100px] max-sm:h-[250px] absolute inset-0 
                             flex flex-col justify-center items-center text-white bg-black/30 rounded-3xl max-sm:px-3">
                 <h1 className="text-3xl font-bold mb-2 sm:text-3xl text-center">{params.slug[0]}</h1>
             </div>
 
-            
+
             {/* Search Bar */}
             <div className="flex justify-center items-center">
                 <input
@@ -145,19 +94,18 @@ const Marketplace = ({params}) => {
             </div>
 
             {/* Product Cards */}
-            <h2 className="text-xl font-semibold mb-2">Current Deals</h2>
+            <h2 className="text-xl font-semibold mb-2 mt-5">Current Deals</h2>
             <div className="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-2">
 
                 {products.map((product, index) => (
                     <Link href={"/product/" + getMarketplaceNameForRouting(product.name)} key={product.id}>
                         <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
-
                             <Image
                                 width={1000}
                                 height={1000}
                                 src={product.img}
                                 alt={product.name}
-                                className="w-full rounded mb-2 h-[250px] max-sm:h-fit"
+                                className="w-full rounded mb-2 h-[200px] max-sm:h-fit"
                             />
                             <h4 className="font-medium">{product.name}</h4>
                             <p className="text-green-600 font-bold">{product.price}</p>
@@ -176,32 +124,18 @@ const Marketplace = ({params}) => {
                     alt="Seller"
                     className="rounded-full mr-4 w-16 h-16"
                 />
-                <div>
+                <div className="flex flex-col">
                     <h4 className="font-semibold">John Smith</h4>
-                    <p className="text-sm text-gray-600 mb-1">
-                        Client satisfaction is my first priority!
-                    </p>
-                    <a href="tel:+923221210102" className="text-blue-500 hover:underline">
-                        +92 322 1210102
-                    </a>
+                    <p className="text-sm text-gray-600 mb-1">Client satisfaction is my first priority!</p>
+                    <Link href="tel:+923221210102" className="text-blue-500 hover:underline"> +92 322 1210102</Link>
                 </div>
             </div>
 
-            {/* Price Change Chart */}
-            <h2 className="text-xl font-semibold mb-2">Price Change Chart</h2>
-            <div className="flex flex-col justify-center items-center border border-gray-300 rounded-lg p-4 mb-6">
-                <h3 className="font-medium">Tomato Prices</h3>
-                <p className="text-green-600 font-bold mb-2">
-                    $1.20 (Last 12 hours +5%)
-                </p>
-                <Image
-                    width={1000}
-                    height={1000}
-                    src="/PriceChart.png"
-                    alt="Chart"
-                    className="w-[400px] rounded"
-                />
-            </div>
+
+
+            <ReactChartJS/>
+
+
 
             {/* Market Features */}
             <h2 className="text-xl font-semibold mb-2">Market Features</h2>
@@ -259,7 +193,6 @@ const Marketplace = ({params}) => {
                 {nearbyMarkets.map((market) => (
                     <div
                         key={market.id}
-
                         className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer"
                     >
                         <Image
