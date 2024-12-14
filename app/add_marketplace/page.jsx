@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import { FaTrashAlt } from 'react-icons/fa';
 
 
 const AddMarket = () => {
@@ -53,6 +54,28 @@ const AddMarket = () => {
         if (file) {
             setImage(file);
         }
+    };
+
+    const [nearbyATMs, setNearbyATMs] = useState([""]);
+    const [nearbyAirports, setNearbyAirports] = useState([""]);
+
+    // Handler for adding a new field
+    const addField = (setFields) => {
+        setFields((prev) => [...prev, ""]);
+    };
+
+    // Handler for removing a field
+    const removeField = (index, fields, setFields) => {
+        setFields((prev) => prev.filter((_, i) => i !== index));
+    };
+
+    // Handler for updating field values
+    const updateField = (index, value, setFields) => {
+        setFields((prev) => {
+            const updated = [...prev];
+            updated[index] = value;
+            return updated;
+        });
     };
 
     return (
@@ -407,6 +430,62 @@ const AddMarket = () => {
                         <option value="Area 3">Area 3</option>
                     </select>
                 </div>
+            </div>
+
+            {/* Nearby ATMs */}
+            <div className="mb-4 bg-white p-3">
+                <label className="block text-lg font-medium mb-2">Nearby ATMs</label>
+                {nearbyATMs.map((atm, index) => (
+                    <div key={index} className="flex items-center mb-2">
+                        <input
+                            type="text"
+                            className="w-full text-sm px-3 py-1 border border-gray-300 rounded bg-gray-100 mr-2"
+                            placeholder="National Bank of Malawi ATM"
+                            value={atm}
+                            onChange={(e) => updateField(index, e.target.value, setNearbyATMs)}
+                        />
+                        <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => removeField(index, nearbyATMs, setNearbyATMs)}
+                        >
+                            <FaTrashAlt />
+                        </button>
+                    </div>
+                ))}
+                <button
+                    className=" hover:bg-blue-700 mt-2 px-4 py-2 rounded-lg bg-blue-500 text-sm text-white font-bold"
+                    onClick={() => addField(setNearbyATMs)}
+                >
+                    Add ATM
+                </button>
+            </div>
+
+            {/* Nearby Airports */}
+            <div className="mb-4 bg-white p-3">
+                <label className="block text-lg font-medium mb-2">Nearby Airports</label>
+                {nearbyAirports.map((airport, index) => (
+                    <div key={index} className="flex items-center mb-2">
+                        <input
+                            type="text"
+                            className="w-full text-sm px-3 py-1 border border-gray-300 rounded bg-gray-100 mr-2"
+                            placeholder="Lilongwe International Airport"
+                            value={airport}
+                            onChange={(e) => updateField(index, e.target.value, setNearbyAirports)}
+                        />
+                        <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => removeField(index, nearbyAirports, setNearbyAirports)}
+                        >
+                            <FaTrashAlt />
+                        </button>
+                    </div>
+                ))}
+                <button
+                    className="hover:bg-blue-700 mt-2 px-4 py-2 rounded-lg bg-blue-500 text-sm text-white font-bold"
+                    onClick={() => addField(setNearbyAirports)}
+                >
+                    Add Airport
+                </button>
             </div>
 
 
