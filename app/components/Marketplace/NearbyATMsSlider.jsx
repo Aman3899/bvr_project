@@ -1,25 +1,27 @@
+"use client";
 import React from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
 const NearbyATMsSlider = () => {
 
     const atms = [
-        { id: 1, name: "National Bank of Malawi ATM", distance: "1", img: "/atm.png" },
+        { id: 1, name: "National Bank of Malawi", distance: "1", img: "/atm.png" },
         { id: 2, name: "FDH Bank ATM", distance: "2", img: "/atm.png" },
-        { id: 3, name: "Standard Bank Malawi ATM", distance: "3", img: "/atm.png" },
+        { id: 3, name: "Standard Bank ATM", distance: "3", img: "/atm.png" },
         { id: 4, name: "EcoBank ATM", distance: "2.5", img: "/atm.png" },
         { id: 5, name: "NBS Bank ATM", distance: "1.8", img: "/atm.png" },
-        { id: 6, name: "XYZ Bank ATM", distance: "3.1", img: "/atm.png" },
-    ];    
+        { id: 6, name: "XYZ Bank of Malawi ATM with Long Name Example", distance: "3.1", img: "/atm.png" },
+    ];
 
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
             {
@@ -32,7 +34,7 @@ const NearbyATMsSlider = () => {
             {
                 breakpoint: 480, // Small screens
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                 },
             },
@@ -45,15 +47,22 @@ const NearbyATMsSlider = () => {
             <Slider {...settings}>
                 {atms.map((atm) => (
                     <div key={atm.id} className="px-2">
-                        <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
+                        <div
+                            className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer h-[300px] max-sm:h-[250px]"
+                        >
                             <Image
                                 width={1000}
                                 height={1000}
                                 src={atm.img}
                                 alt={atm.name}
-                                className="w-full rounded mb-2 h-[200px] max-sm:h-fit"
+                                className="w-full rounded mb-2 h-[225px] max-sm:h-[165px]" // Fixed image height
                             />
-                            <h4 className="font-medium">{atm.name}</h4>
+                            <h4
+                                className="font-medium truncate"
+                                style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} // Prevents text overflow
+                            >
+                                {atm.name}
+                            </h4>
                             <p className="text-gray-600">{atm.distance} km away</p>
                         </div>
                     </div>

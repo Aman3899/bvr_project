@@ -8,19 +8,19 @@ import "slick-carousel/slick/slick-theme.css";
 const NearbyAirportsSlider = () => {
 
     const airports = [
-        { id: 1, name: "Lilongwe Airport", distance: "10", img: "/lingowe_nearby_airport.jpeg" },
-        { id: 2, name: "LAX Airport", distance: "15", img: "/airplane.png" },
-        { id: 3, name: "ORD Airport", distance: "20", img: "/airplane.png" },
+        { id: 1, name: "Lilongwe International Airport", distance: "10", img: "/lingowe_nearby_airport.jpeg" },
+        { id: 2, name: "LAAX International Airport", distance: "15", img: "/airplane.png" },
+        { id: 3, name: "ORD International Airport", distance: "20", img: "/lingowe_nearby_airport.jpeg" },
         { id: 4, name: "Kamuzu International Airport", distance: "15", img: "/airplane.png" },
-        { id: 5, name: "Chileka International Airport", distance: "25", img: "/airplane.png" },
-        { id: 6, name: "Mzuzu Airport", distance: "30", img: "/airplane.png" },
+        { id: 5, name: "Chileka International Airport", distance: "25", img: "/lingowe_nearby_airport.jpeg" },
+        { id: 6, name: "Mzuzu International Airport", distance: "30", img: "/airplane.png" },
     ];
 
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
             {
@@ -33,7 +33,7 @@ const NearbyAirportsSlider = () => {
             {
                 breakpoint: 480, // Small screens
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                 },
             },
@@ -41,7 +41,7 @@ const NearbyAirportsSlider = () => {
     };
 
     return (
-        <div className="mb-6">
+        <div className="mb-6 py-10">
             <h2 className="text-xl font-semibold mb-4">Nearby Airports</h2>
             <Slider {...settings}>
                 {airports.map((airport) => (
@@ -52,9 +52,13 @@ const NearbyAirportsSlider = () => {
                                 height={1000}
                                 src={airport.img}
                                 alt={airport.name}
-                                className="w-full rounded mb-2 h-[200px] max-sm:h-fit"
+                                className="w-full rounded mb-2 h-[200px] max-sm:h-[100px]"
                             />
-                            <h4 className="font-medium">{airport.name}</h4>
+                            <h4 className="font-medium"
+                                style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} // Prevents text overflow
+                            >
+                                {airport.name}
+                            </h4>
                             <p className="text-gray-600">{airport.distance} km away</p>
                         </div>
                     </div>

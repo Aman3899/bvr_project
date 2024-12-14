@@ -44,7 +44,7 @@ const NearbyMarketsSlider = () => {
     };
 
     return (
-        <div className="mb-6">
+        <div className="mb-6 mt-4">
             <h2 className="text-xl font-semibold mb-4">Nearby Markets</h2>
             <Slider {...settings}>
                 {nearbyMarkets.map((market) => (
