@@ -6,109 +6,44 @@ import Footer from "@/app/components/Footer";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 import ReactChartJS from "@/app/components/ReactChartJS";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-
-function getMarketplaceNameForRouting(marketplaceName) {
-    return marketplaceName.split(" ").join("-");
-}
-
-
-
-const ImageSlider = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        loop: true,
-        responsive: [
-            {
-                breakpoint: 768, // For tablets
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 480, // For mobile devices
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    };
-
-    const images = [
-        { src: "/marketplace-hero.jpeg", alt: "Marketplace Hero" },
-        { src: "/marketplace-image.jpeg", alt: "Marketplace Image 2" },
-        { src: "/marketplace1.jpg", alt: "Marketplace Image 3" },
-        { src: "/marketplace3.webp", alt: "Marketplace Image 4" },
-    ];
-
-    return (
-        <section className="w-full px-12 max-sm:px-4">
-            <Slider {...settings} className="rounded-3xl border-2 border-black overflow-hidden">
-                {images.map((image, index) => (
-                    <div key={index}>
-                        <Image
-                            width={1920}
-                            height={1080}
-                            src={image.src}
-                            alt={image.alt}
-                            className="w-full h-[500px] max-sm:h-[250px] object-cover rounded-3xl"
-                        />
-                    </div>
-                ))}
-            </Slider>
-        </section>
-    );
-};
+import { useState } from "react";
+import ImageSlider from "@/app/components/Marketplace/ImageSlider";
+import ProductSlider from "@/app/components/Marketplace/ProductsSlider";
+import NearbyMarketsSlider from "@/app/components/Marketplace/NearbyMarketsSlider";
+import PromotionSliders from "@/app/components/Marketplace/PromotionSliders";
+import NearbyAirportsSlider from "@/app/components/Marketplace/NearbyAirports";
+import NearbyATMsSlider from "@/app/components/Marketplace/NearbyATMsSlider";
 
 
 
 const Marketplace = ({ params }) => {
-    const products = [
-        { id: 1, name: "Apple", price: "MWK 5000", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Banana", price: "MWK 3000", img: "/marketplace-hero.jpeg" },
-        { id: 3, name: "Handmade Crafts", price: "MWK 5000", img: "/marketplace-hero.jpeg" },
-        { id: 4, name: "Fresh Produce", price: "MWK 3000", img: "/marketplace-image.jpeg" },
-        { id: 5, name: "ABCDED", price: "MWK 4000", img: "/marketplace-image.jpeg" },
-        { id: 6, name: "asnjdji Produce", price: "MWK 1000", img: "/marketplace-image.jpeg" },
-    ];
 
-    const promotions = [
-        { id: 1, name: "Discounted Apple", price: "MWK 4500", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Banana Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 3, name: "Discounted BlueBarries Bundle", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 4, name: "Melon Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 5, name: "Discounted Grapes", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 6, name: "Friuts Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-    ];
-
-    const categories = [
-        {
-            title: "Filters",
-            options: [
-                { name: "Under MWK 4000", checked: false },
-                { name: "Organic", checked: true },
-                { name: "Local Products", checked: false },
-            ],
-        },
-    ];
-
-    const nearbyMarkets = [
-        { id: 1, name: "Market A", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Market B", img: "/marketplace-image.jpeg" },
-    ];
+    const [category, setCategory] = useState("");
+    const [subcategory, setSubcategory] = useState("");
 
     const router = useRouter();
+
+    const categoriesWithSub = {
+        GRAIN: ["Maize", "Oats", "Barley", "Rice", "Quinoa", "Rye", "Wheat", "Millet", "Sorghum"],
+        FRUITS: ["Strawberry", "Blueberries", "Raspberries", "Cranberries", "Oranges", "Tangerines", "Limes", "Grapefruits", "Mangoes", "Pineapples", "Papayas", "Kiwi", "Peaches", "Plums", "Quince", "Watermelons", "Cantaloupe", "Honeydew", "Casaba", "Figs", "Pomegranates", "Loquats", "Grapes", "Avocado"],
+        VEGETABLES: ["Lettuce", "Spinach", "Kale", "Aragula", "Chinese", "Rape", "Broccoli", "Cauliflower", "Cabbage", "Carrots", "Beets", "Turnips", "Onions", "Garlic", "Shallots", "Leeks", "Oyster mushrooms", "Button mushrooms", "Zucchini", "Pumpkins", "Tomatoes", "Peppers", "Cucumber", "Okra", "Eggplant"],
+        LEGUMES: ["Kidney beans", "Black beans", "Pinto beans", "Lentils", "Cowpeas"],
+        "NUTS & SEEDS": ["Walnut", "Almond", "Pecans", "Hazel nuts", "Pistachio", "Sunflower seeds", "Pumpkin seeds", "Chia seeds", "Hemp seeds"],
+        HERBS: ["Rosemary", "Thyme", "Parsley", "Cilantro", "Lavender", "Chamomile", "Ginger", "Dandelion", "Turmeric"],
+        MEATS: ["Beef", "Pork", "Lamb", "Turkey", "Ham", "Duck", "Bacon", "Mbewa"],
+        "SEA FOOD": ["Fish", "Salmon", "Tuna", "Tilapia", "Chambo", "Mcheni", "Bonya", "Usipa", "Oyster", "Catfish"],
+        OTHER: ["Mandasi", "Eggs", "Honey", "Cheese", "Milk", "Yogurt", "Mozzarella", "Jam", "Scones", "Bwemba", "Malambe"],
+    };
+
+    // Handle category change
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+        setSubcategory("");
+    };
+
+    const handleSubcategoryChange = (e) => {
+        setSubcategory(e.target.value);
+    };
 
     return (
         <div className="font-sans p-4 mx-auto bg-gray-50 px-20 max-sm:px-4">
@@ -147,22 +82,43 @@ const Marketplace = ({ params }) => {
                         Search
                     </button>
                 </div>
+            </div>
 
-                {/* Product Filters Dropdown */}
-                <div className="w-full sm:w-1/6">
-                    <select className="w-full text-center p-2 rounded-md border bg-blue-500 text-white font-bold border-gray-300 focus:outline-none focus:ring focus:ring-blue-200">
+
+            {/* Categories and Subcategories Filters */}
+            <div className="flex justify-center items-center w-full space-x-10 max-sm:space-x-2 mb-8">
+                <div className="w-full sm:w-1/2">
+                    <select
+                        value={category}
+                        onChange={handleCategoryChange}
+                        className="w-full text-center p-2 rounded-md border bg-blue-500 text-white font-bold border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+                    >
                         <option value="" selected>
-                            Select Filter
+                            Category
                         </option>
-                        {categories.map((category, index) => (
-                            <optgroup key={index} label={category.title}>
-                                {category.options.map((option, idx) => (
-                                    <option key={idx} value={option.name}>
-                                        {option.name}
-                                    </option>
-                                ))}
-                            </optgroup>
+                        {Object.keys(categoriesWithSub).map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
                         ))}
+                    </select>
+                </div>
+
+                {/* Second Dropdown for Subcategories */}
+                <div className="w-full sm:w-1/2">
+                    <select
+                        value={subcategory}
+                        onChange={handleSubcategoryChange}
+                        className="w-full text-center p-2 rounded-md border bg-blue-500 text-white font-bold border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
+                        disabled={!category} // Disable dropdown if no category is selected
+                    >
+                        <option value="">Product</option>
+                        {category &&
+                            categoriesWithSub[category].map((subcat, index) => (
+                                <option key={index} value={subcat}>
+                                    {subcat}
+                                </option>
+                            ))}
                     </select>
                 </div>
             </div>
@@ -170,79 +126,59 @@ const Marketplace = ({ params }) => {
 
 
             {/* Products */}
-            <h2 className="text-xl font-semibold mb-4">Products</h2>
-            <div className="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-2">
-                {products.map((product) => (
-                    <Link href={`/product/${getMarketplaceNameForRouting(product.name)}`} key={product.id}>
-                        <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
-                            <Image
-                                width={1000}
-                                height={1000}
-                                src={product.img}
-                                alt={product.name}
-                                className="w-full rounded mb-2 h-[200px] max-sm:h-fit"
-                            />
-                            <h4 className="font-medium">{product.name}</h4>
-                            <p className="text-green-600 font-bold">{product.price}</p>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+            <ProductSlider />
 
             {/* Price Change Chart */}
             <div className="py-5">
                 <ReactChartJS />
             </div>
 
-            {/* Current Promotions */}
-            <h2 className="text-xl font-semibold mb-4">Current Promotions</h2>
-            <div className="grid grid-cols-3 gap-4 mb-6 max-sm:grid-cols-2">
-                {promotions.map((promotion) => (
-                    <div key={promotion.id} className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
-                        <Image
-                            width={1000}
-                            height={1000}
-                            src={promotion.img}
-                            alt={promotion.name}
-                            className="w-full rounded mb-2 h-[200px] max-sm:h-fit"
-                        />
-                        <h4 className="font-medium">{promotion.name}</h4>
-                        <p className="text-red-600 font-bold">{promotion.price}</p>
+
+            {/* Random Ads Banner Section */}
+            <div className="bg-gray-200 m-4 h-48 flex items-center justify-center rounded-md shadow-md mb-10 max-sm:mx-3">
+                <span className="text-gray-500 text-lg">Sponsored Banner AD</span>
+            </div>
+
+            {/* Promotions Section */}
+            <div className="bg-white rounded-md shadow-md p-4 m-4 max-sm:mx-3 mb-10">
+                <h2 className="text-lg font-semibold mb-2">Promotions</h2>
+                <div className="border-t border-gray-300 pt-4">
+                    <h3 className="text-md font-semibold mb-2">Deals and Discounts!</h3>
+                    <p className="text-sm text-gray-600 mb-4 max-sm:text-xs">
+                        To see the latest deals and discounts for this product, specify by choosing one below:
+                    </p>
+
+                    {/* Filter Dropdown */}
+                    <div className="mb-4">
+                        <label htmlFor="filter" className="block text-sm font-medium mb-1">
+                            Filter
+                        </label>
+                        <select
+                            id="filter"
+                            className="block w-full border border-gray-300 rounded-md p-2 
+                                focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
+                        >
+                            <option value="latest-promos">Latest promos</option>
+                            <option value="deals">Deals</option>
+                            <option value="discounts">Discounts</option>
+                        </select>
                     </div>
-                ))}
+
+                    {/* Buttons for Deals and Discounts */}
+                    <div className="flex space-x-4 text-white font-bold">
+                        <button className="flex-1 bg-blue-500 border border-gray-300 rounded-md py-2 px-4 hover:bg-blue-700">
+                            Deals
+                        </button>
+                        <button className="flex-1 bg-blue-500 border border-gray-300 rounded-md py-2 px-4 hover:bg-blue-700">
+                            Discounts
+                        </button>
+                    </div>
+                </div>
             </div>
 
 
-            {/* Filter for Current Promotion Section */}
-            <section className="py-10">
-                <h2 className="text-2xl font-bold mb-6 text-center">Current Promotions</h2>
-                <div className="flex justify-center mb-6">
-                    <select
-                        className="p-2 border border-gray-300 rounded-lg"
-                        onChange={(e) => console.log(`Selected promotion: ${e.target.value}`)}
-                    >
-                        <option value="all">All Promotions</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="fashion">Fashion</option>
-                        <option value="furniture">Furniture</option>
-                    </select>
-                </div>
-                <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-1">
-                    <div className="p-6 bg-gray-100 rounded-lg shadow-md text-center">
-                        <h3 className="text-lg font-semibold mb-2">Discount on Electronics</h3>
-                        <p className="text-sm text-gray-600">Save big on the latest gadgets.</p>
-                    </div>
-                    <div className="p-6 bg-gray-100 rounded-lg shadow-md text-center">
-                        <h3 className="text-lg font-semibold mb-2">Buy 1 Get 1 Free</h3>
-                        <p className="text-sm text-gray-600">Shop your favorite fashion items now.</p>
-                    </div>
-                    <div className="p-6 bg-gray-100 rounded-lg shadow-md text-center">
-                        <h3 className="text-lg font-semibold mb-2">Flash Sale on Furniture</h3>
-                        <p className="text-sm text-gray-600">Upgrade your home at amazing prices.</p>
-                    </div>
-                </div>
-            </section>
-
+            {/* Current Promotions */}
+            <PromotionSliders />
 
             {/* Market Features */}
             <div className="mb-4 p-3">
@@ -270,24 +206,13 @@ const Marketplace = ({ params }) => {
 
 
             {/* Nearby Markets */}
-            <h2 className="text-xl font-semibold mb-4">Nearby Markets</h2>
-            <div className="grid grid-cols-2 gap-4">
-                {nearbyMarkets.map((market) => (
-                    <div
-                        key={market.id}
-                        className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer"
-                    >
-                        <Image
-                            width={1000}
-                            height={1000}
-                            src={market.img}
-                            alt={market.name}
-                            className="w-full h-[300px] rounded mb-2 max-sm:h-fit"
-                        />
-                        <h4 className="font-medium">{market.name}</h4>
-                    </div>
-                ))}
-            </div>
+            <NearbyMarketsSlider />
+
+            {/* Nearby Airports */}
+            <NearbyAirportsSlider />
+
+            {/* Nearby ATMs */}
+            <NearbyATMsSlider />
 
             <Footer />
         </div>
