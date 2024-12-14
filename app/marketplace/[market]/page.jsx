@@ -13,6 +13,7 @@ import NearbyMarketsSlider from "@/app/components/Marketplace/NearbyMarketsSlide
 import PromotionSliders from "@/app/components/Marketplace/PromotionSliders";
 import NearbyAirportsSlider from "@/app/components/Marketplace/NearbyAirports";
 import NearbyATMsSlider from "@/app/components/Marketplace/NearbyATMsSlider";
+import { SiFacebook, SiX, SiLinkedin } from "react-icons/si";
 
 
 
@@ -35,6 +36,9 @@ const Marketplace = ({ params }) => {
         OTHER: ["Mandasi", "Eggs", "Honey", "Cheese", "Milk", "Yogurt", "Mozzarella", "Jam", "Scones", "Bwemba", "Malambe"],
     };
 
+    console.log(params);
+
+    
     // Handle category change
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
@@ -52,21 +56,46 @@ const Marketplace = ({ params }) => {
             <ImageSlider />
 
             {/* Profile Information (BDO) */}
-            <h2 className="text-xl font-semibold mb-4 mt-10">Business Development Officer</h2>
-            <div className="flex items-center border border-gray-300 rounded-lg p-4 mb-6 pb-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 mt-12 text-center border-b-2 border-blue-500 pb-2">
+                Business Development Officer
+            </h2>
+
+            <div className="flex items-center border shadow-lg rounded-xl p-6 mb-8 bg-gradient-to-r from-gray-100 to-white">
                 <Image
                     width={1000}
                     height={1000}
                     src="/marketplace-hero.jpeg"
                     alt="Seller"
-                    className="rounded-full mr-4 w-16 h-16"
+                    className="rounded-full mr-6 w-20 h-20 border-4 border-blue-500"
                 />
                 <div className="flex flex-col">
-                    <h4 className="font-semibold">John Smith</h4>
-                    <p className="text-sm text-gray-600 mb-1">Empowering market success with tailored strategies.</p>
-                    <Link href="tel:+923221210102" className="text-blue-500 hover:underline">+92 322 1210102</Link>
+                    <h4 className="font-bold text-lg text-gray-900">John Smith</h4>
+                    <p className="text-gray-700 italic mb-2 max-sm:text-xs">Empowering market success with tailored strategies.</p>
+                    <Link href="tel:+923221210102" className="text-blue-600 hover:underline font-medium max-sm:text-sm">
+                        +92 322 1210102
+                    </Link>
+
+                    {/* Social Media Links */}
+                    <div className="mt-4 flex space-x-4">
+                        <Link href="https://www.linkedin.com/in/john-smith" target="_blank">
+                            <div className="text-blue-600 hover:text-blue-800 transition-transform transform hover:scale-110">
+                                <SiLinkedin className="w-6 h-6" />
+                            </div>
+                        </Link>
+                        <Link href="https://twitter.com/johnsmith" target="_blank">
+                            <div className="text-blue-400 hover:text-blue-600 transition-transform transform hover:scale-110">
+                                <SiX className="w-6 h-6" />
+                            </div>
+                        </Link>
+                        <Link href="https://www.facebook.com/johnsmith" target="_blank">
+                            <div className="text-blue-700 hover:text-blue-900 transition-transform transform hover:scale-110">
+                                <SiFacebook className="w-6 h-6" />
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
+
 
 
             {/* Search and Filters */}
@@ -128,6 +157,7 @@ const Marketplace = ({ params }) => {
             {/* Products */}
             <ProductSlider />
 
+
             {/* Price Change Chart */}
             <div className="py-5">
                 <ReactChartJS />
@@ -138,6 +168,7 @@ const Marketplace = ({ params }) => {
             <div className="bg-gray-200 m-4 h-48 flex items-center justify-center rounded-md shadow-md mb-10 max-sm:mx-3">
                 <span className="text-gray-500 text-lg">Sponsored Banner AD</span>
             </div>
+
 
             {/* Promotions Section */}
             <div className="bg-white rounded-md shadow-md p-4 m-4 max-sm:mx-3 mb-10">
@@ -150,19 +181,15 @@ const Marketplace = ({ params }) => {
 
                     {/* Filter Dropdown */}
                     <div className="mb-4">
-                        <label htmlFor="filter" className="block text-sm font-medium mb-1">
-                            Filter
-                        </label>
-                        <select
-                            id="filter"
-                            className="block w-full border border-gray-300 rounded-md p-2 
-                                focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
-                        >
+                        <label htmlFor="filter" className="block text-sm font-medium mb-1">Filter</label>
+                        <select id="filter" className="block w-full border border-gray-300 rounded-md p-2 
+                                focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100">
                             <option value="latest-promos">Latest promos</option>
                             <option value="deals">Deals</option>
                             <option value="discounts">Discounts</option>
                         </select>
                     </div>
+
 
                     {/* Buttons for Deals and Discounts */}
                     <div className="flex space-x-4 text-white font-bold">
@@ -179,6 +206,7 @@ const Marketplace = ({ params }) => {
 
             {/* Current Promotions */}
             <PromotionSliders />
+            
 
             {/* Market Features */}
             <div className="mb-4 p-3">

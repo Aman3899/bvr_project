@@ -4,9 +4,18 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+
+
+function getMarketplaceNameForRouting(marketplaceName) {
+    return marketplaceName.split(" ").join("-");
+}
 
 
 const PromotionSliders = () => {
+
+    const pathname = usePathname();
 
     const promotions = [
         { id: 1, name: "Discounted Apple", price: "MWK 4500", img: "/marketplace-hero.jpeg" },
@@ -47,7 +56,8 @@ const PromotionSliders = () => {
             <Slider {...settings}>
                 {promotions.map((promotion) => (
                     <div key={promotion.id} className="px-2">
-                        <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
+                        <Link href={`${pathname}/discounted_product/${getMarketplaceNameForRouting(promotion.name)}`}
+                            className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
                             <Image
                                 width={1000}
                                 height={1000}
@@ -57,7 +67,7 @@ const PromotionSliders = () => {
                             />
                             <h4 className="font-medium">{promotion.name}</h4>
                             <p className="text-red-600 font-bold">{promotion.price}</p>
-                        </div>
+                        </Link>
                     </div>
                 ))}
             </Slider>

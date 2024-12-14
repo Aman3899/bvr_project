@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 
 
@@ -12,7 +13,11 @@ function getMarketplaceNameForRouting(marketplaceName) {
     return marketplaceName.split(" ").join("-");
 }
 
-const ProductSlider = () => {
+const ProductSlider = (props) => {
+
+    const pathname = usePathname();
+
+    // console.log(params.market);
 
     const products = [
         { id: 1, name: "Apple", price: "MWK 5000", img: "/marketplace-hero.jpeg" },
@@ -47,13 +52,14 @@ const ProductSlider = () => {
         ],
     };
 
+
     return (
         <div className="mb-10">
             <h2 className="text-xl font-semibold mb-4">Products</h2>
             <Slider {...settings}>
                 {products.map((product) => (
                     <div key={product.id} className="px-2">
-                        <Link href={`/product/${getMarketplaceNameForRouting(product.name)}`}>
+                        <Link href={`${pathname}/product/${getMarketplaceNameForRouting(product.name)}`}>
                             <div className="border border-gray-300 rounded-lg p-3 text-center hover:shadow-lg transition cursor-pointer">
                                 <Image
                                     width={1000}
