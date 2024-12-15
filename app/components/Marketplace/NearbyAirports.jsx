@@ -8,12 +8,12 @@ import "slick-carousel/slick/slick-theme.css";
 const NearbyAirportsSlider = () => {
 
     const airports = [
-        { id: 1, name: "Lilongwe International Airport", distance: "10", img: "/lingowe_nearby_airport.jpeg" },
-        { id: 2, name: "LAAX International Airport", distance: "15", img: "/airplane.png" },
-        { id: 3, name: "ORD International Airport", distance: "20", img: "/lingowe_nearby_airport.jpeg" },
-        { id: 4, name: "Kamuzu International Airport", distance: "15", img: "/airplane.png" },
-        { id: 5, name: "Chileka International Airport", distance: "25", img: "/lingowe_nearby_airport.jpeg" },
-        { id: 6, name: "Mzuzu International Airport", distance: "30", img: "/airplane.png" },
+        { id: 1, name: "Lilongwe International Airport", distance: "10", img: "/lilongwe_ariport.jpeg" },
+        { id: 2, name: "LAAX International Airport", distance: "15", img: "/airport.jpg" },
+        { id: 3, name: "ORD International Airport", distance: "20", img: "/lilongwe_ariport.jpeg" },
+        { id: 4, name: "Kamuzu International Airport", distance: "15", img: "/airport.jpg" },
+        { id: 5, name: "Chileka International Airport", distance: "25", img: "/lilongwe_ariport.jpeg" },
+        { id: 6, name: "Mzuzu International Airport", distance: "30", img: "/airport.jpg" },
     ];
 
     const settings = {

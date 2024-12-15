@@ -10,11 +10,11 @@ const NearbyATMsSlider = () => {
 
     const atms = [
         { id: 1, name: "National Bank of Malawi", distance: "1", img: "/atm.png" },
-        { id: 2, name: "FDH Bank ATM", distance: "2", img: "/atm.png" },
+        { id: 2, name: "FDH Bank ATM", distance: "2", img: "/atm.webp" },
         { id: 3, name: "Standard Bank ATM", distance: "3", img: "/atm.png" },
-        { id: 4, name: "EcoBank ATM", distance: "2.5", img: "/atm.png" },
+        { id: 4, name: "EcoBank ATM", distance: "2.5", img: "/atm.webp" },
         { id: 5, name: "NBS Bank ATM", distance: "1.8", img: "/atm.png" },
-        { id: 6, name: "XYZ Bank of Malawi ATM with Long Name Example", distance: "3.1", img: "/atm.png" },
+        { id: 6, name: "XYZ Bank of Malawi ATM with Long Name Example", distance: "3.1", img: "/atm.webp" },
     ];
 
     const settings = {
