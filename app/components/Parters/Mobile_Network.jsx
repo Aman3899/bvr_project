@@ -19,7 +19,7 @@ const MobileNetworksSlideshow = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2, // Default for mobile
+        slidesToShow: 3, // Default for mobile
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2500,

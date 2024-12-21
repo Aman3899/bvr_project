@@ -42,7 +42,7 @@ const NearbyATMsSlider = () => {
     };
 
     return (
-        <div className="mb-6">
+        <div className="mb-16">
             <h2 className="text-xl font-semibold mb-4">Nearby ATMs</h2>
             <Slider {...settings}>
                 {atms.map((atm) => (

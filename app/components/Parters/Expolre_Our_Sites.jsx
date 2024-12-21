@@ -5,7 +5,7 @@ import { FaAd, FaHammer, FaInfoCircle, FaLock, FaPhone, FaQuestionCircle } from 
 
 const Expolre_Our_Sites = () => {
     return (
-        <div>
+        <div className='pb-10'>
             {/* Explore Our Site Section */}
             <div className="space-y-4">
                 <h2 className="text-xl font-semibold">Explore Our Site</h2>

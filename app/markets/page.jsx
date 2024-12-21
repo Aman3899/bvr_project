@@ -51,7 +51,7 @@ const Page = () => {
 
   return (
     <div className="font-sans">
-      <Navbar heading="DealBank"/>
+      <Navbar heading="DealBank" />
 
       <div
         className="flex flex-col items-center justify-center h-[400px] bg-cover bg-center bg-[url('https://th.bing.com/th/id/OIP.klafwZiq4OvQC15BEEsqBgHaJn?pid=ImgDet&w=184&h=239&c=7&dpr=1.3')]"
@@ -112,13 +112,14 @@ const Page = () => {
           </div>
 
 
-          {/* Search Button */}
-          <button className="w-full flex items-center justify-center bg-blue-600 text-white py-2 rounded-lg font-semibold text-lg hover:bg-blue-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M8 3a5 5 0 013.89 8.032l3.267 3.267a1 1 0 01-1.415 1.415l-3.267-3.267A5 5 0 118 3zm2 5a2 2 0 11-4 0 2 2 0 014 0z" clipRule="evenodd" />
-            </svg>
-            Search
-          </button>
+          {/* Search Bar */}
+          <div className="flex justify-center items-center">
+            <input
+              type="text"
+              placeholder="🔍 Search for products"
+              className="w-4/5 lg:w-5/6 p-3 mt-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm text-sm"
+            />
+          </div>
         </div>
       </div>
 

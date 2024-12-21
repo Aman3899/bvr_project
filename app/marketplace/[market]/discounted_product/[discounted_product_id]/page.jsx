@@ -46,7 +46,7 @@ const DealPage = () => {
             {/* Product Image */}
             <div className="flex flex-col justify-center items-center overflow-hidden">
                 <Image
-                    src="/iphone.jpeg"
+                    src="/airport.jpg"
                     alt="iPhone 13"
                     width={1080}
                     height={720}

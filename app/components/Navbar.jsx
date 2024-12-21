@@ -72,8 +72,10 @@ const Navbar = (Props) => {
                         <FaBars />
                     </button>
                 )}
-
-                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">{Props.heading}</h1>
+                
+                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">
+                    <Link href={"/"}>{Props.heading}</Link>
+                </h1>
             </div>
         </div>
     )

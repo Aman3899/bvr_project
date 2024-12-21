@@ -101,7 +101,7 @@ const Marketplace = ({ params }) => {
             {/* Search and Filters */}
             <div className="flex flex-col sm:flex-row justify-between items-center py-7 space-y-4 sm:space-y-0 sm:space-x-5">
                 {/* Search Engine */}
-                <div className="flex justify-between items-center w-full sm:w-5/6">
+                <div className="flex justify-between items-center w-full max-sm:w-full">
                     <input
                         type="text"
                         placeholder="🔍 Search for products"

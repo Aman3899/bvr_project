@@ -12,47 +12,46 @@ import Screen_Printers from "./components/Parters/Screen_Printers";
 import Hero_Section from "./components/Hero_Section";
 import Navbar from "./components/Navbar";
 
-
-
 export default function Home() {
-
   return (
-    <div>
+    <div className="bg-white text-gray-800">
+      {/* Navbar */}
+      <Navbar heading="DealBank" />
 
-        <Navbar heading="DealBank"/>
+      {/* Hero Section */}
+      <Hero_Section />
 
-        <Hero_Section />
-
-        {/* Search Bar */}
-        <div className="flex justify-center items-center">
-          <input
-            type="text"
-            placeholder="🔍 Search for products"
-            className="w-5/6 p-2 mt-10 max-sm:mt-4 max-sm:mb-1 mb-6 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-
-        <div className="mt-8 px-20 max-sm:px-3">
-          <Nearby_Markets />
-
-          <div className="p-6 space-y-12">
-            <h1 className="text-2xl font-bold text-center py-4">
-              Our Partners
-            </h1>
-
-            <Universities />
-
-            <Financial_Institutes />
-
-            <MobileNetworksSlideshow />
-
-            <Screen_Printers />
-
-            <Expolre_Our_Sites />
-          </div>
-        </div>
-
-        <Footer />
+      {/* Search Bar */}
+      <div className="flex justify-center items-center">
+        <input
+          type="text"
+          placeholder="🔍 Search for products"
+          className="w-4/5 lg:w-5/6 p-3 mt-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm text-sm"
+        />
       </div>
+
+      {/* Nearby Markets Section */}
+      <div className="mt-12 px-6 lg:px-20">
+        <Nearby_Markets />
+      </div>
+
+      {/* Partners Section */}
+      <div className="mt-12 p-6 lg:px-20 bg-gray-50 shadow-sm rounded-lg">
+        <h1 className="text-3xl font-bold text-center py-6">
+          Our Trusted Partners
+        </h1>
+
+        <div className="space-y-12">
+          <Universities />
+          <Financial_Institutes />
+          <MobileNetworksSlideshow />
+          <Screen_Printers />
+          <Expolre_Our_Sites />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 }
