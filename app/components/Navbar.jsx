@@ -45,7 +45,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/profile"
+                                    href="/login"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaUser className="inline-block mr-2" /> Login
