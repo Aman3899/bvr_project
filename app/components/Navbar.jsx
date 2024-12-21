@@ -48,7 +48,7 @@ const Navbar = (Props) => {
                                     href="/profile"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
-                                    <FaUser className="inline-block mr-2" /> Profile
+                                    <FaUser className="inline-block mr-2" /> Login
                                 </Link>
                             </li>
                             <li>
