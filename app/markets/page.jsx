@@ -1,14 +1,12 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Image from 'next/image';
-import { FaSearch } from 'react-icons/fa';
-import Link from 'next/link';
+import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
-
+import MarketSlider from '../components/All_Markets';
 
 const Page = () => {
-
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
 
@@ -31,34 +29,16 @@ const Page = () => {
     setSelectedCity(''); // Reset city when district changes
   };
 
-  function getMarketplaceNameForRouting(marketplaceName) {
-    let arr = marketplaceName.split(" ");
-    let Str = "";
-
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr.length - 1 === i) {
-        Str = Str + arr[i];
-      }
-      else {
-        Str = Str + arr[i] + "-";
-      }
-    }
-    return Str;
-  }
-
-
-
   return (
-    <div className="font-sans">
+    <div className="font-sans mt-20">
       <Navbar heading="DealBank" />
 
-      <div
+      {/* Hero Section */}
+      <motion.div
         className="flex flex-col items-center justify-center h-[400px] bg-cover bg-center bg-[url('https://th.bing.com/th/id/OIP.klafwZiq4OvQC15BEEsqBgHaJn?pid=ImgDet&w=184&h=239&c=7&dpr=1.3')]"
-        style={{
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-white">Explore Your City</h1>
@@ -66,18 +46,25 @@ const Page = () => {
             Let’s uncover the best places to eat, drink, and shop nearest to you.
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-lg p-4 w-11/12 max-w-md">
 
-          {/* "District" Dropdown */}
+        {/* Search Section */}
+        <motion.div
+          className="bg-white rounded-xl shadow-lg p-6 w-11/12 max-w-md"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* District Dropdown */}
           <div className="mb-4">
             <label htmlFor="district" className="block text-gray-500 text-sm font-semibold mb-1">
               District
             </label>
-            <select
+            <motion.select
               id="district"
               value={selectedDistrict}
               onChange={handleDistrictChange}
               className="w-full border border-gray-300 rounded-lg bg-gray-100 p-2 text-gray-600"
+              whileFocus={{ scale: 1.02, transition: { duration: 0.2 } }}
             >
               <option value="">Select District</option>
               {districts.map((district) => (
@@ -85,21 +72,21 @@ const Page = () => {
                   {district}
                 </option>
               ))}
-            </select>
+            </motion.select>
           </div>
 
-
-          {/* "City" Dropdown */}
+          {/* City Dropdown */}
           <div className="mb-4">
             <label htmlFor="city" className="block text-gray-500 text-sm font-semibold mb-1">
               City
             </label>
-            <select
+            <motion.select
               id="city"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
               className="w-full border border-gray-300 rounded-lg bg-gray-100 p-2 text-gray-600"
-              disabled={!selectedDistrict} // Disable if no district selected
+              disabled={!selectedDistrict}
+              whileFocus={{ scale: 1.02, transition: { duration: 0.2 } }}
             >
               <option value="">Select City</option>
               {selectedDistrict &&
@@ -108,65 +95,35 @@ const Page = () => {
                     {city}
                   </option>
                 ))}
-            </select>
+            </motion.select>
           </div>
 
-
           {/* Search Bar */}
-          <div className="flex justify-center items-center">
+          <motion.div
+            className="flex justify-center items-center mt-6"
+            whileHover={{ scale: 1.05 }}
+          >
             <input
               type="text"
               placeholder="🔍 Search for products"
-              className="w-4/5 lg:w-5/6 p-3 mt-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm text-sm"
+              className="w-4/5 lg:w-full p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm text-sm"
             />
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
       {/* Page Title */}
-      <h1 className="text-4xl text-center py-5 font-bold">DealBank</h1>
-
-      {/* Search Bar */}
-      <div className="flex justify-center items-center">
-        <input
-          type="text"
-          placeholder="🔍 Search for products"
-          className="w-5/6 p-2 mt-10 max-sm:mt-4 max-sm:mb-1 mb-6 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
-        />
-      </div>
+      <motion.h1
+        className="text-4xl text-center py-5 font-bold"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        DealBank
+      </motion.h1>
 
       {/* Market Section */}
-      <div className="mt-8 px-20 max-sm:px-3">
-        <h2 className="text-xl font-bold mb-4">Nearby Markets</h2>
-        <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-2">
-          {[
-            { name: "Farmer's Market", image: "/marketplace-image.jpeg" },
-            { name: "Crafts Market", image: "/marketplace-image.jpeg" },
-            { name: "Fish Market", image: "/marketplace-image.jpeg" },
-            { name: "Spice Market", image: "/marketplace-image.jpeg" },
-            { name: "Clothing Market", image: "/marketplace-image.jpeg" },
-            { name: "Food Market", image: "/marketplace-image.jpeg" },
-          ].map((market, index) => (
-            <div
-              key={index}
-              className="rounded-lg overflow-hidden shadow-md hover:shadow-lg"
-            >
-              <Link href={"/marketplace/" + getMarketplaceNameForRouting(market.name)}>
-                <Image
-                  src={market.image}
-                  alt={market.name}
-                  width={300}
-                  height={200}
-                  className="w-full h-40 object-cover max-sm:h-20"
-                />
-                <div className="p-4 text-center">
-                  <h3 className="text-md font-semibold">{market.name}</h3>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
+      <MarketSlider />
 
       {/* Footer */}
       <Footer />

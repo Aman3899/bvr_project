@@ -19,7 +19,7 @@ import InternshipProgram from "./components/Internship_Program";
 
 export default function Home() {
   return (
-    <div className="bg-white text-gray-800">
+    <div className="bg-white text-gray-800 mt-28">
       {/* Navbar */}
       <Navbar heading="DealBank" />
 

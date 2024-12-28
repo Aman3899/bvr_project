@@ -1,27 +1,26 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import { MapPin } from "lucide-react";
 
 function getMarketplaceNameForRouting(marketplaceName) {
     return marketplaceName.split(" ").join("-");
 }
 
-const PromotionSliders = () => {
-    const pathname = usePathname();
+const MarketSlider = () => {
 
-    const promotions = [
-        { id: 1, name: "Discounted Apple", price: "MWK 4500", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Banana Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 3, name: "Discounted BlueBarries Bundle", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 4, name: "Melon Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 5, name: "Discounted Grapes", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 6, name: "Friuts Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
+    const markets = [
+        { name: "Farmer's Market", image: "/marketplace-image.jpeg", distance: "0.5 km" },
+        { name: "Crafts Market", image: "/marketplace-image.jpeg", distance: "1.2 km" },
+        { name: "Fish Market", image: "/marketplace-image.jpeg", distance: "0.8 km" },
+        { name: "Spice Market", image: "/marketplace-image.jpeg", distance: "1.5 km" },
+        { name: "Clothing Market", image: "/marketplace-image.jpeg", distance: "2.0 km" },
+        { name: "Food Market", image: "/marketplace-image.jpeg", distance: "0.7 km" },
     ];
 
     const settings = {
@@ -31,7 +30,7 @@ const PromotionSliders = () => {
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 3500,
         pauseOnHover: true,
         responsive: [
             {
@@ -102,29 +101,29 @@ const PromotionSliders = () => {
 
     return (
         <motion.div 
-            className="px-4 py-12 max-w-7xl mx-auto"
+            className="px-4 py-12 max-w-7xl mx-auto mb-10"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
             <motion.h2 
-                className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-black to-blue-500 bg-clip-text text-transparent"
+                className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-black to-amber-500 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                Current Promotions
+                Nearby Markets
             </motion.h2>
             <Slider {...settings} className="px-2">
-                {promotions.map((promotion) => (
+                {markets.map((market, index) => (
                     <motion.div
-                        key={promotion.id}
+                        key={index}
                         className="px-4 py-2"
                         variants={cardVariants}
                         whileHover="hover"
                     >
                         <Link
-                            href={`${pathname}/discounted_product/${getMarketplaceNameForRouting(promotion.name)}`}
+                            href={"/marketplace/" + getMarketplaceNameForRouting(market.name)}
                             className="block"
                         >
                             <motion.div 
@@ -140,21 +139,28 @@ const PromotionSliders = () => {
                                         className="h-full"
                                     >
                                         <Image
+                                            src={market.image}
+                                            alt={market.name}
                                             width={1000}
                                             height={1000}
-                                            src={promotion.img}
-                                            alt={promotion.name}
                                             className="w-full h-full object-cover"
                                         />
                                     </motion.div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                                    <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white/90 px-2 py-1 rounded-full">
+                                        <MapPin className="w-4 h-4 text-orange-500" />
+                                        <span className="text-sm font-medium text-gray-800">
+                                            {market.distance}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="p-6">
-                                    <h4 className="font-semibold text-gray-800 text-xl mb-2">{promotion.name}</h4>
+                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                        {market.name}
+                                    </h3>
                                     <div className="flex items-center justify-between">
-                                        <p className="text-red-500 font-bold text-lg">{promotion.price}</p>
-                                        <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-                                            On Sale
+                                        <span className="inline-block px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-medium">
+                                            Open Now
                                         </span>
                                     </div>
                                 </div>
@@ -167,4 +173,4 @@ const PromotionSliders = () => {
     );
 };
 
-export default PromotionSliders;
+export default MarketSlider;

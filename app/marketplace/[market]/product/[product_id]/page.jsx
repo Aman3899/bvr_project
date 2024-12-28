@@ -11,7 +11,7 @@ const ProductPage = ({ params }) => {
     console.log({ params });
 
     return (
-        <div className="font-sans py-4 max-sm:mx-4 mx-64 px-4">
+        <div className="font-sans py-4 max-sm:mx-4 mx-64 px-4 mt-24">
             {/* Navbar */}
             <Navbar heading="DealBank" />
 

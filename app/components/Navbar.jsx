@@ -1,13 +1,20 @@
 "use client";
-import React from 'react';
-import Link from 'next/link';
-import { useState } from 'react';
-import Image from 'next/image';
-import { FaAd, FaBars, FaHome, FaPhoneAlt, FaSearchLocation, FaShoppingBag, FaShoppingCart, FaUser } from 'react-icons/fa';
-
+import React from "react";
+import Link from "next/link";
+import { useState } from "react";
+import Image from "next/image";
+import {
+    FaAd,
+    FaBars,
+    FaHome,
+    FaPhoneAlt,
+    FaSearchLocation,
+    FaShoppingBag,
+    FaShoppingCart,
+    FaUser,
+} from "react-icons/fa";
 
 const Navbar = (Props) => {
-
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     function toggleDrawer() {
@@ -15,8 +22,7 @@ const Navbar = (Props) => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-200 border-b border-gray-400 mb-4">
-
+        <div className="fixed top-0 left-0 w-full bg-gray-200 border-b border-gray-400 z-50">
             <div className="font-sans relative w-full max-sm:w-full bg-white">
                 {/* Drawer Menu */}
                 {isDrawerOpen && (
@@ -81,7 +87,7 @@ const Navbar = (Props) => {
                                     href="/contact"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
-                                    <FaAd className="inline-block mr-2"/> Advertise
+                                    <FaAd className="inline-block mr-2" /> Advertise
                                 </Link>
                             </li>
                         </ul>
@@ -97,23 +103,42 @@ const Navbar = (Props) => {
                         <FaBars />
                     </button>
                 )}
-                
+
                 <div className="max-sm:text-xl flex justify-around items-center py-5 font-bold">
-                    <Link href={"/"} className='flex gap-x-5'>
-                        <Image width={45} height={45} src={"/favicon.ico"} alt={"Logo"} className='rounded-full'/>
-                        <p className='text-3xl'>{Props.heading}</p>
+                    <Link href={"/"} className="flex gap-x-5">
+                        <Image
+                            width={45}
+                            height={45}
+                            src={"/favicon.ico"}
+                            alt={"Logo"}
+                            className="rounded-full"
+                        />
+                        <p className="text-3xl">{Props.heading}</p>
                     </Link>
-                    <div className='flex justify-evenly items-center max-sm:hidden gap-x-10'>
-                        <Link href={"/"} className='text-sm max-sm:hidden'>Home</Link>
-                        <Link href={"/markets"} className='text-sm max-sm:hidden'>All Markets</Link>
-                        <Link href={"/markets"} className='text-sm max-sm:hidden'>Districts</Link>
-                        <Link href={"/ads"} className='text-sm max-sm:hidden'>Advertise</Link>
-                        <Link href={"/dealbank/contact_us"} className='text-sm max-sm:hidden'>Contact</Link>
+                    <div className="flex justify-evenly items-center max-sm:hidden gap-x-10">
+                        <Link href={"/"} className="text-sm max-sm:hidden">
+                            Home
+                        </Link>
+                        <Link href={"/markets"} className="text-sm max-sm:hidden">
+                            All Markets
+                        </Link>
+                        <Link href={"/markets"} className="text-sm max-sm:hidden">
+                            Districts
+                        </Link>
+                        <Link href={"/ads"} className="text-sm max-sm:hidden">
+                            Advertise
+                        </Link>
+                        <Link
+                            href={"/dealbank/contact_us"}
+                            className="text-sm max-sm:hidden"
+                        >
+                            Contact
+                        </Link>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;
