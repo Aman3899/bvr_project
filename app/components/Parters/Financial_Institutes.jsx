@@ -1,10 +1,11 @@
 "use client"; // Ensure this directive is at the top for client-side rendering
 
-import React from 'react';
-import Image from 'next/image';
-import Slider from 'react-slick'; // Import Slick Slider
+import React from "react";
+import Image from "next/image";
+import Slider from "react-slick"; // Import Slick Slider
 import "slick-carousel/slick/slick.css"; // Import Slick CSS
 import "slick-carousel/slick/slick-theme.css"; // Import Slick Theme CSS
+import { motion } from "framer-motion"; // For animations
 
 const FinancialInstitutes = () => {
     const financialInstitutions = [
@@ -22,7 +23,7 @@ const FinancialInstitutes = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3, // Default for mobile
+        slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
@@ -34,13 +35,13 @@ const FinancialInstitutes = () => {
                 },
             },
             {
-                breakpoint: 1024, // For tablets and larger devices
+                breakpoint: 1024, // For tablets
                 settings: {
-                    slidesToShow: 2, // Show 2 slides on larger devices
+                    slidesToShow: 2, // Show 2 slides on tablets
                 },
             },
             {
-                breakpoint: 1280, // For larger screens like desktops
+                breakpoint: 1280, // For desktops
                 settings: {
                     slidesToShow: 3, // Show 3 slides on larger screens
                 },
@@ -49,22 +50,36 @@ const FinancialInstitutes = () => {
     };
 
     return (
-        <div>
+        <div className="bg-gray-50 py-8 px-5 max-sm:py-3 max-sm:px-0">
             {/* Financial Institutions Section */}
-            <div className="space-y-4">
-                <h2 className="text-xl font-semibold">Financial Institutions</h2>
+            <div className="max-w-6xl mx-auto">
+                <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+                    Financial Institutions
+                </h2>
                 <Slider {...settings} className="w-full">
                     {financialInstitutions.map((institution, index) => (
-                        <div key={index} className="bg-white shadow-md rounded-md p-4 flex flex-col items-center">
-                            <Image
-                                width={1920}
-                                height={1080}
-                                src={institution.logo}
-                                alt={institution.alt}
-                                className="object-contain mb-2 rounded-xl"
-                            />
-                            <p className="font-medium text-center max-sm:py-4">{institution.name}</p>
-                        </div>
+                        <motion.div
+                            key={index}
+                            className="p-4"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center space-y-4 border border-gray-200">
+                                <Image
+                                    width={1920}
+                                    height={1080}
+                                    src={institution.logo}
+                                    alt={institution.alt}
+                                    className="object-contain rounded-md"
+                                />
+                                <p className="text-lg font-medium text-gray-700 text-center">
+                                    {institution.name}
+                                </p>
+                            </div>
+                        </motion.div>
                     ))}
                 </Slider>
             </div>

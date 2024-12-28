@@ -42,26 +42,20 @@ const Universities = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 600,
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 3500,
         responsive: [
             {
                 breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                },
-            },
-            {
-                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                 },
             },
             {
-                breakpoint: 640,
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 1,
                 },
@@ -70,27 +64,34 @@ const Universities = () => {
     };
 
     return (
-        <div className="py-8">
+        <div className="py-8 bg-gradient-to-b from-gray-100 to-gray-50">
             {/* Section Title */}
-            <h2 className="text-3xl font-bold text-center mb-6">Universities</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+                Top Universities
+            </h2>
 
             {/* Carousel Slider */}
-            <Slider {...settings} className="mx-auto max-w-7xl">
+            <Slider {...settings} className="mx-auto w-full px-4">
                 {universities.map((university, index) => (
-                    <div key={index} className="px-3">
-                        <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-64">
+                    <div
+                        key={index}
+                        className="p-4 transition-transform duration-500 transform hover:scale-105"
+                    >
+                        <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col items-center justify-center h-80 border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
                             {/* Logo */}
-                            <div className="w-32 h-32 relative mb-4">
+                            <div className="w-40 h-40 relative mb-4">
                                 <Image
                                     src={university.logo}
                                     alt={university.alt}
                                     layout="fill"
                                     objectFit="contain"
-                                    className="rounded-lg"
+                                    className="rounded-md"
                                 />
                             </div>
                             {/* University Name */}
-                            <p className="font-medium text-center text-lg">{university.name}</p>
+                            <p className="text-lg font-semibold text-gray-800">
+                                {university.name}
+                            </p>
                         </div>
                     </div>
                 ))}

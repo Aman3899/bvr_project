@@ -11,6 +11,11 @@ import Expolre_Our_Sites from "./components/Parters/Expolre_Our_Sites";
 import Screen_Printers from "./components/Parters/Screen_Printers";
 import Hero_Section from "./components/Hero_Section";
 import Navbar from "./components/Navbar";
+import About_Dealbank from "./components/About_Dealbank";
+import HowWeDoIt from "./components/How_We_Do_It";
+import InternshipProgram from "./components/Internship_Program";
+
+
 
 export default function Home() {
   return (
@@ -34,6 +39,12 @@ export default function Home() {
       <div className="mt-12 px-6 lg:px-20">
         <Nearby_Markets />
       </div>
+
+      <About_Dealbank />
+
+      <HowWeDoIt />
+
+      <InternshipProgram />
 
       {/* Partners Section */}
       <div className="mt-12 p-6 lg:px-20 bg-gray-50 shadow-sm rounded-lg">

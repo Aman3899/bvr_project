@@ -2,7 +2,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { FaBars, FaHome, FaShoppingCart, FaUser } from 'react-icons/fa';
+import Image from 'next/image';
+import { FaAd, FaBars, FaHome, FaPhoneAlt, FaSearchLocation, FaShoppingBag, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 
 const Navbar = (Props) => {
@@ -56,7 +57,31 @@ const Navbar = (Props) => {
                                     href="/contact"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
-                                    📞 Contact Us
+                                    <FaPhoneAlt className="inline-block mr-2" /> Contact Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/contact"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <FaShoppingBag className="inline-block mr-2" /> All Markets
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/contact"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <FaSearchLocation className="inline-block mr-2" /> Districts
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/contact"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <FaAd className="inline-block mr-2"/> Advertise
                                 </Link>
                             </li>
                         </ul>
@@ -73,9 +98,19 @@ const Navbar = (Props) => {
                     </button>
                 )}
                 
-                <h1 className="text-4xl max-sm:text-xl text-center py-5 font-bold">
-                    <Link href={"/"}>{Props.heading}</Link>
-                </h1>
+                <div className="max-sm:text-xl flex justify-around items-center py-5 font-bold">
+                    <Link href={"/"} className='flex gap-x-5'>
+                        <Image width={45} height={45} src={"/favicon.ico"} alt={"Logo"} className='rounded-full'/>
+                        <p className='text-3xl'>{Props.heading}</p>
+                    </Link>
+                    <div className='flex justify-evenly items-center max-sm:hidden gap-x-10'>
+                        <Link href={"/"} className='text-sm max-sm:hidden'>Home</Link>
+                        <Link href={"/markets"} className='text-sm max-sm:hidden'>All Markets</Link>
+                        <Link href={"/markets"} className='text-sm max-sm:hidden'>Districts</Link>
+                        <Link href={"/ads"} className='text-sm max-sm:hidden'>Advertise</Link>
+                        <Link href={"/dealbank/contact_us"} className='text-sm max-sm:hidden'>Contact</Link>
+                    </div>
+                </div>
             </div>
         </div>
     )
