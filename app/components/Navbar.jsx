@@ -47,7 +47,7 @@ const Navbar = (Props) => {
                                     href="/markets"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
-                                    <FaShoppingCart className="inline-block mr-2" /> Markets
+                                    <FaShoppingCart className="inline-block mr-2" />All Markets
                                 </Link>
                             </li>
                             <li>
@@ -60,7 +60,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/contact"
+                                    href="/dealbank/contact_us"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaPhoneAlt className="inline-block mr-2" /> Contact Us
@@ -68,15 +68,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/contact"
-                                    className="block px-4 py-2 hover:bg-gray-700"
-                                >
-                                    <FaShoppingBag className="inline-block mr-2" /> All Markets
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/contact"
+                                    href="/markets"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaSearchLocation className="inline-block mr-2" /> Districts
@@ -84,7 +76,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/contact"
+                                    href="//dealbank/advertise"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaAd className="inline-block mr-2" /> Advertise
