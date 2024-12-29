@@ -14,6 +14,9 @@ import PromotionSliders from "@/app/components/Marketplace/PromotionSliders";
 import NearbyAirportsSlider from "@/app/components/Marketplace/NearbyAirports";
 import NearbyATMsSlider from "@/app/components/Marketplace/NearbyATMsSlider";
 import { SiFacebook, SiX, SiLinkedin } from "react-icons/si";
+import PromotionsSearchFunc from "@/app/components/Marketplace/PromotionSearchFunc";
+import Nearby_Markets from "@/app/components/Nearby_Markets";
+import Market_Features_Details_Page from "@/app/components/Marketplace/MarketFeatures";
 
 
 
@@ -173,37 +176,7 @@ const Marketplace = ({ params }) => {
 
 
                 {/* Promotions Section */}
-                <div className="bg-white rounded-md shadow-md p-4 m-4 max-sm:mx-3 mb-10">
-                    <h2 className="text-lg font-semibold mb-2">Promotions</h2>
-                    <div className="border-t border-gray-300 pt-4">
-                        <h3 className="text-md font-semibold mb-2">Deals and Discounts!</h3>
-                        <p className="text-sm text-gray-600 mb-4 max-sm:text-xs">
-                            To see the latest deals and discounts for this product, specify by choosing one below:
-                        </p>
-
-                        {/* Filter Dropdown */}
-                        <div className="mb-4">
-                            <label htmlFor="filter" className="block text-sm font-medium mb-1">Filter</label>
-                            <select id="filter" className="block w-full border border-gray-300 rounded-md p-2 
-                                focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100">
-                                <option value="latest-promos">Latest promos</option>
-                                <option value="deals">Deals</option>
-                                <option value="discounts">Discounts</option>
-                            </select>
-                        </div>
-
-
-                        {/* Buttons for Deals and Discounts */}
-                        <div className="flex space-x-4 text-white font-bold">
-                            <button className="flex-1 bg-blue-500 border border-gray-300 rounded-md py-2 px-4 hover:bg-blue-700">
-                                Deals
-                            </button>
-                            <button className="flex-1 bg-blue-500 border border-gray-300 rounded-md py-2 px-4 hover:bg-blue-700">
-                                Discounts
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <PromotionsSearchFunc />
 
 
                 {/* Current Promotions */}
@@ -211,32 +184,11 @@ const Marketplace = ({ params }) => {
 
 
                 {/* Market Features */}
-                <div className="mb-4 p-3">
-                    <h2 className="text-xl font-semibold mb-4">Market Features</h2>
-                    {[
-                        { name: 'Electricity', selected: true },
-                        { name: 'Water Supply', selected: false },
-                        { name: 'Access Roads', selected: false },
-                        { name: 'Sewage Systems', selected: true },
-                        { name: 'Waste Management Services', selected: false },
-                    ].map((feature) => (
-                        <div key={feature.name} className="border-y bg-white border-gray-100 py-2 px-2">
-                            <label className="inline-flex items-center">
-                                <input
-                                    type="checkbox"
-                                    className="form-checkbox"
-                                    disabled
-                                    defaultChecked={feature.selected}
-                                />
-                                <span className="ml-2">{feature.name}</span>
-                            </label>
-                        </div>
-                    ))}
-                </div>
+                <Market_Features_Details_Page />
 
 
                 {/* Nearby Markets */}
-                <NearbyMarketsSlider />
+                <Nearby_Markets />
 
                 {/* Nearby Airports */}
                 <NearbyAirportsSlider />
