@@ -76,7 +76,7 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="//dealbank/advertise"
+                                    href="/dealbank/advertise"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaAd className="inline-block mr-2" /> Advertise
@@ -117,7 +117,7 @@ const Navbar = (Props) => {
                         <Link href={"/markets"} className="text-sm max-sm:hidden">
                             Districts
                         </Link>
-                        <Link href={"/ads"} className="text-sm max-sm:hidden">
+                        <Link href={"/dealbank/advertise"} className="text-sm max-sm:hidden">
                             Advertise
                         </Link>
                         <Link

@@ -1,47 +1,120 @@
 "use client";
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-
 const Hero_Section = () => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
+
     return (
-        <div>
-            {/* Hero Section */}
-            <div className="relative flex justify-center max-sm:mx-3">
-                <Image
-                    src="/marketplace-hero.jpeg"
-                    alt="Marketplace Hero"
-                    width={1920}
-                    height={1080}
-                    className="mx-16 max-sm:mx-4 w-full h-[500px] object-cover rounded-3xl bg-none max-sm:h-[300px] border-2 border-black"
-                />
-                <div className="mx-16 max-sm:mx-0 max-sm:h-[300px] absolute inset-0 flex flex-col justify-center items-center text-white bg-black/30 rounded-3xl px-4 sm:px-3">
-                    <h1 className="text-4xl font-bold mb-2 sm:text-3xl text-center">
-                        Discover, Trade, Connect
-                    </h1>
-                    <p className="text-lg mb-4 sm:text-sm text-center">
-                        Explore the vibrant markets of Malawi
-                    </p>
-                    <div className="flex gap-4">
-                        <Link
-                            href={"/post_request"}
-                            className="bg-white text-blue-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100"
-                        >
-                            Post Request
-                        </Link>
-                        <Link
-                            href={"/market_management"}
-                            className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700"
-                        >
-                            List Market
-                        </Link>
+        <div className="px-4 sm:px-6 lg:px-16 py-8">
+            <div className={`
+                relative 
+                transform transition-all duration-1000 ease-out
+                ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+            `}>
+                <div className="relative overflow-hidden rounded-3xl border-2 border-black shadow-2xl">
+                    <Image
+                        src="/marketplace-hero.jpeg"
+                        alt="Marketplace Hero"
+                        width={1920}
+                        height={1080}
+                        className={`
+                            w-full h-[500px] max-sm:h-[300px] 
+                            object-cover 
+                            transform transition-transform duration-700
+                            hover:scale-105
+                        `}
+                        priority
+                        onLoadingComplete={() => setIsLoaded(true)}
+                    />
+                    
+                    <div className="
+                        absolute inset-0 
+                        flex flex-col justify-center items-center 
+                        bg-gradient-to-r from-black/50 to-black/30
+                        text-white 
+                        px-6 
+                        backdrop-blur-sm
+                    ">
+                        <h1 className={`
+                            text-5xl max-sm:text-3xl 
+                            font-bold mb-4 
+                            text-center
+                            transform transition-all duration-700 delay-300
+                            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+                            bg-gradient-to-r from-white to-gray-100
+                            text-transparent bg-clip-text
+                            drop-shadow-lg
+                        `}>
+                            Discover, Trade, Connect
+                        </h1>
+                        
+                        <p className={`
+                            text-xl max-sm:text-base 
+                            mb-8 
+                            text-center
+                            transform transition-all duration-700 delay-500
+                            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+                            text-gray-100
+                        `}>
+                            Explore the vibrant markets of Malawi
+                        </p>
+                        
+                        <div className={`
+                            flex gap-6 
+                            transform transition-all duration-700 delay-700
+                            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+                        `}>
+                            <Link
+                                href="/post_request"
+                                className="
+                                    bg-white text-blue-600 
+                                    px-8 py-3 
+                                    rounded-lg
+                                    font-semibold 
+                                    transition-all duration-300
+                                    hover:bg-gray-100 
+                                    hover:shadow-lg
+                                    hover:scale-105
+                                    active:scale-95
+                                    max-sm:px-3
+                                    max-sm:py-2
+                                    max-sm:text-sm
+                                "
+                            >
+                                Post Request
+                            </Link>
+                            
+                            <Link
+                                href="/market_management"
+                                className="
+                                    bg-blue-600 text-white 
+                                    px-8 py-3 
+                                    rounded-lg
+                                    font-semibold 
+                                    transition-all duration-300
+                                    hover:bg-blue-700 
+                                    hover:shadow-lg
+                                    hover:scale-105
+                                    active:scale-95
+                                    max-sm:px-4
+                                    max-sm:py-2
+                                    max-sm:text-sm
+                                "
+                            >
+                                List Market
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
 export default Hero_Section;
