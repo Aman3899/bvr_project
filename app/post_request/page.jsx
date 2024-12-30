@@ -1,83 +1,153 @@
+"use client";
 import React from "react";
 import Link from "next/link";
-import { FaUser, FaBars } from "react-icons/fa";
+import { motion } from "framer-motion";
+import {
+    FaUser,
+    FaBox,
+    FaCheckCircle,
+    FaClock,
+    FaChartLine,
+    FaArrowRight
+} from "react-icons/fa";
 import Navbar from "../components/Navbar";
 
-
-
 const PostRequestPage = () => {
+    const fadeIn = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 }
+    };
+
+    const getStatusConfig = (index) => {
+        const configs = {
+            0: { color: "bg-emerald-500", label: "Active", icon: <FaCheckCircle size={14} /> },
+            1: { color: "bg-gray-500", label: "Completed", icon: <FaBox size={14} /> },
+            2: { color: "bg-red-500", label: "Expired", icon: <FaClock size={14} /> }
+        };
+        return configs[index];
+    };
 
     return (
-        <div className="min-h-screen bg-gray-100 px-48 py-6 max-sm:px-4">
-
-            <Navbar heading="Customer Dashboard" />
-            
-            {/* Post Activity Section */}
-            <section className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">Post Activity</h2>
-
-                {/* Post Cards */}
-                {["Request 1", "Request B", "Request A"].map((request, index) => (
-                    <div
-                        key={index}
-                        className="bg-white shadow rounded-lg p-4 mb-4 flex justify-between items-center"
-                    >
-                        <div>
-                            <h3 className="text-gray-800 font-semibold">{request}</h3>
-                            <p className="text-sm text-gray-500">Bids: 3</p>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                            <button
-                                className={`text-white px-3 py-1 text-sm font-medium rounded-md ${index === 0
-                                        ? "bg-cyan-500"
-                                        : index === 1
-                                            ? "bg-gray-500"
-                                            : "bg-red-500"
-                                    }`}
-                            >
-                                {index === 0 ? "Active" : index === 1 ? "Completed" : "Expired"}
-                            </button>
-                            <button className="bg-cyan-500 text-white px-4 py-1 text-sm font-medium rounded-md">
-                                View
-                            </button>
-                        </div>
-                    </div>
-                ))}
-            </section>
-
-            {/* Subscription Plans Section */}
-            <section className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">Subscription Plans</h2>
-
-                {/* Subscription Options */}
-                <div className="bg-white shadow rounded-lg p-4">
-                    {[
-                        { label: "10 Posts - MWK 500", value: "10" },
-                        { label: "30 Posts - MWK 1000", value: "30" },
-                        { label: "50 Posts - MWK 1500", value: "50" },
-                    ].map((plan, index) => (
-                        <label
-                            key={index}
-                            className="flex items-center gap-3 mb-3 last:mb-0"
-                        >
-                            <input
-                                type="radio"
-                                name="subscription"
-                                value={plan.value}
-                                className="form-radio text-cyan-500"
-                            />
-                            <span className="text-gray-800">{plan.label}</span>
-                        </label>
-                    ))}
+        <>
+        <Navbar heading="Customer Dashboard" />
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-48 py-6 mt-20">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="bg-white rounded-xl shadow-lg p-4 sm:p-6"
+            >
+                <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
+                    <h1 className="text-lg sm:text-2xl font-bold text-gray-900">
+                        Customer Dashboard
+                    </h1>
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium flex items-center gap-2">
+                        <FaUser size={14} />
+                        Premium User
+                    </span>
                 </div>
-            </section>
 
-            {/* Buttons */}
-            <div className="flex flex-col text-center gap-4">
-                <Link href="/" className="bg-red-500 text-white py-2 rounded-md font-medium">Subscribe</Link>
-                <Link href="/submit_request" className="bg-cyan-500 text-white py-2 rounded-md font-medium">Submit Request</Link>
-            </div>
+                {/* Post Activity Section */}
+                <section className="mb-8">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <FaChartLine className="text-cyan-500" />
+                        Post Activity
+                    </h2>
+
+                    {["Request 1", "Request B", "Request A"].map((request, index) => (
+                        <motion.div
+                            key={index}
+                            initial="initial"
+                            animate="animate"
+                            variants={fadeIn}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white shadow-sm border border-gray-100 rounded-xl p-4 mb-4 hover:shadow-md transition-shadow duration-200"
+                        >
+                            <div className="flex flex-wrap justify-between items-center gap-4">
+                                <div className="space-y-1 w-full sm:w-auto">
+                                    <h3 className="text-gray-800 font-semibold flex items-center gap-2">
+                                        {request}
+                                        <span className="text-xs text-gray-500 font-normal">
+                                            ID: #{(1000 + index).toString().padStart(4, "0")}
+                                        </span>
+                                    </h3>
+                                    <p className="text-sm text-gray-500">
+                                        <span className="font-medium">3</span> active bids
+                                    </p>
+                                </div>
+                                <div className="flex gap-3 items-center w-full sm:w-auto">
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-white text-sm flex items-center gap-1 ${getStatusConfig(index).color}`}
+                                    >
+                                        {getStatusConfig(index).icon}
+                                        {getStatusConfig(index).label}
+                                    </span>
+                                    <button className="px-4 py-1 border border-gray-200 rounded-full text-sm hover:bg-gray-50 transition-colors duration-200 flex items-center gap-1">
+                                        View Details
+                                        <FaArrowRight size={12} />
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </section>
+
+                {/* Subscription Plans Section */}
+                <section className="mb-8">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <FaBox className="text-cyan-500" />
+                        Subscription Plans
+                    </h2>
+
+                    <div className="bg-gray-50 rounded-xl p-4 sm:p-6 space-y-4">
+                        {[
+                            { label: "10 Posts - MWK 500", value: "10", desc: "Perfect for beginners" },
+                            { label: "30 Posts - MWK 1000", value: "30", desc: "Most popular" },
+                            { label: "50 Posts - MWK 1500", value: "50", desc: "Best value" }
+                        ].map((plan, index) => (
+                            <label
+                                key={index}
+                                className="flex items-center space-x-3 p-3 bg-white rounded-lg hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                            >
+                                <input
+                                    type="radio"
+                                    name="subscription"
+                                    value={plan.value}
+                                    className="w-4 h-4 text-cyan-500"
+                                />
+                                <div className="flex flex-col">
+                                    <span className="text-gray-800 font-medium">{plan.label}</span>
+                                    <span className="text-sm text-gray-500">{plan.desc}</span>
+                                </div>
+                                {plan.value === "30" && (
+                                    <span className="ml-auto text-xs bg-cyan-100 text-cyan-800 px-2 py-1 rounded-full">
+                                        Popular Choice
+                                    </span>
+                                )}
+                            </label>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Link
+                        href="/submit_request"
+                        className="bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white py-3 px-4 sm:px-6 rounded-xl text-center font-medium shadow-lg shadow-cyan-500/20 transition-all duration-200 hover:shadow-xl"
+                    >
+                        Submit New Request
+                    </Link>
+                    <Link
+                        href="/"
+                        className="bg-gray-50 hover:bg-gray-100 text-gray-700 py-3 px-4 sm:px-6 rounded-xl text-center font-medium transition-colors duration-200"
+                    >
+                        Manage Subscription
+                    </Link>
+                </div>
+            </motion.div>
         </div>
+        </>
     );
 };
 

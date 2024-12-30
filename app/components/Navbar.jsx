@@ -103,9 +103,9 @@ const Navbar = (Props) => {
                             height={45}
                             src={"/favicon.ico"}
                             alt={"Logo"}
-                            className="rounded-full"
+                            className="rounded-full max-sm:w-9 max-sm:h-9"
                         />
-                        <p className="text-3xl">{Props.heading}</p>
+                        <p className="text-3xl max-sm:text-xl">{Props.heading}</p>
                     </Link>
                     <div className="flex justify-evenly items-center max-sm:hidden gap-x-10">
                         <Link href={"/"} className="text-sm max-sm:hidden">

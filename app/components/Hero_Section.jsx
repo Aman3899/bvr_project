@@ -31,7 +31,7 @@ const Hero_Section = () => {
                             Post Request
                         </Link>
                         <Link
-                            href={"/list_market"}
+                            href={"/market_management"}
                             className="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700"
                         >
                             List Market
