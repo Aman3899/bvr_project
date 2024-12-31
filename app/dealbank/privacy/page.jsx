@@ -37,7 +37,7 @@ const PrivacyPolicy = () => {
                         Your Privacy Matters
                     </h1>
                     <p className="text-xl text-gray-600">
-                        We're committed to protecting your personal information and being transparent about our practices.
+                        We&apos;re committed to protecting your personal information and being transparent about our practices.
                     </p>
                 </motion.div>
 
