@@ -2,13 +2,14 @@
 import React from "react";
 import Image from "next/image";
 import Navbar from "@/app/components/Navbar";
+import Footer from "@/app/components/Footer";
 
 const AboutUs = () => {
 
     return (
         <>
             <Navbar heading="DealBank" />
-            <div className=" p-10">
+            <div className="p-10 mt-20">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     {/* Text Section */}
                     <div className="text-gray-800">
@@ -38,6 +39,8 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
+
+            <Footer />
         </>
     );
 };
