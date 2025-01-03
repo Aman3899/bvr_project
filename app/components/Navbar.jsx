@@ -13,6 +13,7 @@ import {
     FaShoppingCart,
     FaUser,
 } from "react-icons/fa";
+import { MdOutlineChat } from "react-icons/md";
 
 const Navbar = (Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -60,14 +61,6 @@ const Navbar = (Props) => {
                             </li>
                             <li>
                                 <Link
-                                    href="/dealbank/contact_us"
-                                    className="block px-4 py-2 hover:bg-gray-700"
-                                >
-                                    <FaPhoneAlt className="inline-block mr-2" /> Contact Us
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
                                     href="/markets"
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
@@ -80,6 +73,22 @@ const Navbar = (Props) => {
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaAd className="inline-block mr-2" /> Advertise
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/chat"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <MdOutlineChat className="inline-block mr-2" /> Chats
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/dealbank/contact_us"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <FaPhoneAlt className="inline-block mr-2" /> Contact Us
                                 </Link>
                             </li>
                         </ul>

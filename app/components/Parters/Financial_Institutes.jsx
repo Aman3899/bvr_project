@@ -50,9 +50,9 @@ const FinancialInstitutes = () => {
     };
 
     return (
-        <div className="bg-gray-50 py-8 px-5 max-sm:py-3 max-sm:px-0">
+        <div className="w-full bg-gray-50 py-8 px-5 max-sm:py-3 max-sm:px-0">
             {/* Financial Institutions Section */}
-            <div className="max-w-6xl mx-auto">
+            <div className="w-full mx-auto">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
                     Financial Institutions
                 </h2>
