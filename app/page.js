@@ -18,6 +18,7 @@ import Navbar from "./components/Navbar";
 import About_Dealbank from "./components/About_Dealbank";
 import HowWeDoIt from "./components/How_We_Do_It";
 import InternshipProgram from "./components/Internship_Program";
+import MarketSlider from './components/All_Markets';
 
 const FuturisticSearch = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -166,8 +167,8 @@ export default function Home() {
         <FuturisticSearch />
       </div>
 
-      <div className="mt-12 px-6 lg:px-20">
-        <Nearby_Markets />
+      <div className="px-6 max-sm:px-0">
+        <MarketSlider />
       </div>
 
       <About_Dealbank />

@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import SearchSection from '../components/AllMarkets/SearchFunc';
 import MarketSlider from '../components/All_Markets';
 
+
 const Page = () => {
   return (
     <div className="font-sans mt-20">
