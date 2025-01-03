@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import { FaSmile, FaUserEdit, FaTrashAlt, FaPaperPlane, FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import Navbar from "@/app/components/Navbar";
+import Particles from "react-tsparticles";
+
 
 const SellerChat = () => {
     const [activeChat, setActiveChat] = useState(null);
