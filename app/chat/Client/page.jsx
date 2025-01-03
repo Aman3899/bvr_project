@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Particles from "react-particles";
+import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 import Navbar from "@/app/components/Navbar";
 import { FaPaperPlane, FaRegClock } from "react-icons/fa";
