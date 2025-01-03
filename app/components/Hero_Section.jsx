@@ -41,18 +41,6 @@ const Hero_Section = () => {
                         px-6 
                         backdrop-blur-sm
                     ">
-                        <h1 className={`
-                            text-5xl max-sm:text-3xl 
-                            font-bold mb-4 
-                            text-center
-                            transform transition-all duration-700 delay-300
-                            ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-                            bg-gradient-to-r from-white to-gray-100
-                            text-transparent bg-clip-text
-                            drop-shadow-lg
-                        `}>
-                            Discover, Trade, Connect
-                        </h1>
                         
                         <p className={`
                             text-xl max-sm:text-base 

@@ -40,13 +40,13 @@ const SearchFilters = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
                 <button className="text-blue-500 font-medium px-4 py-2 border-2 border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out">
-                    Filter 1
+                    Fresh
                 </button>
                 <button className="text-blue-500 font-medium px-4 py-2 border-2 border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out">
-                    Filter 2
+                    Dry
                 </button>
                 <button className="text-blue-500 font-medium px-4 py-2 border-2 border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out">
-                    Filter 3
+                    Packaged
                 </button>
             </motion.div>
         </div>
