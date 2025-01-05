@@ -1,5 +1,6 @@
 import User from "@/models/userModel";
 import nodemailer from "nodemailer";
+import bcryptjs from "bcryptjs";
 
 
 export async function sendMail( {email, emailType, userId} ) {
@@ -19,7 +20,7 @@ export async function sendMail( {email, emailType, userId} ) {
             });
         }
 
-        var transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
             host: "sandbox.smtp.mailtrap.io",
             port: 2525,
             auth: {

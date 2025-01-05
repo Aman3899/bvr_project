@@ -1,32 +1,78 @@
 "use client";
+import React, { useState } from "react";
 import Link from "next/link";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import AlertDialog from "../components/User/AlertDialogssss";
 
 const Page = () => {
     const {
         register,
         watch,
-        formState: { errors },
         handleSubmit,
+        formState: { errors },
     } = useForm();
-
     const router = useRouter();
 
-    // Watch the password and confirmPassword fields
     const password = watch("password");
     const confirmPassword = watch("confirmPassword");
-
-    const getLoginCredentials = async (data) => {
-        console.log("Form Data:", data);
-        console.log("Successfully Signed Up & Logged In!");
-        router.push("/"); // Adjust the route if necessary
-    };
-
     const passwordsDoNotMatch =
         password && confirmPassword && password !== confirmPassword;
+
+    const [alert, setAlert] = useState({
+        open: false,
+        type: "loading",
+        message: "",
+    });
+
+    const closeAlert = () =>
+        setAlert({ open: false, type: "", message: "" });
+
+    const getLoginCredentials = async (data) => {
+        setAlert({
+            open: true,
+            type: "loading",
+            message: "Processing your request...",
+        });
+
+        try {
+            const response = await fetch("/api/users/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setAlert({
+                    open: true,
+                    type: "success",
+                    message: result.message,
+                });
+                setTimeout(() => {
+                    closeAlert();
+                    router.push("/login");
+                }, 2000); // Redirect after success
+            } else {
+                setAlert({
+                    open: true,
+                    type: "error",
+                    message: result.message,
+                });
+            }
+        } catch (error) {
+            setAlert({
+                open: true,
+                type: "error",
+                message:
+                    "An internal server error occurred. Please try again later.",
+            });
+        }
+    };
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 relative overflow-hidden">
@@ -35,104 +81,119 @@ const Page = () => {
             <div className="absolute w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000 top-24 -right-4"></div>
             <div className="absolute w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000 -bottom-8 left-20"></div>
 
-            <div className="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl px-8 py-10 max-w-md w-full m-6 relative transform transition-all duration-300 hover:scale-[1.02]">
-                {/* Card hover effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-
+            <div className="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl px-8 py-10 max-sm:py-6 max-w-md w-full m-6 relative transform transition-all duration-300 hover:scale-[1.02]">
                 <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-center mb-4 transform transition-all">
                     DealBank
                 </h1>
                 <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
                     Sign Up
                 </h2>
-                <p className="text-sm text-gray-500 text-center mb-8">
-                    Please enter your email and password to sign up
-                </p>
-
                 <form
                     onSubmit={handleSubmit(getLoginCredentials)}
                     className="space-y-6"
                 >
+                    {/* Username input */}
                     <div className="relative group">
-                        <div className="absolute left-3 top-2.5 flex items-center justify-center w-6 h-6 pointer-events-none">
-                            <FaEnvelope className="h-5 w-5 text-blue-600 group-hover:text-blue-800 transition-colors duration-200" />
-                        </div>
+                        <FaUser className="absolute left-3 top-3 text-blue-600" />
                         <input
-                            {...register("email", { required: "Email is required" })}
-                            type="email"
-                            placeholder="Email ID"
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white group-hover:border-blue-500"
+                            {...register("username", {
+                                required: "Username is required",
+                            })}
+                            type="text"
+                            placeholder="Username"
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                         />
-                        {errors.email && (
-                            <span className="text-sm text-red-500 mt-1 block animate-fadeIn">{errors.email.message}</span>
+                        {errors.username && (
+                            <span className="text-red-500">
+                                {errors.username.message}
+                            </span>
                         )}
                     </div>
-
+                    {/* Email input */}
                     <div className="relative group">
-                        <div className="absolute left-3 top-2.5 flex items-center justify-center w-6 h-6 pointer-events-none">
-                            <FaLock className="h-5 w-5 text-blue-600 group-hover:text-blue-800 transition-colors duration-200" />
-                        </div>
+                        <FaEnvelope className="absolute left-3 top-3 text-blue-600" />
+                        <input
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address",
+                                },
+                            })}
+                            type="email"
+                            placeholder="Email"
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+                        {errors.email && (
+                            <span className="text-red-500">
+                                {errors.email.message}
+                            </span>
+                        )}
+                    </div>
+                    {/* Password input */}
+                    <div className="relative group">
+                        <FaLock className="absolute left-3 top-3 text-blue-600" />
                         <input
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: {
                                     value: 8,
-                                    message: "Password must be at least 8 characters",
+                                    message:
+                                        "Password must be at least 8 characters long",
                                 },
                             })}
                             type="password"
                             placeholder="Password"
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white group-hover:border-blue-500"
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                         />
                         {errors.password && (
-                            <span className="text-sm text-red-500 mt-1 block animate-fadeIn">{errors.password.message}</span>
+                            <span className="text-red-500">
+                                {errors.password.message}
+                            </span>
                         )}
                     </div>
-
+                    {/* Confirm Password input */}
                     <div className="relative group">
-                        <div className="absolute left-3 top-2.5 flex items-center justify-center w-6 h-6 pointer-events-none">
-                            <FaLock className="h-5 w-5 text-blue-600 group-hover:text-blue-800 transition-colors duration-200" />
-                        </div>
+                        <FaLock className="absolute left-3 top-3 text-blue-600" />
                         <input
                             {...register("confirmPassword", {
                                 required: "Confirm Password is required",
-                                validate: (value) =>
-                                    value === password || "Passwords do not match",
                             })}
                             type="password"
                             placeholder="Confirm Password"
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white group-hover:border-blue-500"
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                         />
+                        {passwordsDoNotMatch && (
+                            <span className="text-red-500">
+                                Passwords do not match
+                            </span>
+                        )}
                         {errors.confirmPassword && (
-                            <span className="text-sm text-red-500 mt-1 block animate-fadeIn">
+                            <span className="text-red-500">
                                 {errors.confirmPassword.message}
                             </span>
                         )}
                     </div>
-
-                    {passwordsDoNotMatch && (
-                        <div className="text-sm text-red-500 animate-fadeIn">
-                            Confirm Password does not match with Password
-                        </div>
-                    )}
-
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] mt-4"
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl"
                     >
                         Register
                     </button>
-                </form>
-
-                <div className="text-center mt-8 relative z-10">
-                    <p className="text-sm text-gray-600">
-                        Already a DealBank member?{" "}
-                        <Link href="/login" className="text-blue-600 hover:text-blue-800 hover:underline font-medium">
-                            Login
+                    <p className="text-center text-sm text-gray-600">
+                        Already have an account?{" "}
+                        <Link
+                            href="/login"
+                            className="text-blue-500 hover:underline"
+                        >
+                            Login here
                         </Link>
                     </p>
-                </div>
+                </form>
             </div>
+
+            {/* Alert Dialog */}
+            <AlertDialog {...alert} onClose={closeAlert} />
         </div>
     );
 };
