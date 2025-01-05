@@ -186,7 +186,7 @@ const Page = () => {
 
                     <div className="text-right">
                         <Link
-                            href="/forgetpassword"
+                            href="/forget-password"
                             className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200 hover:underline font-medium"
                         >
                             Forgot Password?
