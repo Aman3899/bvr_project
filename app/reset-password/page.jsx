@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { Lock, ArrowLeft, Eye, EyeOff, CheckCircle2, AlertCircle, Shield } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 
 
 const ResetPasswordPage = () => {
@@ -137,13 +138,13 @@ const ResetPasswordPage = () => {
                                 <div
                                     key={i}
                                     className={`h-1 flex-1 rounded-full transition-colors duration-300 ${i < passwordStrength
-                                            ? [
-                                                'bg-red-500',
-                                                'bg-orange-500',
-                                                'bg-yellow-500',
-                                                'bg-green-500'
-                                            ][passwordStrength - 1]
-                                            : 'bg-gray-200'
+                                        ? [
+                                            'bg-red-500',
+                                            'bg-orange-500',
+                                            'bg-yellow-500',
+                                            'bg-green-500'
+                                        ][passwordStrength - 1]
+                                        : 'bg-gray-200'
                                         }`}
                                 />
                             ))}
@@ -242,4 +243,7 @@ const ResetPasswordPage = () => {
     );
 };
 
-export default ResetPasswordPage;
+
+export default dynamic(() => Promise.resolve(ResetPasswordPage), {
+    ssr: false,
+});
