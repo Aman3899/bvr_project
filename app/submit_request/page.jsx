@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import {
     FaTrashAlt,
     FaShoppingBasket,
@@ -13,8 +12,12 @@ import {
     FaBox
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/navigation";
+
 
 const SubmitAnCreateShoppingListRequest = () => {
+
+    const router = useRouter();
     const categoriesWithSub = {
         GRAIN: ["Maize", "Oats", "Barley", "Rice", "Quinoa", "Rye", "Wheat", "Millet", "Sorghum"],
         FRUITS: ["Strawberry", "Blueberries", "Raspberries", "Cranberries", "Oranges", "Tangerines", "Limes", "Grapefruits", "Mangoes", "Pineapples", "Papayas", "Kiwi", "Peaches", "Plums", "Quince", "Watermelons", "Cantaloupe", "Honeydew", "Casaba", "Figs", "Pomegranates", "Loquats", "Grapes", "Avocado"],
@@ -75,6 +78,10 @@ const SubmitAnCreateShoppingListRequest = () => {
         hidden: { opacity: 0, x: -20 },
         visible: { opacity: 1, x: 0 }
     };
+
+    const handlePostShoppingList = (data) => {
+        router.push("/");
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-48 py-6 mt-20">
@@ -221,11 +228,9 @@ const SubmitAnCreateShoppingListRequest = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                     >
-                        <Link href="/add_marketplace">
-                            <button className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white py-3 rounded-lg font-medium shadow-lg shadow-cyan-500/20 transition-all duration-200">
-                                Post Shopping List
-                            </button>
-                        </Link>
+                    <button onClick={handlePostShoppingList} className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white py-3 rounded-lg font-medium shadow-lg shadow-cyan-500/20 transition-all duration-200">
+                        Post Shopping List
+                    </button>
                     </motion.div>
                 </div>
             </motion.div>

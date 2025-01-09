@@ -3,14 +3,17 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaBackward, FaCloudUploadAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "../components/Navbar";
+import Navbar from "@/app/components/Navbar";
+import { Badge } from "@/components/ui/badge";
+
 
 const AddProductDetails = () => {
-    const [category, setCategory] = useState("");
     const [productName, setProductName] = useState("");
-    const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
+    const [marketplace, setMarketplace] = useState("");
+    const [category, setCategory] = useState("");
     const [image, setImage] = useState(null);
+    const [price, setPrice] = useState("");
     const router = useRouter();
 
     const handleSubmit = (e) => {
@@ -66,6 +69,19 @@ const AddProductDetails = () => {
         OTHER: ["Mandasi", "Eggs", "Honey", "Cheese", "Milk"],
     };
 
+    const markets = [
+        { name: "Zigwagwa Market", distance: "2 km", image: "/marketplace-image.jpeg" },
+        { name: "Salisbury Market", distance: "3 km", image: "/marketplace-image.jpeg" },
+        { name: "Luwinga Market", distance: "5 km", image: "/marketplace-image.jpeg" },
+        { name: "Mzuzu Market", distance: "7 km", image: "/marketplace-image.jpeg" },
+        { name: "Limbe Market", distance: "4 km", image: "/marketplace-image.jpeg" },
+        { name: "Kamuzu Market", distance: "6 km", image: "/marketplace-image.jpeg" },
+        { name: "Bwaila Market", distance: "8 km", image: "/marketplace-image.jpeg" },
+        { name: "Chichiri Market", distance: "9 km", image: "/marketplace-image.jpeg" },
+        { name: "Mulanje Market", distance: "10 km", image: "/marketplace-image.jpeg" },
+        { name: "Dedza Market", distance: "11 km", image: "/marketplace-image.jpeg" },
+    ];
+
     return (
         <motion.div 
             initial={{ opacity: 0 }}
@@ -81,26 +97,24 @@ const AddProductDetails = () => {
                     animate="visible"
                     className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden"
                 >
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
+                            <div className="flex justify-between items-center">
+                                <motion.button 
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    onClick={() => router.back()} 
+                                    className="p-2 bg-white/20 rounded-full transition-colors text-white"
+                                >
+                                    <FaBackward />
+                                </motion.button>
+                                <h2 className="text-2xl font-bold text-white">Add Product</h2>
+                                <Badge variant="secondary" className="bg-white/20 text-white">
+                                    Insert
+                                </Badge>
+                            </div>
+                        </div>
                     <div className="p-6">
-                        <motion.div 
-                            variants={itemVariants}
-                            className="flex items-center border-b border-gray-200 pb-4 mb-6"
-                        >
-                            <motion.button 
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => router.back()} 
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                            >
-                                <FaBackward className="text-gray-600" />
-                            </motion.button>
-                            <motion.h2 
-                                variants={itemVariants}
-                                className="text-2xl font-bold text-center text-gray-800 flex-1"
-                            >
-                                Add Product Details
-                            </motion.h2>
-                        </motion.div>
+                        
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <motion.div 
@@ -136,6 +150,24 @@ const AddProductDetails = () => {
                                     />
                                 </motion.div>
                             </motion.div>
+
+
+                            <motion.div variants={itemVariants} className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">
+                                        Marketplace
+                                    </label>
+                                    <select
+                                        value={marketplace}
+                                        onChange={(e) => setMarketplace(e.target.value)}
+                                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-gray-50"
+                                    >
+                                        <option value="">Select Marketplace</option>
+                                        {markets.map((market) => (
+                                            <option key={market.name} value={market.name}>{market.name}</option>
+                                        ))}
+                                    </select>
+                                </motion.div>
+
 
                             <motion.div 
                                 variants={formFieldVariants}
@@ -233,7 +265,7 @@ const AddProductDetails = () => {
                                     whileHover="hover"
                                     whileTap="tap"
                                     type="button"
-                                    className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors focus:ring-2 focus:ring-gray-300"
+                                    className="px-6 py-3 max-sm:m-1 max-sm:px-3 max-sm:text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors focus:ring-2 focus:ring-gray-300"
                                 >
                                     + Add Another
                                 </motion.button>
@@ -242,7 +274,7 @@ const AddProductDetails = () => {
                                     whileHover="hover"
                                     whileTap="tap"
                                     type="submit"
-                                    className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors focus:ring-2 focus:ring-blue-300"
+                                    className="px-6 py-3 max-sm:m-1 max-sm:px-3 max-sm:text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors focus:ring-2 focus:ring-blue-300"
                                 >
                                     Submit Product
                                 </motion.button>

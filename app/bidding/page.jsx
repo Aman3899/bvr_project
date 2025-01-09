@@ -45,7 +45,7 @@ const CustomerRequestDetails = () => {
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="min-h-screen bg-gray-50 flex items-center justify-center px-6 py-8 mt-20"
+            className="min-h-screen bg-gray-50 flex items-center justify-center px-3 py-8 mt-16"
         >
             <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl">
                 {/* Header with Back Button */}
@@ -58,7 +58,7 @@ const CustomerRequestDetails = () => {
 
                 {/* Customer Comments */}
                 <motion.div variants={inputVariants} className="mb-6">
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm max-sm:text-xs text-gray-700">
                         Customer Comments: Please ensure all vegetables are fresh and organically certified. Delivery should be made in eco-friendly packaging.
                     </p>
                 </motion.div>
@@ -152,7 +152,7 @@ const CustomerRequestDetails = () => {
 
                 {/* Summary */}
                 <motion.div variants={inputVariants} className="mt-6 text-sm text-gray-700">
-                    <p>Summary: Your proposed price is ${price || 90} with a {margin || "15%"} profit margin. Delivery will be made within {deliveryDuration || "2 days"}. Additional comments: {comments || "All items are fresh."}</p>
+                    <p className="max-sm:text-xs">Summary: Your proposed price is ${price || 90} with a {margin || "15%"} profit margin. Delivery will be made within {deliveryDuration || "2 days"}. Additional comments: {comments || "All items are fresh."}</p>
                 </motion.div>
             </div>
         </motion.div>

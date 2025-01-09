@@ -1,15 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import MarketEssentials from "../components/AddMarketPlace/MarketEssentials";
-import MarketFeatures from "../components/AddMarketPlace/MarketAllFeaturesData";
-import Location_NearbyATMAndAirport from "../components/AddMarketPlace/Location_NearbyATMsAndAirports";
-import MarketMediaAndLocation from "../components/AddMarketPlace/MarketMediaAndLocation";
-import MarketOperatingHoursAndStatus from "../components/AddMarketPlace/MarketOperatingHoursAndStatus";
-import MarketForm from "../components/AddMarketPlace/MarketNameAndDetails";
+import Navbar from "@/app/components/Navbar";
+import MarketEssentials from "@/app/components/AddMarketPlace/MarketEssentials";
+import MarketFeatures from "@/app/components/AddMarketPlace/MarketAllFeaturesData";
+import Location_NearbyATMAndAirport from "@/app/components/AddMarketPlace/Location_NearbyATMsAndAirports";
+import MarketMediaAndLocation from "@/app/components/AddMarketPlace/MarketMediaAndLocation";
+import MarketOperatingHoursAndStatus from "@/app/components/AddMarketPlace/MarketOperatingHoursAndStatus";
+import MarketForm from "@/app/components/AddMarketPlace/MarketNameAndDetails";
 import { motion } from "framer-motion";
 
-const AddMarketPlace = () => {
+const EditMarketPlace = () => {
     
     const [marketName, setMarketName] = useState("");
     const [marketDescription, setMarketDescription] = useState("");
@@ -71,7 +71,7 @@ const AddMarketPlace = () => {
             variants={containerVariants}
             className="p-6 max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg mt-24 max-sm:mt-20"
         >
-            <Navbar heading="Add Market" />
+            <Navbar heading="Edit Market" />
 
             {/* Market Name AND Description */}
             <MarketForm
@@ -152,4 +152,4 @@ const AddMarketPlace = () => {
     );
 };
 
-export default AddMarketPlace;
+export default EditMarketPlace;
