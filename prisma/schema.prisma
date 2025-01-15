@@ -30,3 +30,210 @@ model User {
   @@index([email, username])
   @@map("users")
 }
+
+model Market {
+  id                  Int       @id @default(autoincrement())
+  areaId              Int       @map("area_id")
+  name                String
+  description         String?
+  marketType          String?   @map("market_type")
+  modeOfTransaction   String?   @map("mode_of_transaction")
+  language            String?
+  accessibility       String?
+  specialDayName      String?   @map("special_day_name")
+  operatingHoursStart DateTime? @map("operating_hours_start")
+  operatingHoursEnd   DateTime? @map("operating_hours_end")
+  isOpen              Boolean?  @map("is_open")
+  videoLink           String?   @map("video_link")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  area                 Area                  @relation(fields: [areaId], references: [id])
+  products             Product[]
+  marketFeatures       MarketFeatures?
+  amenities            Amenities?
+  regulatoryCompliance RegulatoryCompliance?
+  sanitationHygiene    SanitationHygiene?
+  marketMedia          MarketMedia[]
+  marketAtms           MarketAtm[]
+  marketAirports       MarketAirport[]
+
+  @@map("markets")
+}
+
+model District {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  cities    City[]
+
+  @@map("districts")
+}
+
+model City {
+  id         Int      @id @default(autoincrement())
+  name       String
+  districtId Int      @map("district_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  district District @relation(fields: [districtId], references: [id])
+  areas    Area[]
+
+  @@map("cities")
+}
+
+model Area {
+  id        Int      @id @default(autoincrement())
+  name      String
+  cityId    Int      @map("city_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  city    City     @relation(fields: [cityId], references: [id])
+  markets Market[]
+
+  @@map("areas")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  itemId      Int      @map("item_id")
+  description String?
+  unit        String
+  price       Decimal
+  marketId    Int      @map("market_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  item   Item   @relation(fields: [itemId], references: [id])
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("products")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  items     Item[]
+
+  @@map("categories")
+}
+
+model Item {
+  id         Int      @id @default(autoincrement())
+  name       String
+  categoryId Int      @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  category Category  @relation(fields: [categoryId], references: [id])
+  products Product[]
+
+  @@map("items")
+}
+
+model MarketFeatures {
+  id                      Int      @id @default(autoincrement())
+  marketId                Int      @unique @map("market_id")
+  electricity             Boolean  @default(false)
+  waterSupply             Boolean  @default(false) @map("water_supply")
+  accessRoads             Boolean  @default(false) @map("access_roads")
+  sewageSystems           Boolean  @default(false) @map("sewage_systems")
+  wasteManagementServices Boolean  @default(false) @map("waste_management_services")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("market_features")
+}
+
+model Amenities {
+  id                   Int      @id @default(autoincrement())
+  marketId             Int      @unique @map("market_id")
+  seatingAreas         Boolean  @default(false) @map("seating_areas")
+  atms                 Boolean  @default(false)
+  mobileMoneyServices  Boolean  @default(false) @map("mobile_money_services")
+  internetConnectivity Boolean  @default(false) @map("internet_connectivity")
+  informationDesk      Boolean  @default(false) @map("information_desk")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("amenities")
+}
+
+model RegulatoryCompliance {
+  id                      Int      @id @default(autoincrement())
+  marketId                Int      @unique @map("market_id")
+  businessLicensing       Boolean  @default(false) @map("business_licensing")
+  environmentalRegulation Boolean  @default(false) @map("environmental_regulation")
+  taxCompliance           Boolean  @default(false) @map("tax_compliance")
+  deliveryServices        Boolean  @default(false) @map("delivery_services")
+  securityArrangements    Boolean  @default(false) @map("security_arrangements")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("regulatory_compliance")
+}
+
+model SanitationHygiene {
+  id                  Int      @id @default(autoincrement())
+  marketId            Int      @unique @map("market_id")
+  ptFlush             Boolean  @default(false) @map("pt_flush")
+  ptPitLatrines       Boolean  @default(false) @map("pt_pit_latrines")
+  showers             Boolean  @default(false)
+  wasteDisposalBins   Boolean  @default(false) @map("waste_disposal_bins")
+  pestControlServices Boolean  @default(false) @map("pest_control_services")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("sanitation_hygiene")
+}
+
+model MarketMedia {
+  id        Int      @id @default(autoincrement())
+  marketId  Int      @map("market_id")
+  mediaType String   @map("media_type")
+  filePath  String   @map("file_path")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("market_media")
+}
+
+model MarketAtm {
+  id        Int      @id @default(autoincrement())
+  marketId  Int      @map("market_id")
+  bankName  String   @map("bank_name")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("market_atms")
+}
+
+model MarketAirport {
+  id          Int      @id @default(autoincrement())
+  marketId    Int      @map("market_id")
+  airportName String   @map("airport_name")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  market Market @relation(fields: [marketId], references: [id])
+
+  @@map("market_airports")
+}
