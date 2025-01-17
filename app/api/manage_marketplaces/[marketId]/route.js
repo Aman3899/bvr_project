@@ -87,41 +87,6 @@ export async function DELETE(request, { params }) {
 
     // Delete market and all related records in a transaction
     await prisma.$transaction(async (tx) => {
-      // Delete all related records first
-      await tx.marketMedia.deleteMany({
-        where: { marketId }
-      });
-
-      await tx.marketAtm.deleteMany({
-        where: { marketId }
-      });
-
-      await tx.marketAirport.deleteMany({
-        where: { marketId }
-      });
-
-      await tx.product.deleteMany({
-        where: { marketId }
-      });
-
-      // Delete one-to-one relations
-      await tx.marketFeatures.delete({
-        where: { marketId }
-      }).catch(() => {}); // Ignore if doesn't exist
-
-      await tx.amenities.delete({
-        where: { marketId }
-      }).catch(() => {}); // Ignore if doesn't exist
-
-      await tx.regulatoryCompliance.delete({
-        where: { marketId }
-      }).catch(() => {}); // Ignore if doesn't exist
-
-      await tx.sanitationHygiene.delete({
-        where: { marketId }
-      }).catch(() => {}); // Ignore if doesn't exist
-
-      // Finally delete the market itself
       await tx.market.delete({
         where: { id: marketId }
       });

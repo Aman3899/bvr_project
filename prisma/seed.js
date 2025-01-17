@@ -283,9 +283,45 @@ const malawiData = [
   }
 ];
 
-// Execute the seed function
+//Execute the seed function
 // seedMalawiData()
 //   .catch((error) => {
 //     console.error('Error executing seed:', error);
 //     process.exit(1);
 //   });
+
+
+const categories = [
+  { name: 'GRAIN' },
+  { name: 'FRUITS' },
+  { name: 'VEGETABLES' },
+  { name: 'LEGUMES' },
+  { name: 'NUTS & SEEDS' },
+  { name: 'HERBS' },
+  { name: 'MEATS' },
+  { name: 'SEA FOOD' },
+  { name: 'OTHER' }
+]
+
+async function addProductCategories() {
+
+  console.log('Start seeding product categories...')
+
+  for (const category of categories) {
+    const createdCategory = await prisma.category.create({
+      data: category
+    })
+    console.log(`Created category: ${createdCategory.name} (ID: ${createdCategory.id})`)
+  }
+
+  console.log('Seeding finished.')
+}
+
+// addProductCategories()
+//   .catch((e) => {
+//     console.error(e)
+//     process.exit(1)
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect()
+//   })

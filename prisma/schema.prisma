@@ -49,8 +49,8 @@ model Market {
   updatedAt           DateTime  @updatedAt @map("updated_at")
 
   // Relations
-  area                 Area                  @relation(fields: [areaId], references: [id])
-  products             Product[]
+  area                 Area                  @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  products             Product[]            
   marketFeatures       MarketFeatures?
   amenities            Amenities?
   regulatoryCompliance RegulatoryCompliance?
@@ -79,7 +79,7 @@ model City {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  district District @relation(fields: [districtId], references: [id])
+  district District @relation(fields: [districtId], references: [id], onDelete: Cascade)
   areas    Area[]
 
   @@map("cities")
@@ -92,7 +92,7 @@ model Area {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  city    City     @relation(fields: [cityId], references: [id])
+  city    City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
   markets Market[]
 
   @@map("areas")
@@ -100,41 +100,44 @@ model Area {
 
 model Product {
   id          Int      @id @default(autoincrement())
-  itemId      Int      @map("item_id")
+  categoryId  Int      @map("category_id")
+  marketId    Int      @map("market_id")
+  name        String
   description String?
   unit        String
   price       Decimal
-  marketId    Int      @map("market_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  item   Item   @relation(fields: [itemId], references: [id])
-  market Market @relation(fields: [marketId], references: [id])
+  // Relations
+  category     Category       @relation(fields: [categoryId], references: [id],onDelete: Cascade)
+  market       Market         @relation(fields: [marketId], references: [id],onDelete: Cascade)
+  productMedia ProductMedia[]
 
   @@map("products")
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  items     Item[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  products  Product[]
 
   @@map("categories")
 }
 
-model Item {
-  id         Int      @id @default(autoincrement())
-  name       String
-  categoryId Int      @map("category_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+model ProductMedia {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  mediaType String   @map("media_type")
+  filePath  String   @map("file_path")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  category Category  @relation(fields: [categoryId], references: [id])
-  products Product[]
+  product Product @relation(fields: [productId], references: [id],onDelete: Cascade)
 
-  @@map("items")
+  @@map("product_media")
 }
 
 model MarketFeatures {
@@ -148,7 +151,7 @@ model MarketFeatures {
   createdAt               DateTime @default(now()) @map("created_at")
   updatedAt               DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("market_features")
 }
@@ -164,7 +167,7 @@ model Amenities {
   createdAt            DateTime @default(now()) @map("created_at")
   updatedAt            DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("amenities")
 }
@@ -180,7 +183,7 @@ model RegulatoryCompliance {
   createdAt               DateTime @default(now()) @map("created_at")
   updatedAt               DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("regulatory_compliance")
 }
@@ -196,7 +199,7 @@ model SanitationHygiene {
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("sanitation_hygiene")
 }
@@ -209,7 +212,7 @@ model MarketMedia {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("market_media")
 }
@@ -221,7 +224,7 @@ model MarketAtm {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("market_atms")
 }
@@ -233,7 +236,7 @@ model MarketAirport {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
-  market Market @relation(fields: [marketId], references: [id])
+  market Market @relation(fields: [marketId], references: [id],onDelete: Cascade)
 
   @@map("market_airports")
 }
