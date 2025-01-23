@@ -1,43 +1,48 @@
-import User from "@/models/userModel";
+import { prisma } from '../lib/prisma.js';
 import nodemailer from "nodemailer";
 import bcryptjs from "bcryptjs";
 
 
-export async function sendMail( {email, emailType, userId} ) {
+export async function sendMail({ email, emailType, userId }) {
     try {
         const hashedToken = await bcryptjs.hash(userId.toString(), 10);
-        
-        if ( emailType === "VERIFY" ) {
-            await User.findByIdAndUpdate(userId, {
-                verifyToken: hashedToken,
-                verifyTokenExpiry: Date.now() + 3600000
+
+        if (emailType === "VERIFY") {
+            await prisma.user.update({
+                where: { id: userId },
+                data: {
+                    verifyToken: hashedToken,
+                    verifyTokenExpiry: new Date(Date.now() + 3600000)
+                }
             });
         }
-        else if ( emailType === "RESET" ) {
-            await User.findByIdAndUpdate(userId, {
-                forgetPasswordToken: hashedToken,
-                forgetPasswordTokenExpiry: Date.now() + 3600000
+        else if (emailType === "RESET") {
+            await prisma.user.update({
+                where: { id: userId },
+                data: {
+                    forgotPasswordToken: hashedToken,
+                    forgotPasswordTokenExpiry: new Date(Date.now() + 3600000)
+                }
             });
         }
 
         const transporter = nodemailer.createTransport({
-            host: "sandbox.smtp.mailtrap.io",
-            port: 2525,
+            service: 'gmail',
             auth: {
-                user: "0b6f9b8cc00261",
-                pass: "8ae9727def51d0"
+                user: 'abdulwahab.dev.codes@gmail.com',
+                pass: process.env.GMAIL_APP_PASSWORD,
             }
         });
 
         const mailOptions = {
-            from: 'm.amanullah0830@gmail.com',
+            from: 'no-reply@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Verify your Email Address" : "Reset your Password",
             html: `<p>Click 
                         <a href="${process.env.DOMAIN}/verify-email?token=${hashedToken}">Here</a> 
                     to ${emailType === "VERIFY" ? "Verify your Email Address" : "Reset your Password"} 
                     <br>
-                    ${process.env.DOMAIN}/veridy-email?token=${hashedToken}
+                    ${process.env.DOMAIN}/verify-email?token=${hashedToken}
                     </p>`,
         };
 

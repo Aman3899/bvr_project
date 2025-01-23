@@ -1,18 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { connectToDB } from "@/lib/dbConfig";
-import User from "@/models/userModel";
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-
-connectToDB();
 
 export async function POST(request) {
     try {
         const reqBody = await request.json();
         const { email, password } = reqBody;
 
-        const user = await User.findOne({email});
+        const user = await prisma.user.findUnique({ where: { email } });
 
         if ( !user ) {
             return NextResponse.json({error: "User not Found!"}, {status: 404});
@@ -20,17 +16,17 @@ export async function POST(request) {
 
         const isPasswordValid = await bcryptjs.compare(password, user.password);
 
+        const isEmailVerified = user.isVerified;
+
         if ( !isPasswordValid ) {
-            return NextResponse.json({error: "Invalid Email or Password!"}, {status: 400});
+            return NextResponse.json({error: "Invalid Password!"}, {status: 400});
         }
 
-        const tokenData = {
-            id: user._id,
-            email: user.email,
-            username: user.username
-        };
+        if ( !isEmailVerified ) {
+            return NextResponse.json({error: "Email is not verified!"}, {status: 400});
+        }
 
-        const token = await jwt.sign(tokenData, process.env.JSON_TOKEN_SECRET, {expiresIn: "1h"})
+        const token = jwt.sign({ userId: user.id, email: email }, process.env.JWT_SECRET, {expiresIn: "1h"});
 
         const response = NextResponse.json({
             message: "Login Successfully!",
@@ -38,7 +34,10 @@ export async function POST(request) {
         }, {status: 200});
 
         response.cookies.set("token", token, {
-            httpOnly: true
+            httpOnly: true,
+            secure: true,
+            maxAge: 60 * 60,
+            path: "/",
         });
 
         return response;

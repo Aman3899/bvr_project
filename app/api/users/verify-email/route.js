@@ -1,9 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { connectToDB } from "@/lib/dbConfig";
-import User from "@/models/userModel";
-
-
-connectToDB();
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 
 export async function POST(request) {
@@ -11,24 +7,31 @@ export async function POST(request) {
         const reqBody = await request.json();
         const { token } = reqBody;
 
-        const user = await User.findOne({
-            verifyToken: token,
-            verifyTokenExpiry: { $gt: Date.now() }
+        const user = await prisma.user.findFirst({
+            where : {
+                verifyToken: token,
+                verifyTokenExpiry: {
+                    gt: new Date(),
+                }
+            }
         });
 
         if ( !user ) {
             return NextResponse.json({error: "Invalid or Expired Token"}, {status: 400});
         }
 
-        user.isVerified = true;
-        user.verifyToken = undefined;
-        user.verifyTokenExpiry = undefined;
-
-        await user.save();
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                isVerified: true,
+                verifyToken: null,
+                verifyTokenExpiry: null,
+            },
+        });
 
         return NextResponse.json({message: "Email Verified Successfully"}, {status: 200});
     }
     catch (error) {
-        return NextRequest.json({error: error.message}, {status: 500});
+        return NextResponse.json({error: error.message}, {status: 500});
     }
 }
