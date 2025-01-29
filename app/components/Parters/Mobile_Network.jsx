@@ -83,7 +83,7 @@ export const MobileNetworksSlideshow = () => {
     ];
 
     return (
-        <section className="py-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <section className="pt-5 lg:pt-10 px-4 bg-gradient-to-b from-gray-50 to-white">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
