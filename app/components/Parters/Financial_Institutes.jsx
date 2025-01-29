@@ -1,90 +1,107 @@
-"use client"; // Ensure this directive is at the top for client-side rendering
+"use client";
 
 import React from "react";
 import Image from "next/image";
-import Slider from "react-slick"; // Import Slick Slider
-import "slick-carousel/slick/slick.css"; // Import Slick CSS
-import "slick-carousel/slick/slick-theme.css"; // Import Slick Theme CSS
-import { motion } from "framer-motion"; // For animations
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { motion } from "framer-motion";
 
-const FinancialInstitutes = () => {
-    const financialInstitutions = [
-        { name: "Chase", logo: "/marketplace-hero.jpeg", alt: "Chase Logo" },
-        { name: "HSBC", logo: "/marketplace-hero.jpeg", alt: "HSBC Logo" },
-        { name: "ABC", logo: "/marketplace-hero.jpeg", alt: "ABC Logo" },
-        { name: "DEF", logo: "/marketplace-hero.jpeg", alt: "DEF Logo" },
-        { name: "GHI", logo: "/marketplace-hero.jpeg", alt: "GHI Logo" },
-        { name: "JHL", logo: "/marketplace-hero.jpeg", alt: "JHL Logo" },
-        { name: "SJD", logo: "/marketplace-hero.jpeg", alt: "SJD Logo" },
-    ];
+// Shared slider settings
+const createSliderSettings = (customSpeed = 3000) => ({
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: customSpeed,
+    pauseOnHover: true,
+    arrows: true,
+    responsive: [
+        {
+            breakpoint: 640,
+            settings: {
+                slidesToShow: 1,
+                dots: true,
+                arrows: false, // Hide arrows on mobile
+            },
+        },
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 2,
+                dots: true,
+            },
+        },
+        {
+            breakpoint: 1536,
+            settings: {
+                slidesToShow: 3,
+            },
+        },
+    ],
+});
 
-    // Settings for the Slick Slider
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        responsive: [
-            {
-                breakpoint: 640, // For mobile devices
-                settings: {
-                    slidesToShow: 1, // Show 1 slide on mobile
-                },
-            },
-            {
-                breakpoint: 1024, // For tablets
-                settings: {
-                    slidesToShow: 2, // Show 2 slides on tablets
-                },
-            },
-            {
-                breakpoint: 1280, // For desktops
-                settings: {
-                    slidesToShow: 3, // Show 3 slides on larger screens
-                },
-            },
-        ],
-    };
-
-    return (
-        <div className="w-full bg-gray-50 py-8 px-5 max-sm:py-3 max-sm:px-0">
-            {/* Financial Institutions Section */}
-            <div className="w-full mx-auto">
-                <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-                    Financial Institutions
-                </h2>
-                <Slider {...settings} className="w-full">
-                    {financialInstitutions.map((institution, index) => (
-                        <motion.div
-                            key={index}
-                            className="p-4"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center space-y-4 border border-gray-200">
-                                <Image
-                                    width={1920}
-                                    height={1080}
-                                    src={institution.logo}
-                                    alt={institution.alt}
-                                    className="object-contain rounded-md"
-                                />
-                                <p className="text-lg font-medium text-gray-700 text-center">
-                                    {institution.name}
-                                </p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </Slider>
+// Shared card component
+const SliderCard = ({ name, logo, alt }) => (
+    <motion.div
+        className="px-2 py-4 h-full"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.98 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+    >
+        <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 h-full overflow-hidden border border-gray-100">
+            <div className="relative p-6 flex flex-col h-full">
+                <div className="relative w-full h-48 sm:h-64 mb-4 bg-gray-50 rounded-lg overflow-hidden">
+                    <Image
+                        src={logo}
+                        alt={alt}
+                        fill
+                        className="object-contain p-4 transform hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mt-auto">
+                    {name}
+                </h3>
             </div>
         </div>
+    </motion.div>
+);
+
+
+// Enhanced FinancialInstitutes component
+export const FinancialInstitutes = () => {
+    const financialInstitutions = [
+      { name: "National Bank of Malawi", logo: "/logos/nbm.jpg", alt: "National Bank of Malawi Logo" },
+      { name: "Standard Bank Malawi", logo: "/logos/standard_bank.jpg", alt: "Standard Bank Malawi Logo" },
+      { name: "FDH Bank", logo: "/logos/fdh_bank.jpg", alt: "FDH Bank Logo" },
+      { name: "Ecobank Malawi", logo: "/logos/ecobank.jpg", alt: "Ecobank Malawi Logo" },
+      { name: "First Capital Bank", logo: "/logos/first_capital_bank.jpg", alt: "First Capital Bank Logo" },
+      { name: "MyBucks Banking Corporation", logo: "/logos/mybucks.jpg", alt: "MyBucks Banking Corporation Logo" },
+      { name: "Opportunity International Bank", logo: "/logos/opportunity_bank.jpg", alt: "Opportunity International Bank Logo" },
+    ];
+  
+    return (
+      <section className="py-12 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+              Financial Institutions
+            </h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+          </div>
+          <Slider {...createSliderSettings(3000)} className="financial-slider">
+            {financialInstitutions.map((institution, index) => (
+              <SliderCard key={index} {...institution} />
+            ))}
+          </Slider>
+        </div>
+      </section>
     );
-};
+  };
 
 export default FinancialInstitutes;
