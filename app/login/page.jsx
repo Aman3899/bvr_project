@@ -110,7 +110,7 @@ const Page = () => {
             setAlertMessage(result.message || "Successfully Logged In!");
             setShowSuccess(true);
             setTimeout(() => {
-                router.push("/"); // Redirect to the homepage after a brief delay
+                router.push("/");
             }, 1500);
         } catch (error) {
             setIsProcessing(false);
