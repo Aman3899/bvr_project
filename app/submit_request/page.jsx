@@ -1,58 +1,90 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useForm } from "react-hook-form";
 import {
-    FaTrashAlt,
-    FaShoppingBasket,
-    FaCalendarAlt,
-    FaClock,
-    FaComments,
-    FaPlus,
-    FaWallet,
-    FaBox
-} from "react-icons/fa";
-import Navbar from "../components/Navbar";
+    Trash2,
+    ShoppingBasket,
+    CalendarClock,
+    Clock,
+    MessageSquare,
+    Plus,
+    Wallet,
+    Package,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-
+import Navbar from "../components/Navbar";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const SubmitAnCreateShoppingListRequest = () => {
 
     const router = useRouter();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm({
+        defaultValues: {
+            budget: "",
+            deliveryDate: "",
+            deliveryTime: "",
+            comments: "",
+        }
+    });
+
+    const [currentDate, setCurrentDate] = useState("");
+
+    useEffect(() => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Adjust month (0-based)
+        const day = String(today.getDate()).padStart(2, '0');
+        setCurrentDate(`${year}-${month}-${day}`); // Set the current date in YYYY-MM-DD format
+    }, []);
+
     const categoriesWithSub = {
         GRAIN: ["Maize", "Oats", "Barley", "Rice", "Quinoa", "Rye", "Wheat", "Millet", "Sorghum"],
-        FRUITS: ["Strawberry", "Blueberries", "Raspberries", "Cranberries", "Oranges", "Tangerines", "Limes", "Grapefruits", "Mangoes", "Pineapples", "Papayas", "Kiwi", "Peaches", "Plums", "Quince", "Watermelons", "Cantaloupe", "Honeydew", "Casaba", "Figs", "Pomegranates", "Loquats", "Grapes", "Avocado"],
-        VEGETABLES: ["Lettuce", "Spinach", "Kale", "Aragula", "Chinese", "Rape", "Broccoli", "Cauliflower", "Cabbage", "Carrots", "Beets", "Turnips", "Onions", "Garlic", "Shallots", "Leeks", "Oyster mushrooms", "Button mushrooms", "Zucchini", "Pumpkins", "Tomatoes", "Peppers", "Cucumber", "Okra", "Eggplant"],
+        FRUITS: ["Strawberry", "Blueberries", "Raspberries", "Cranberries", "Oranges", "Tangerines"],
+        VEGETABLES: ["Lettuce", "Spinach", "Kale", "Aragula", "Chinese", "Rape", "Broccoli"],
         LEGUMES: ["Kidney beans", "Black beans", "Pinto beans", "Lentils", "Cowpeas"],
-        "NUTS & SEEDS": ["Walnut", "Almond", "Pecans", "Hazel nuts", "Pistachio", "Sunflower seeds", "Pumpkin seeds", "Chia seeds", "Hemp seeds"],
-        HERBS: ["Rosemary", "Thyme", "Parsley", "Cilantro", "Lavender", "Chamomile", "Ginger", "Dandelion", "Turmeric"],
-        MEATS: ["Beef", "Pork", "Lamb", "Turkey", "Ham", "Duck", "Bacon", "Mbewa"],
-        "SEA FOOD": ["Fish", "Salmon", "Tuna", "Tilapia", "Chambo", "Mcheni", "Bonya", "Usipa", "Oyster", "Catfish"],
-        OTHER: ["Mandasi", "Eggs", "Honey", "Cheese", "Milk", "Yogurt", "Mozzarella", "Jam", "Scones", "Bwemba", "Malambe"],
+        "NUTS & SEEDS": ["Walnut", "Almond", "Pecans", "Hazel nuts", "Pistachio"],
+        HERBS: ["Rosemary", "Thyme", "Parsley", "Cilantro", "Lavender"],
+        MEATS: ["Beef", "Pork", "Lamb", "Turkey", "Ham", "Duck"],
+        "SEA FOOD": ["Fish", "Salmon", "Tuna", "Tilapia", "Chambo"],
+        OTHER: ["Mandasi", "Eggs", "Honey", "Cheese", "Milk", "Yogurt"],
     };
 
     const [selectedCategory, setSelectedCategory] = useState("GRAIN");
     const [subCategories, setSubCategories] = useState(categoriesWithSub[selectedCategory]);
     const [selectedProducts, setSelectedProducts] = useState([]);
 
-    const handleCategoryChange = (e) => {
-        const category = e.target.value;
-        setSelectedCategory(category);
-        setSubCategories(categoriesWithSub[category]);
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value);
+        setSubCategories(categoriesWithSub[value]);
     };
 
     const handleAddProduct = (productName) => {
         setSelectedProducts((prevProducts) => {
-            // Check if the product is already in the list
             const existingProduct = prevProducts.find((item) => item.name === productName);
             if (existingProduct) {
-                // If the product exists, increment the quantity
                 return prevProducts.map((item) =>
                     item.name === productName ? { ...item, quantity: item.quantity + 1 } : item
                 );
-            } else {
-                // If it's a new product, add it to the list with quantity 1
-                return [...prevProducts, { name: productName, quantity: 1 }];
             }
+            return [...prevProducts, { name: productName, quantity: 1 }];
         });
     };
 
@@ -62,15 +94,21 @@ const SubmitAnCreateShoppingListRequest = () => {
         );
     };
 
+    const onSubmit = (data) => {
+        if (selectedProducts.length === 0) {
+            alert("Please select at least one product");
+            return;
+        }
+        console.log({ ...data, selectedProducts });
+        router.push("/");
+    };
+
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: {
-                duration: 0.5,
-                staggerChildren: 0.1
-            }
+            transition: { duration: 0.5, staggerChildren: 0.1 }
         }
     };
 
@@ -79,160 +117,194 @@ const SubmitAnCreateShoppingListRequest = () => {
         visible: { opacity: 1, x: 0 }
     };
 
-    const handlePostShoppingList = (data) => {
-        router.push("/");
-    }
-
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-48 py-6 mt-20">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+            <Navbar heading="Create Shopping List" />
+
             <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
-                className="max-w-4xl mx-auto"
+                className="container mx-auto px-4 max-sm:px-0 py-8 mt-16"
             >
-                <Navbar heading="Create Shopping List" />
-
-                {/* Main Form Container */}
-                <div className="bg-white rounded-xl shadow-lg p-6 mt-6">
-                    {/* Category Selection */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                            <FaBox className="text-cyan-500" />
-                            Category
-                        </label>
-                        <select
-                            value={selectedCategory}
-                            onChange={handleCategoryChange}
-                            className="w-full border border-gray-200 rounded-lg p-3 bg-white text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                        >
-                            {Object.keys(categoriesWithSub).map((category, index) => (
-                                <option key={index} value={category}>{category}</option>
-                            ))}
-                        </select>
-                    </motion.div>
-
-                    {/* Sub-Category Selection */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                            <FaShoppingBasket className="text-cyan-500" />
-                            Sub-category
-                        </label>
-                        <select className="w-full border border-gray-200 rounded-lg p-3 bg-white text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200">
-                            {subCategories.map((subCategory, index) => (
-                                <option key={index} value={subCategory}>{subCategory}</option>
-                            ))}
-                        </select>
-                    </motion.div>
-
-                    {/* Products List */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        {subCategories.map((product) => (
-                            <motion.div
-                                key={product}
-                                whileHover={{ scale: 1.02 }}
-                                className="flex justify-between items-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg mb-2 transition-colors duration-200"
-                            >
-                                <span className="text-gray-800 font-medium flex items-center">
-                                    <FaPlus className="text-cyan-500 mr-2" /> {product}
-                                </span>
-                                <button
-                                    onClick={() => handleAddProduct(product)}
-                                    className="bg-cyan-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-cyan-600 transition-colors duration-200"
-                                >
-                                    Add
-                                </button>
+                <Card className="w-5/6 mx-auto backdrop-blur-sm bg-white/90">
+                    <CardContent className="p-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                            {/* Category Selection */}
+                            <motion.div variants={itemVariants} className="space-y-2">
+                                <Label className="flex items-center gap-2">
+                                    <Package className="h-4 w-4 text-purple-500" />
+                                    Category
+                                </Label>
+                                <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {Object.keys(categoriesWithSub).map((category) => (
+                                            <SelectItem key={category} value={category}>
+                                                {category}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </motion.div>
-                        ))}
-                    </motion.div>
 
-                    {/* Selected Products */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Selected Products</h2>
-                        <AnimatePresence>
-                            {selectedProducts.map((product) => (
-                                <motion.div
-                                    key={product.name}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: 20 }}
-                                    className="flex items-center bg-white border border-gray-100 p-4 rounded-lg mb-2 hover:shadow-md transition-all duration-200"
-                                >
-                                    <button
-                                        onClick={() => handleRemoveProduct(product.name)}
-                                        className="p-2 hover:bg-red-50 rounded-lg group transition-colors duration-200"
+                            {/* Products Grid */}
+                            <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                {subCategories.map((product) => (
+                                    <motion.div
+                                        key={product}
+                                        whileHover={{ scale: 1.02 }}
+                                        className="group relative"
                                     >
-                                        <FaTrashAlt className="text-gray-400 group-hover:text-red-500 transition-colors duration-200" />
-                                    </button>
-                                    <div className="ml-4 flex-1">
-                                        <p className="text-gray-800 font-medium">{product.name}</p>
-                                        <p className="text-sm text-gray-500">Quantity: {product.quantity}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </motion.div>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            onClick={() => handleAddProduct(product)}
+                                            className="w-full justify-between hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200"
+                                        >
+                                            {product}
+                                            <Plus className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        </Button>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
 
-                    {/* Budget Input */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                            <FaWallet className="text-cyan-500" />
-                            Budget
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Enter your budget"
-                            className="w-full border border-gray-200 rounded-lg p-3 text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                        />
-                    </motion.div>
+                            {/* Selected Products */}
+                            <motion.div variants={itemVariants} className="space-y-3">
+                                <Label className="flex items-center gap-2">
+                                    <ShoppingBasket className="h-4 w-4 text-purple-500" />
+                                    Selected Products
+                                </Label>
+                                <div className="space-y-2">
+                                    <AnimatePresence>
+                                        {selectedProducts.map((product) => (
+                                            <motion.div
+                                                key={product.name}
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: "auto" }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                className="flex items-center justify-between bg-purple-50 rounded-lg p-3"
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <Badge variant="secondary">
+                                                        {product.quantity}
+                                                    </Badge>
+                                                    <span>{product.name}</span>
+                                                </div>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => handleRemoveProduct(product.name)}
+                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </motion.div>
+                                        ))}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
 
-                    {/* Delivery Date and Time */}
-                    <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                        <div>
-                            <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                                <FaCalendarAlt className="text-cyan-500" />
-                                Delivery Date
-                            </label>
-                            <input
-                                type="date"
-                                className="w-full border border-gray-200 rounded-lg p-3 text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                            />
-                        </div>
-                        <div>
-                            <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                                <FaClock className="text-cyan-500" />
-                                Delivery Time
-                            </label>
-                            <input
-                                type="time"
-                                className="w-full border border-gray-200 rounded-lg p-3 text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200"
-                            />
-                        </div>
-                    </motion.div>
+                            {/* Budget */}
+                            <motion.div variants={itemVariants} className="space-y-2">
+                                <Label className="flex items-center gap-2">
+                                    <Wallet className="h-4 w-4 text-purple-500" />
+                                    Budget
+                                </Label>
+                                <Input
+                                    {...register("budget", { required: "Budget is required" })}
+                                    placeholder="Enter your budget"
+                                    className={errors.budget ? "border-red-500" : ""}
+                                />
+                                {errors.budget && (
+                                    <p className="text-sm text-red-500">{errors.budget.message}</p>
+                                )}
+                            </motion.div>
 
-                    {/* Comments */}
-                    <motion.div variants={itemVariants} className="mb-6">
-                        <label className="flex items-center gap-2 text-gray-800 font-medium mb-2">
-                            <FaComments className="text-cyan-500" />
-                            Comments
-                        </label>
-                        <textarea
-                            placeholder="Add any additional comments or special instructions..."
-                            className="w-full border border-gray-200 rounded-lg p-3 text-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 min-h-[100px]"
-                        />
-                    </motion.div>
+                            {/* Delivery Details */}
+                            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="flex items-center gap-2">
+                                        <Clock className="h-4 w-4 text-purple-500" />
+                                        Delivery Time
+                                    </Label>
 
-                    {/* Submit Button */}
-                    <motion.div
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                    <button onClick={handlePostShoppingList} className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white py-3 rounded-lg font-medium shadow-lg shadow-cyan-500/20 transition-all duration-200">
-                        Post Shopping List
-                    </button>
-                    </motion.div>
-                </div>
+                                    <Input
+                                        type="date"
+                                        {...register("deliveryDate", {
+                                            required: "Delivery date is required",
+                                            min: {
+                                                value: currentDate,
+                                                message: "Delivery date cannot be in the past",
+                                            },
+                                            max: {
+                                                value: new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString().split('T')[0],
+                                                message: "Delivery date cannot be more than 2 months in the future",
+                                            },
+                                        })}
+                                        className={errors.deliveryDate ? "border-red-500" : ""}
+                                    />
+                                    {errors.deliveryDate && (
+                                        <p className="text-sm text-red-500">{errors.deliveryDate.message}</p>
+                                    )}
+
+                                </div>
+
+                                <div className="space-y-2">
+                                    <Label className="flex items-center gap-2">
+                                        <Clock className="h-4 w-4 text-purple-500" />
+                                        Delivery Time
+                                    </Label>
+
+                                    <Input
+                                        type="time"
+                                        {...register("deliveryTime", {
+                                            required: "Delivery time is required",
+                                            validate: value => value !== "00:00" || "Time cannot be midnight",
+                                        })}
+                                        className={errors.deliveryTime ? "border-red-500" : ""}
+                                    />
+                                    {errors.deliveryTime && (
+                                        <p className="text-sm text-red-500">{errors.deliveryTime.message}</p>
+                                    )}
+
+                                </div>
+
+                            </motion.div>
+
+
+                            {/* Comments */}
+                            <motion.div variants={itemVariants} className="space-y-2">
+                                <Label className="flex items-center gap-2">
+                                    <MessageSquare className="h-4 w-4 text-purple-500" />
+                                    Comments
+                                </Label>
+                                <Textarea
+                                    {...register("comments")}
+                                    placeholder="Add any additional comments or special instructions..."
+                                    className="min-h-[100px]"
+                                />
+                            </motion.div>
+
+                            {/* Submit Button */}
+                            <motion.div
+                                variants={itemVariants}
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.99 }}
+                            >
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white"
+                                >
+                                    Post Shopping List
+                                </Button>
+                            </motion.div>
+                        </form>
+                    </CardContent>
+                </Card>
             </motion.div>
         </div>
     );

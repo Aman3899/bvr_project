@@ -3,24 +3,48 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, ChevronDown } from 'lucide-react';
 
-const SearchSection = () => {
+const SearchSection = ({Location_And_Search_Data}) => {
+
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [isLocationOpen, setIsLocationOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const dataToPass = { city: selectedDistrict, area: selectedCity, search: searchQuery };
+
+    const handleChange = (e) => {
+        setSearchQuery(e.target.value);
+    }
 
     const districts = [
         'Blantyre', 'Lilongwe', 'Mzimba', 'Zomba', 'Mangochi', 'Mulanje', 'Salima',
     ];
 
     const cities = {
-        Blantyre: ['Limbe', 'Chilomoni', 'Soche'],
-        Lilongwe: ['Area 25', 'Area 18', 'Kawale'],
-        Mzimba: ['Mzimba Boma', 'Euthini', 'Enukweni'],
-        Zomba: ['Zomba City', 'Thondwe', 'Chancellor College Area'],
-        Mangochi: ['Mangochi Town', 'Monkey Bay', 'Malindi'],
-        Mulanje: ['Mulanje Boma', 'Lujeri', 'Phalombe'],
-        Salima: ['Salima Boma', 'Senga Bay', 'Nkhotakota'],
+        "Blantyre": ["Limbe", "Chilomoni", "Soche"],
+        "Lilongwe": ["Area 25", "Area 18", "Kawale"],
+        "Mzimba": ["Mzimba Boma", "Euthini", "Enukweni"],
+        "Zomba": ["Zomba City", "Thondwe", "Chancellor College Area"],
+        "Mangochi": ["Mangochi Town", "Monkey Bay", "Malindi"],
+        "Mulanje": ["Mulanje Boma", "Lujeri", "Phalombe"],
+        "Salima": ["Salima Boma", "Senga Bay", "Nkhotakota"],
+        "Machinga": ["Machinga Boma", "Liwonde", "Mbenjere"],
+        "Nsanje": ["Nsanje Boma", "Mkomanize", "Chikwawa"],
+        "Chitipa": ["Chitipa Boma", "Ituzi", "Katoto"],
+        "Kasungu": ["Kasungu Boma", "Chankhungu", "Kanyenda"],
+        "Karonga": ["Karonga Town", "Chitipa", "Nkhotakota"],
+        "Dowa": ["Dowa Boma", "Nkhamenya", "Chibavi"],
+        "Ntcheu": ["Ntcheu Boma", "Chintheche", "Mwimba"],
+        "Phalombe": ["Phalombe Boma", "Chonde", "Mambo"],
+        "Balaka": ["Balaka Boma", "Chikowa", "Mpondasi"],
+        "Rumphi": ["Rumphi Boma", "Chiwengo", "Mlowe"],
+        "Likoma": ["Likoma Island", "Lakeside", "Chizumulu"]
     };
+
+    const handleSubmit = () => {
+        console.log(selectedDistrict, selectedCity, searchQuery);
+        Location_And_Search_Data(dataToPass);
+    }
 
     return (
         <div className="w-full px-4 py-8 md:py-16">
@@ -107,6 +131,8 @@ const SearchSection = () => {
                             <div className="relative">
                                 <input
                                     type="text"
+                                    value={searchQuery}
+                                    onChange={handleChange}
                                     placeholder="Search for products..."
                                     className="w-full bg-gray-50 hover:bg-gray-100 focus:bg-white rounded-xl pl-12 pr-4 py-4 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
@@ -119,6 +145,7 @@ const SearchSection = () => {
                             className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-8 py-4 font-medium shadow-lg"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
+                            onClick={handleSubmit}
                         >
                             Search
                         </motion.button>
