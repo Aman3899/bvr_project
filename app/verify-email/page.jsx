@@ -4,9 +4,13 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { Mail, RefreshCw, CheckCircle2, Timer, AlertCircle, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
 
 const VerifyEmailPage = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const token = searchParams.get("token");
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [status, setStatus] = useState(null);
@@ -26,21 +30,47 @@ const VerifyEmailPage = () => {
         }
     }, [canResend, timeLeft]);
 
-    const handleResend = () => {
+    const handleResend = async () => {
         setIsProcessing(true);
         setCanResend(false);
         setTimeLeft(60);
 
-        // Simulate API call
+        // Simulate API call for resend email (you may adjust this for actual resend functionality)
         setTimeout(() => {
             setIsProcessing(false);
             setStatus("success");
         }, 1500);
     };
 
+    // Function to handle verification via the backend
+    const handleVerifyEmail = async () => {
+        try {
+            setIsProcessing(true);
+
+            const response = await fetch("/api/users/verify-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ token: token }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setStatus("success");
+            } else {
+                setStatus(data.error || "An error occurred");
+            }
+        } catch (error) {
+            setStatus("Error: " + error.message);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 p-4">
-            {/* Animated background elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute w-96 h-96 bg-blue-400/50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
                 <div className="absolute w-96 h-96 bg-indigo-400/50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
@@ -49,9 +79,7 @@ const VerifyEmailPage = () => {
 
             <Card className="w-full max-w-md bg-white/90 backdrop-blur-lg p-8 rounded-2xl shadow-2xl">
                 <div className="space-y-6">
-                    {/* Header with animated icon */}
                     <div className="text-center space-y-4">
-                        {/* Back button */}
                         <button
                             onClick={() => router.back()}
                             className="absolute top-4 left-4 text-gray-600 hover:text-gray-900 transition-colors group"
@@ -70,7 +98,6 @@ const VerifyEmailPage = () => {
                         </p>
                     </div>
 
-                    {/* Email verification tips */}
                     <div className="bg-blue-50 p-4 rounded-xl space-y-3">
                         <h3 className="text-sm font-medium text-blue-800 flex items-center gap-2">
                             <AlertCircle className="w-4 h-4" />
@@ -88,10 +115,9 @@ const VerifyEmailPage = () => {
                         </ul>
                     </div>
 
-                    {/* Resend button */}
                     <button
-                        onClick={handleResend}
-                        disabled={isProcessing || !canResend}
+                        onClick={handleVerifyEmail}
+                        disabled={isProcessing}
                         className={`w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium
                             transform hover:scale-[1.02] active:scale-[0.98] transition-all
                             disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
@@ -101,29 +127,32 @@ const VerifyEmailPage = () => {
                             {isProcessing ? (
                                 <>
                                     <RefreshCw className="w-5 h-5 animate-spin" />
-                                    Sending...
-                                </>
-                            ) : !canResend ? (
-                                <>
-                                    <Timer className="w-5 h-5" />
-                                    Resend in {timeLeft}s
+                                    Verifying...
                                 </>
                             ) : (
-                                <>
-                                    <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
-                                    Resend Verification Email
-                                </>
+                                <CheckCircle2 className="w-5 h-5" />
                             )}
+                            Verify Email
                         </span>
                     </button>
 
-                    {/* Status messages */}
-                    {status === "success" && (
-                        <Alert className="bg-green-50 border-green-200">
-                            <CheckCircle2 className="w-4 h-4 text-green-600" />
-                            <AlertDescription className="text-green-800">
-                                Verification email has been resent successfully!
-                            </AlertDescription>
+                    {status && (
+                        <Alert className={`bg-${status === "success" ? "green" : "red"}-50 border-${status === "success" ? "green" : "red"}-200`}>
+                            {status === "success" ? (
+                                <>
+                                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    <AlertDescription className="text-green-800">
+                                        Email verified successfully!
+                                    </AlertDescription>
+                                </>
+                            ) : (
+                                <>
+                                    <AlertCircle className="w-4 h-4 text-red-600" />
+                                    <AlertDescription className="text-red-800">
+                                        {status}
+                                    </AlertDescription>
+                                </>
+                            )}
                         </Alert>
                     )}
                 </div>
