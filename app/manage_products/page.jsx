@@ -7,16 +7,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
-const ProductCard = ({ image, name, price, onDelete }) => (
+const ProductCard = ({ image, name, category, marketPlace, onDelete }) => (
     <motion.div
         layout
-        className="flex flex-col sm:flex-row items-center p-4 bg-white shadow-md rounded-lg hover:shadow-xl transition-all duration-300 ease-in-out gap-4"
+        className="flex flex-col sm:flex-row items-center p-4 bg-white shadow-lg rounded-xl hover:shadow-2xl transition-all duration-300 ease-in-out gap-4 transform hover:scale-105"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.05 }}
     >
-        <div className="relative w-full sm:w-24 h-48 sm:h-24">
+        <div className="relative w-full sm:w-28 h-56 sm:h-28 rounded-lg overflow-hidden">
             <Image
                 fill
                 src={image}
@@ -26,31 +26,42 @@ const ProductCard = ({ image, name, price, onDelete }) => (
             />
         </div>
         <div className="flex-1 text-center sm:text-left">
-            <h3 className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition duration-300">
+            <h3 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition duration-300">
                 {name}
             </h3>
-            <p className="text-gray-500 font-medium">{price}</p>
+            <p className="text-gray-500 font-medium">{category}</p>
+            <p className="text-sm text-gray-600 mt-1">{marketPlace}</p>
         </div>
-        <div className="flex gap-2 w-full sm:w-auto justify-center sm:justify-end">
+        <div className="flex gap-3 w-full sm:w-auto justify-center sm:justify-end">
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 flex items-center gap-2"
+                className="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 flex items-center gap-2"
                 onClick={() => onDelete(name)}
             >
                 <FaTrash />
                 <span className="sm:hidden md:inline">Delete</span>
             </motion.button>
-            <Link href="/manage_products/edit_product">
+            <Link
+                href={{
+                    pathname: '/manage_products/edit_product',
+                    query: {
+                        name: name,
+                        category: category,
+                        marketPlace: marketPlace,
+                    },
+                }}
+            >
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 flex items-center gap-2"
+                    className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 flex items-center gap-2"
                 >
                     <FaEdit />
                     <span className="sm:hidden md:inline">Edit</span>
                 </motion.button>
             </Link>
+
         </div>
     </motion.div>
 );
@@ -61,19 +72,22 @@ const ManageProducts = () => {
             id: 1,
             image: "/marketplace-image.jpeg",
             name: "Fresh Organic Apples",
-            price: "$1.99/lb",
+            category: "Fruits",
+            marketPlace: "Zigwagwa Market",
         },
         {
             id: 2,
             image: "/marketplace-hero.jpeg",
-            name: "Premium Bananas",
-            price: "$0.99/lb",
+            name: "Premium Wheet Flour",
+            category: "Grains",
+            marketPlace: "Chichiri Market",
         },
         {
             id: 3,
             image: "/marketplace-image.jpeg",
             name: "Organic Carrots",
-            price: "$2.49/lb",
+            category: "Fruits",
+            marketPlace: "Mzuzu Market",
         },
     ]);
 
@@ -141,13 +155,14 @@ const ManageProducts = () => {
                         <span className="text-gray-500">{filteredProducts.length} items</span>
                     </div>
                     <AnimatePresence>
-                        <div className="space-y-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                             {filteredProducts.map((product) => (
                                 <ProductCard
                                     key={product.id}
                                     image={product.image}
                                     name={product.name}
-                                    price={product.price}
+                                    category={product.category}
+                                    marketPlace={product.marketPlace}
                                     onDelete={handleDelete}
                                 />
                             ))}
@@ -167,16 +182,15 @@ const ManageProducts = () => {
                 </motion.button>
 
                 <div className="flex justify-center items-center mt-8">
-                <Link href={"/manage_products/add_product"} className='flex items-center justify-center gap-x-3 rounded-xl
-                            bg-gradient-to-r from-blue-500 to-purple-600 w-11/12 py-3 text-white font-bold shadow-md 
-                            hover:shadow-lg'>
-                    <FaPlusCircle />
-                    Add Product
-                </Link>
+                    <Link
+                        href={"/manage_products/add_product"}
+                        className="flex items-center justify-center gap-x-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 w-11/12 py-3 text-white font-bold shadow-md hover:shadow-lg"
+                    >
+                        <FaPlusCircle />
+                        Add Product
+                    </Link>
                 </div>
-
             </motion.div>
-
 
             {/* Delete Confirmation Modal */}
             {deleteModal.open && (
