@@ -7,14 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-
+import Cookies from "js-cookie";
 
 const Navbar = (Props) => {
 
     const router = useRouter();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [ isAuthUser, setIsAuthUser ] = useState(false);
+    const [isAuthUser, setIsAuthUser] = useState(false);
 
     function toggleDrawer() {
         setIsDrawerOpen(!isDrawerOpen);
@@ -23,21 +23,44 @@ const Navbar = (Props) => {
     const handleLogout = async () => {
         await axios.get("/api/users/logout");
         toast.success("Logout Successfully");
+        Cookies.remove("token"); // Remove token cookie on logout
+        setIsAuthUser(false); // Update state to reflect logout
         router.push("/login");
     }
 
     const checkAuth = async () => {
-        try {
-            const res = await axios.get("/api/users/me");
-            if (res.status === 200) {
-                setIsAuthUser(true);
-            }
-        } catch (error) {
+        const token = Cookies.get("token");
+        console.log("Token from cookies:", token);
+        console.log(document.cookie.token);
+
+        
+        if (token) {
+            setIsAuthUser(true);
+        } else {
             setIsAuthUser(false);
         }
     }
 
+
+    const verifyToken = async () => {
+        try {
+            const res = await axios.get('/api/users/isAuthenticated');
+            if (res.status === 200) {
+                console.log('Token verified:', res.data);
+                if (token) {
+                    setIsAuthUser(true);
+                } else {
+                    setIsAuthUser(false);
+                }
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error.response?.data || error);
+            
+        }
+    };
+
     useEffect(() => {
+        // verifyToken();
         checkAuth();
     }, []);
 
@@ -71,17 +94,15 @@ const Navbar = (Props) => {
                                 </Link>
                             </li>
                             <li>
-                            {!isAuthUser && (
-                                <Link href="/login" className="block px-4 py-2 hover:bg-gray-700">
-                                    <FaLock className="inline-block mr-2" /> Login
-                                </Link>
-                            )}
-
-                            {isAuthUser && (
-                                <button className="block px-4 py-2 hover:bg-gray-700" onClick={handleLogout}>
-                                    <FaLockOpen className="inline-block mr-2" /> Logout
-                                </button>
-                            )}
+                                {!isAuthUser ? (
+                                    <Link href="/login" className="block px-4 py-2 hover:bg-gray-700">
+                                        <FaLock className="inline-block mr-2" /> Login
+                                    </Link>
+                                ) : (
+                                    <button className="block px-4 py-2 hover:bg-gray-700" onClick={handleLogout}>
+                                        <FaLockOpen className="inline-block mr-2" /> Logout
+                                    </button>
+                                )}
                             </li>
                             <li>
                                 <Link
@@ -159,6 +180,12 @@ const Navbar = (Props) => {
                         >
                             Contact
                         </Link>
+                        {/* Render Logout Button in main navbar */}
+                        {isAuthUser && (
+                            <button onClick={handleLogout} className="text-sm max-sm:hidden">
+                                Logout
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
