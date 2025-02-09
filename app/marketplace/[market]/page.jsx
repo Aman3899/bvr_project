@@ -14,17 +14,29 @@ import Market_Features_Details_Page from "@/app/components/Marketplace/MarketFea
 import BusinessDevelopmentOfficer from "@/app/components/Marketplace/BDO";
 import SearchFilters from "@/app/components/Marketplace/ProductSearchFunc";
 import FilterSection from "@/app/components/Marketplace/CategoriesFilter";
+import AdBanner from "@/app/components/Marketplace/AdsBannarSection";
+import MarketSlider from "@/app/components/All_Markets";
+import { usePathname } from "next/navigation";
 
 
 
 const Marketplace = ({ params }) => {
+
+    let pathname = usePathname();
+
+    const getCorrectPathURL = (path) => {
+        const concisedURL = path.replace("/marketplace/", "");
+
+        const url = concisedURL.replaceAll("-", " ")
+        return url;
+    }
 
     return (
         <>
             <div className="font-sans p-4 mx-auto bg-gray-50 px-20 max-sm:px-4 mt-20">
                 <Navbar heading="DealBank" />
 
-                <ImageSlider />
+                <ImageSlider title={`${getCorrectPathURL(pathname)}`} />
 
                 {/* Profile Information (BDO) */}
                 <BusinessDevelopmentOfficer />
@@ -47,6 +59,7 @@ const Marketplace = ({ params }) => {
                 <div className="bg-gray-200 m-4 h-48 flex items-center justify-center rounded-md shadow-md mb-10 max-sm:mx-3">
                     <span className="text-gray-500 text-lg">Sponsored Banner AD</span>
                 </div>
+                <AdBanner />
 
                 {/* Promotions Section */}
                 <PromotionsSearchFunc />
@@ -58,7 +71,7 @@ const Marketplace = ({ params }) => {
                 <Market_Features_Details_Page />
 
                 {/* Nearby Markets */}
-                <Nearby_Markets />
+                <MarketSlider />
 
                 {/* Nearby Airports */}
                 <NearbyAirportsSlider />

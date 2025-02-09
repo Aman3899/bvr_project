@@ -3,6 +3,7 @@ import { sendMail } from '@/utils/mailer';
 import { NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
 
+
 export async function POST(request) {
     try {
         const reqBody = await request.json();

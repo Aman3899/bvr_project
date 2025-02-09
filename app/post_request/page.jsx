@@ -83,10 +83,6 @@ const PostRequestPage = () => {
                                         {getStatusConfig(index).icon}
                                         {getStatusConfig(index).label}
                                     </span>
-                                    <button className="px-4 py-1 border border-gray-200 rounded-full text-sm hover:bg-gray-50 transition-colors duration-200 flex items-center gap-1">
-                                        View Details
-                                        <FaArrowRight size={12} />
-                                    </button>
                                 </div>
                             </div>
                         </motion.div>
@@ -139,7 +135,7 @@ const PostRequestPage = () => {
                         Submit New Request
                     </Link>
                     <Link
-                        href="/"
+                        href="/post_request/manage_subscriptions"
                         className="bg-gray-50 hover:bg-gray-100 text-gray-700 py-3 px-4 sm:px-6 rounded-xl text-center font-medium transition-colors duration-200"
                     >
                         Manage Subscription

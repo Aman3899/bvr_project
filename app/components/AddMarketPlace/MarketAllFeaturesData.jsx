@@ -4,55 +4,14 @@ import { BsBank2 } from 'react-icons/bs';
 import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { GiWashingMachine } from 'react-icons/gi';
 
-const MarketFeatures = ({
-    features,
-    setFeatures,
-    amenities,
-    setAmenities,
-    compliance,
-    setCompliance,
-    hygiene,
-    setHygiene
-}) => {
+const MarketFeatures = ({ register, errors }) => {
     const [activeSection, setActiveSection] = useState('features');
 
-    const marketFeatures = [
-        'Electricity',
-        'Water Supply',
-        'Access Roads',
-        'Sewage Systems',
-        'Waste Management Services'
-    ];
-
-    const marketAmenities = [
-        'Seating Areas',
-        'ATMs',
-        'Mobile Money Services',
-        'Internet Connectivity',
-        'Information Desk'
-    ];
-
-    const complianceItems = [
-        'Business Licensing',
-        'Environmental Regulation',
-        'Tax Compliance',
-        'Delivery Services',
-        'Security Arrangements'
-    ];
-
-    const hygieneItems = [
-        'Public Toilets (Flush)',
-        'Public Toilets (Pit Latrines)',
-        'Showers',
-        'Waste Disposal Bins',
-        'Pest Control Services'
-    ];
-
     const sections = [
-        { id: 'features', title: 'Market Features', icon: <FaMapMarkerAlt />, items: marketFeatures, state: features, setState: setFeatures },
-        { id: 'amenities', title: 'Amenities', icon: <BsBank2 />, items: marketAmenities, state: amenities, setState: setAmenities },
-        { id: 'compliance', title: 'Regulatory Compliance', icon: <AiFillSafetyCertificate />, items: complianceItems, state: compliance, setState: setCompliance },
-        { id: 'hygiene', title: 'Sanitation & Hygiene', icon: <GiWashingMachine />, items: hygieneItems, state: hygiene, setState: setHygiene }
+        { id: 'features', title: 'Market Features', icon: <FaMapMarkerAlt />, items: ['Electricity', 'Water Supply', 'Access Roads', 'Sewage Systems', 'Waste Management Services'] },
+        { id: 'amenities', title: 'Amenities', icon: <BsBank2 />, items: ['Seating Areas', 'ATMs', 'Mobile Money Services', 'Internet Connectivity', 'Information Desk'] },
+        { id: 'compliance', title: 'Regulatory Compliance', icon: <AiFillSafetyCertificate />, items: ['Business Licensing', 'Environmental Regulation', 'Tax Compliance', 'Delivery Services', 'Security Arrangements'] },
+        { id: 'hygiene', title: 'Sanitation & Hygiene', icon: <GiWashingMachine />, items: ['Public Toilets (Flush)', 'Public Toilets (Pit Latrines)', 'Showers', 'Waste Disposal Bins', 'Pest Control Services'] }
     ];
 
     return (
@@ -66,8 +25,8 @@ const MarketFeatures = ({
                         className={`
                             flex items-center gap-2 px-4 py-2 rounded-lg font-medium
                             transition-all duration-300 transform hover:scale-105
-                            ${activeSection === section.id 
-                                ? 'bg-blue-600 text-white shadow-lg' 
+                            ${activeSection === section.id
+                                ? 'bg-blue-600 text-white shadow-lg'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }
                         `}
@@ -86,8 +45,8 @@ const MarketFeatures = ({
                     key={section.id}
                     className={`
                         transition-all duration-500 transform
-                        ${activeSection === section.id 
-                            ? 'opacity-100 translate-x-0' 
+                        ${activeSection === section.id
+                            ? 'opacity-100 translate-x-0'
                             : 'opacity-0 translate-x-8 hidden'
                         }
                     `}
@@ -107,45 +66,28 @@ const MarketFeatures = ({
                                         border-2 cursor-pointer
                                         transform transition-all duration-300
                                         hover:scale-[1.02]
-                                        ${section.state.includes(item)
-                                            ? 'border-blue-500 bg-blue-50'
-                                            : 'border-gray-200 hover:border-blue-300'
-                                        }
+                                        ${errors[section.id] ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-blue-300'}
                                     `}
                                 >
                                     <input
                                         type="checkbox"
-                                        checked={section.state.includes(item)}
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                section.setState([...section.state, item]);
-                                            } else {
-                                                section.setState(section.state.filter(i => i !== item));
-                                            }
-                                        }}
+                                        {...register(section.id, {
+                                            validate: value => value?.length > 0 || `Please select at least one ${section.title}`
+                                        })}
+                                        value={item}
                                         className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 transition duration-150 ease-in-out"
                                     />
-                                    <span className={`text-sm font-medium ${
-                                        section.state.includes(item) ? 'text-blue-700' : 'text-gray-700'
-                                    }`}>
+                                    <span className={`text-sm font-medium ${errors[section.id] ? 'text-red-700' : 'text-gray-700'}`}>
                                         {item}
                                     </span>
-                                    <div className={`
-                                        absolute inset-0 rounded-xl pointer-events-none
-                                        transition-opacity duration-300
-                                        ${section.state.includes(item) ? 'ring-2 ring-blue-500 ring-opacity-50' : ''}
-                                    `} />
+                                    <div className={`absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300`} />
                                 </label>
                             ))}
                         </div>
 
-                        {/* Selected Items Summary */}
-                        {section.state.length > 0 && (
-                            <div className="mt-4 p-3 bg-blue-50 rounded-lg animate-fadeIn">
-                                <p className="text-sm text-blue-700">
-                                    Selected {section.title}: {section.state.length}
-                                </p>
-                            </div>
+                        {/* Error Message */}
+                        {errors[section.id] && (
+                            <p className="text-red-600 text-sm mt-2">{errors[section.id].message}</p>
                         )}
                     </div>
                 </div>

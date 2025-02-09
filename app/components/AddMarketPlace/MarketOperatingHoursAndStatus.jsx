@@ -3,8 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaClock, FaCheckCircle } from 'react-icons/fa';
 
-
-const MarketOperatingHoursAndStatus = ({ operatingHours, setOperatingHours, isOpen, setIsOpen }) => {
+const MarketOperatingHoursAndStatus = ({ register, errors }) => {
 
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -18,18 +17,6 @@ const MarketOperatingHoursAndStatus = ({ operatingHours, setOperatingHours, isOp
         }
     };
 
-    const successVariants = {
-        hidden: { scale: 0.8, opacity: 0 },
-        visible: {
-            scale: 1,
-            opacity: 1,
-            transition: {
-                duration: 0.3,
-                ease: "easeOut"
-            }
-        }
-    };
-
     return (
         <motion.div
             initial="hidden"
@@ -38,7 +25,6 @@ const MarketOperatingHoursAndStatus = ({ operatingHours, setOperatingHours, isOp
             className="w-full max-w-4xl mx-auto p-1"
         >
             <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-xl p-6 space-y-8">
-
                 {/* Operating Hours Section */}
                 <div className="flex items-center gap-3">
                     <div className="p-3 bg-yellow-500 rounded-lg">
@@ -53,18 +39,18 @@ const MarketOperatingHoursAndStatus = ({ operatingHours, setOperatingHours, isOp
                         <input
                             type="time"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-                            value={operatingHours.start}
-                            onChange={(e) => setOperatingHours((prev) => ({ ...prev, start: e.target.value }))}
+                            {...register("operatingHours.start", { required: "Start time is required" })}
                         />
+                        {errors.operatingHours?.start && <p className="text-red-500 text-xs mt-1">{errors.operatingHours.start.message}</p>}
                     </div>
                     <div>
                         <label className="block text-xs font-medium mb-1">End Time</label>
                         <input
                             type="time"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-                            value={operatingHours.end}
-                            onChange={(e) => setOperatingHours((prev) => ({ ...prev, end: e.target.value }))}
+                            {...register("operatingHours.end", { required: "End time is required" })}
                         />
+                        {errors.operatingHours?.end && <p className="text-red-500 text-xs mt-1">{errors.operatingHours.end.message}</p>}
                     </div>
                 </div>
 
@@ -80,26 +66,23 @@ const MarketOperatingHoursAndStatus = ({ operatingHours, setOperatingHours, isOp
                     <label className="inline-flex items-center">
                         <input
                             type="radio"
-                            name="status"
                             value="Open"
                             className="form-radio text-blue-500 focus:ring-blue-400"
-                            checked={isOpen}
-                            onChange={() => setIsOpen(true)}
+                            {...register("marketStatus", { required: "Market status is required" })}
                         />
                         <span className="ml-2 text-sm">Open</span>
                     </label>
                     <label className="inline-flex items-center">
                         <input
                             type="radio"
-                            name="status"
                             value="Closed"
                             className="form-radio text-red-500 focus:ring-red-400"
-                            checked={!isOpen}
-                            onChange={() => setIsOpen(false)}
+                            {...register("marketStatus", { required: "Market status is required" })}
                         />
                         <span className="ml-2 text-sm">Closed</span>
                     </label>
                 </div>
+                {errors.marketStatus && <p className="text-red-500 text-xs mt-1">{errors.marketStatus.message}</p>}
             </div>
         </motion.div>
     );

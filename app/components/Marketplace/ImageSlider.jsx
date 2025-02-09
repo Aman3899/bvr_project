@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
-const ImageSlider = () => {
+const ImageSlider = (props) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     
     const images = [
@@ -37,6 +37,9 @@ const ImageSlider = () => {
             description: "Supporting local businesses and artisans"
         },
     ];
+
+    console.log(props);
+    
 
     const CustomArrow = ({ direction, onClick }) => (
         <motion.button
@@ -122,7 +125,7 @@ const ImageSlider = () => {
                                     transition={{ delay: 0.3 }}
                                     className="absolute bottom-0 left-0 right-0 p-8 text-white"
                                 >
-                                    <h2 className="text-3xl font-bold mb-2 max-sm:text-sm">{image.title}</h2>
+                                    <h2 className="text-3xl font-bold mb-2 max-sm:text-sm">{props.title}</h2>
                                     <p className="text-lg text-gray-200 max-sm:text-xs">{image.description}</p>
                                 </motion.div>
                             </div>

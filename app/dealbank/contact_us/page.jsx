@@ -118,10 +118,10 @@ const ContactUs = () => {
                                             <strong>Address:</strong> 123 Market Street, Suite 500, Metropolis, MT 54321
                                         </li>
                                         <li>
-                                            <strong>Phone:</strong> <a href="tel:+1234567890" className="text-blue-500">+1 (234) 567-890</a>
+                                            <strong>Phone:</strong> <a href="tel:+265996339101" className="text-blue-500">+265 996 33 91 01</a>
                                         </li>
                                         <li>
-                                            <strong>Email:</strong> <a href="mailto:support@dealbank.com" className="text-blue-500">support@dealbank.com</a>
+                                            <strong>Email:</strong> <a href="mailto:support@dealbank.com" className="text-blue-500">scrollamalawi@gmail.com</a>
                                         </li>
                                         <li>
                                             <strong>Working Hours:</strong> Monday to Friday, 9:00 AM - 6:00 PM
@@ -130,11 +130,11 @@ const ContactUs = () => {
                                             <strong>Timezone:</strong> Eastern Standard Time (EST)
                                         </li>
                                         <li className='text-justify'>
-                                            At DealBank, we value your feedback, questions, and suggestions. 
-                                            Whether you&apos;re seeking assistance with your orders, exploring partnership opportunities, 
-                                            or simply want to share your experience with us, our dedicated support team is here to help. 
-                                            Reach out to us via the contact form, email, or phone, and we’ll get back to you promptly. 
-                                            Your satisfaction is our priority, and we are committed to providing you with exceptional service every step of the way. 
+                                            At DealBank, we value your feedback, questions, and suggestions.
+                                            Whether you&apos;re seeking assistance with your orders, exploring partnership opportunities,
+                                            or simply want to share your experience with us, our dedicated support team is here to help.
+                                            Reach out to us via the contact form, email, or phone, and we’ll get back to you promptly.
+                                            Your satisfaction is our priority, and we are committed to providing you with exceptional service every step of the way.
                                             Let’s connect and make your DealBank experience even better!
                                         </li>
                                     </ul>

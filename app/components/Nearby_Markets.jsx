@@ -38,12 +38,20 @@ const Nearby_Markets = () => {
     };
 
     const markets = [
-        { name: "Farmer's Market", distance: "2 km", image: "/marketplace-image.jpeg" },
-        { name: "Crafts Market", distance: "3 km", image: "/marketplace-image.jpeg" },
-        { name: "Fish Market", distance: "5 km", image: "/marketplace-image.jpeg" },
-        { name: "Spice Market", distance: "7 km", image: "/marketplace-image.jpeg" },
-        { name: "Clothing Market", distance: "4 km", image: "/marketplace-image.jpeg" },
-        { name: "Food Market", distance: "6 km", image: "/marketplace-image.jpeg" },
+        { name: "Zigwagwa Market", distance: "2 km", image: "/marketplace-image.jpeg" },
+        { name: "Salisbury Market", distance: "3 km", image: "/marketplace-image.jpeg" },
+        { name: "Luwinga Market", distance: "5 km", image: "/marketplace-image.jpeg" },
+        { name: "Mzuzu Market", distance: "7 km", image: "/marketplace-image.jpeg" },
+        { name: "Limbe Market", distance: "4 km", image: "/marketplace-image.jpeg" },
+        { name: "Kamuzu Market", distance: "6 km", image: "/marketplace-image.jpeg" },
+        { name: "Bwaila Market", distance: "8 km", image: "/marketplace-image.jpeg" },
+        { name: "Chichiri Market", distance: "9 km", image: "/marketplace-image.jpeg" },
+        { name: "Mulanje Market", distance: "10 km", image: "/marketplace-image.jpeg" },
+        { name: "Dedza Market", distance: "11 km", image: "/marketplace-image.jpeg" },
+        { name: "Karonga Market", distance: "12 km", image: "/marketplace-image.jpeg" },
+        { name: "Monkey Bay Market", distance: "13 km", image: "/marketplace-image.jpeg" },
+        { name: "Mangochi Market", distance: "14 km", image: "/marketplace-image.jpeg" },
+        { name: "Balaka Market", distance: "15 km", image: "/marketplace-image.jpeg" }
     ];
 
     return (

@@ -1,25 +1,68 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import { useState } from "react";
+import { FaAd, FaBars, FaHome, FaPhoneAlt, FaSearchLocation, FaShoppingCart, FaUser, FaLockOpen, FaLock } from "react-icons/fa";
+import { MdOutlineChat } from "react-icons/md";
+import { toast } from "@/hooks/use-toast";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-    FaAd,
-    FaBars,
-    FaHome,
-    FaPhoneAlt,
-    FaSearchLocation,
-    FaShoppingBag,
-    FaShoppingCart,
-    FaUser,
-} from "react-icons/fa";
+import Link from "next/link";
+import React from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Navbar = (Props) => {
+
+    const router = useRouter();
+
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isAuthUser, setIsAuthUser] = useState(false);
 
     function toggleDrawer() {
         setIsDrawerOpen(!isDrawerOpen);
     }
+
+    const handleLogout = async () => {
+        await axios.get("/api/users/logout");
+        toast.success("Logout Successfully");
+        Cookies.remove("token"); // Remove token cookie on logout
+        setIsAuthUser(false); // Update state to reflect logout
+        router.push("/login");
+    }
+
+    const checkAuth = async () => {
+        const token = Cookies.get("token");
+        console.log("Token from cookies:", token);
+        console.log(document.cookie.token);
+
+        
+        if (token) {
+            setIsAuthUser(true);
+        } else {
+            setIsAuthUser(false);
+        }
+    }
+
+
+    const verifyToken = async () => {
+        try {
+            const res = await axios.get('/api/users/isAuthenticated');
+            if (res.status === 200) {
+                console.log('Token verified:', res.data);
+                if (token) {
+                    setIsAuthUser(true);
+                } else {
+                    setIsAuthUser(false);
+                }
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error.response?.data || error);
+            
+        }
+    };
+
+    useEffect(() => {
+        // verifyToken();
+        checkAuth();
+    }, []);
 
     return (
         <div className="fixed top-0 left-0 w-full bg-gray-200 border-b border-gray-400 z-50">
@@ -51,20 +94,15 @@ const Navbar = (Props) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    href="/login"
-                                    className="block px-4 py-2 hover:bg-gray-700"
-                                >
-                                    <FaUser className="inline-block mr-2" /> Login
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/dealbank/contact_us"
-                                    className="block px-4 py-2 hover:bg-gray-700"
-                                >
-                                    <FaPhoneAlt className="inline-block mr-2" /> Contact Us
-                                </Link>
+                                {!isAuthUser ? (
+                                    <Link href="/login" className="block px-4 py-2 hover:bg-gray-700">
+                                        <FaLock className="inline-block mr-2" /> Login
+                                    </Link>
+                                ) : (
+                                    <button className="block px-4 py-2 hover:bg-gray-700" onClick={handleLogout}>
+                                        <FaLockOpen className="inline-block mr-2" /> Logout
+                                    </button>
+                                )}
                             </li>
                             <li>
                                 <Link
@@ -80,6 +118,22 @@ const Navbar = (Props) => {
                                     className="block px-4 py-2 hover:bg-gray-700"
                                 >
                                     <FaAd className="inline-block mr-2" /> Advertise
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/chat"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <MdOutlineChat className="inline-block mr-2" /> Chats
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/dealbank/contact_us"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
+                                    <FaPhoneAlt className="inline-block mr-2" /> Contact Us
                                 </Link>
                             </li>
                         </ul>
@@ -126,6 +180,12 @@ const Navbar = (Props) => {
                         >
                             Contact
                         </Link>
+                        {/* Render Logout Button in main navbar */}
+                        {isAuthUser && (
+                            <button onClick={handleLogout} className="text-sm max-sm:hidden">
+                                Logout
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

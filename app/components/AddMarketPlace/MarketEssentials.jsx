@@ -3,159 +3,162 @@ import { MdLanguage } from 'react-icons/md';
 import { BiAccessibility } from 'react-icons/bi';
 import { BsCalendarEvent } from 'react-icons/bs';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const MarketEssentials = ({
-    marketType,
-    setMarketType,
-    transactionMode,
-    setTransactionMode,
-    language,
-    setLanguage,
-    accessibility,
-    setAccessibility,
-    specialDays,
-    setSpecialDays,
-    inputStyle,
-    labelStyle
-}) => {
+const MarketEssentials = ({ register, errors }) => {
+    const containerVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.6,
+                when: "beforeChildren",
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, x: -20 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.4 }
+        }
+    };
+
+    const selectVariants = {
+        hover: { scale: 1.02 },
+        tap: { scale: 0.98 }
+    };
+
     return (
         <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-4 bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-8 bg-gradient-to-br from-white to-gray-50 p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
         >
-            <h2 className="text-xl font-semibold mb-6 text-gray-800 flex items-center">
-                <RiMoneyDollarCircleLine className="text-blue-600 mr-2" />
+            <motion.h2 
+                className="text-2xl font-bold mb-8 text-gray-800 flex items-center"
+                variants={itemVariants}
+            >
+                <RiMoneyDollarCircleLine className="text-blue-600 mr-3 text-3xl" />
                 Market Essentials
-            </h2>
+            </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                {/* Market Type */}
-                <motion.div 
-                    initial={{ y: -10, opacity: 0 }} 
-                    animate={{ y: 0, opacity: 1 }} 
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="relative"
-                >
-                    <label className={labelStyle}>
-                        <div className="flex items-center space-x-2">
-                            <RiMoneyDollarCircleLine className="text-blue-600" />
-                            <span>Market Type</span>
-                        </div>
-                    </label>
-                    <select
-                        className={inputStyle}
-                        value={marketType}
-                        onChange={(e) => setMarketType(e.target.value)}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8">
+                {[
+                    {
+                        label: "Market Type",
+                        icon: <RiMoneyDollarCircleLine />,
+                        name: "marketType",
+                        options: ["Flea Market", "Wholesale", "Retail"]
+                    },
+                    {
+                        label: "Mode of Transaction",
+                        icon: <RiMoneyDollarCircleLine />,
+                        name: "transactionMode",
+                        options: ["Cash", "Bidding", "Both"]
+                    },
+                    {
+                        label: "Language",
+                        icon: <MdLanguage />,
+                        name: "language",
+                        options: ["English", "Chichewa", "Both"]
+                    },
+                    {
+                        label: "Accessibility",
+                        icon: <BiAccessibility />,
+                        name: "accessibility",
+                        options: ["Good", "Difficult", "Very Easy"]
+                    }
+                ].map((field, index) => (
+                    <motion.div
+                        key={field.name}
+                        variants={itemVariants}
+                        className="relative"
                     >
-                        <option value="">Select Type</option>
-                        <option value="Flea Market">Flea Market</option>
-                        <option value="Wholesale">Wholesale</option>
-                        <option value="Retail">Retail</option>
-                    </select>
-                </motion.div>
+                        <label className="flex items-center space-x-2 text-gray-700 font-medium mb-2 group">
+                            <motion.span 
+                                className="text-blue-600 text-xl"
+                                whileHover={{ scale: 1.2, rotate: 360 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                {field.icon}
+                            </motion.span>
+                            <span className="group-hover:text-blue-600 transition-colors">
+                                {field.label}
+                            </span>
+                        </label>
+                        <motion.select
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 bg-white shadow-sm"
+                            variants={selectVariants}
+                            whileHover="hover"
+                            whileTap="tap"
+                            {...register(field.name, { required: `${field.label} is required` })}
+                        >
+                            <option value="">Select {field.label}</option>
+                            {field.options.map(opt => (
+                                <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                        </motion.select>
+                        <AnimatePresence>
+                            {errors[field.name] && (
+                                <motion.p
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="text-red-500 text-sm mt-1"
+                                >
+                                    {errors[field.name].message}
+                                </motion.p>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                ))}
 
-                {/* Transaction Mode */}
                 <motion.div 
-                    initial={{ y: -10, opacity: 0 }} 
-                    animate={{ y: 0, opacity: 1 }} 
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="relative"
-                >
-                    <label className={labelStyle}>
-                        <div className="flex items-center space-x-2">
-                            <RiMoneyDollarCircleLine className="text-blue-600" />
-                            <span>Mode of Transaction</span>
-                        </div>
-                    </label>
-                    <select
-                        className={inputStyle}
-                        value={transactionMode}
-                        onChange={(e) => setTransactionMode(e.target.value)}
-                    >
-                        <option value="">Select Mode</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Bidding">Bidding</option>
-                        <option value="Both">Both</option>
-                    </select>
-                </motion.div>
-
-                {/* Language */}
-                <motion.div 
-                    initial={{ y: -10, opacity: 0 }} 
-                    animate={{ y: 0, opacity: 1 }} 
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="relative"
-                >
-                    <label className={labelStyle}>
-                        <div className="flex items-center space-x-2">
-                            <MdLanguage className="text-blue-600" />
-                            <span>Language</span>
-                        </div>
-                    </label>
-                    <select
-                        className={inputStyle}
-                        value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
-                    >
-                        <option value="">Select Language</option>
-                        <option value="English">English</option>
-                        <option value="Chichewa">Chichewa</option>
-                        <option value="Both">Both</option>
-                    </select>
-                </motion.div>
-
-                {/* Accessibility */}
-                <motion.div 
-                    initial={{ y: -10, opacity: 0 }} 
-                    animate={{ y: 0, opacity: 1 }} 
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="relative"
-                >
-                    <label className={labelStyle}>
-                        <div className="flex items-center space-x-2">
-                            <BiAccessibility className="text-blue-600" />
-                            <span>Accessibility</span>
-                        </div>
-                    </label>
-                    <select
-                        className={inputStyle}
-                        value={accessibility}
-                        onChange={(e) => setAccessibility(e.target.value)}
-                    >
-                        <option value="">Select Accessibility</option>
-                        <option value="Good">Good</option>
-                        <option value="Difficult">Difficult</option>
-                        <option value="Very Easy">Very Easy</option>
-                    </select>
-                </motion.div>
-
-                {/* Special Days */}
-                <motion.div 
-                    initial={{ y: -10, opacity: 0 }} 
-                    animate={{ y: 0, opacity: 1 }} 
-                    transition={{ duration: 0.6, delay: 0.5 }}
                     className="relative md:col-span-2"
+                    variants={itemVariants}
                 >
-                    <label className={labelStyle}>
-                        <div className="flex items-center space-x-2">
-                            <BsCalendarEvent className="text-blue-600" />
-                            <span>Special Days</span>
-                        </div>
+                    <label className="flex items-center space-x-2 text-gray-700 font-medium mb-2 group">
+                        <motion.span 
+                            className="text-blue-600 text-xl"
+                            whileHover={{ scale: 1.2, rotate: 360 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <BsCalendarEvent />
+                        </motion.span>
+                        <span className="group-hover:text-blue-600 transition-colors">
+                            Special Days
+                        </span>
                     </label>
-                    <select
-                        className={inputStyle}
-                        value={specialDays}
-                        onChange={(e) => setSpecialDays(e.target.value)}
+                    <motion.select
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 bg-white shadow-sm"
+                        variants={selectVariants}
+                        whileHover="hover"
+                        whileTap="tap"
+                        {...register("specialDays", { required: "Special Days selection is required" })}
                     >
                         <option value="">Select Special Days</option>
-                        <option value="Christmas">Christmas</option>
-                        <option value="New Year">New Year</option>
-                        <option value="Easter">Easter</option>
-                        <option value="Independence Day">Independence Day</option>
-                    </select>
+                        {["Christmas", "New Year", "Easter", "Independence Day"].map(day => (
+                            <option key={day} value={day}>{day}</option>
+                        ))}
+                    </motion.select>
+                    <AnimatePresence>
+                        {errors.specialDays && (
+                            <motion.p
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="text-red-500 text-sm mt-1"
+                            >
+                                {errors.specialDays.message}
+                            </motion.p>
+                        )}
+                    </AnimatePresence>
                 </motion.div>
             </div>
         </motion.div>

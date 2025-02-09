@@ -15,9 +15,9 @@ const MarketManagement = () => {
 
   const options = [
     {
-      name: "Edit Market Details",
+      name: "Manage Marketplaces",
       icon: <FaEdit />,
-      link: "/add_marketplace",
+      link: "/manage_marketplaces",
       image: "/marketplace-image.jpeg", // Image for hover
       description: "Edit the details of your market including name, description, and other related information.",
     },

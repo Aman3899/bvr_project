@@ -6,13 +6,14 @@ export async function POST(request) {
     try {
         const reqBody = await request.json();
         const { token } = reqBody;
+
         const user = await prisma.user.findFirst({
-           where : {
-               verifyToken: token,
-               verifyTokenExpiry: {
-                   gt: new Date(),
-               }
-           }
+            where : {
+                verifyToken: token,
+                verifyTokenExpiry: {
+                    gt: new Date(),
+                }
+            }
         });
 
         if ( !user ) {
@@ -22,11 +23,11 @@ export async function POST(request) {
         await prisma.user.update({
             where: { id: user.id },
             data: {
-              isVerified: true,
-              verifyToken: null,
-              verifyTokenExpiry: null,
+                isVerified: true,
+                verifyToken: null,
+                verifyTokenExpiry: null,
             },
-          });
+        });
 
         return NextResponse.json({message: "Email Verified Successfully"}, {status: 200});
     }

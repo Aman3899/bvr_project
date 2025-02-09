@@ -10,7 +10,6 @@ import "swiper/css/navigation";
 import Universities from "./components/Parters/Universities";
 import Financial_Institutes from "./components/Parters/Financial_Institutes";
 import MobileNetworksSlideshow from "./components/Parters/Mobile_Network";
-import Nearby_Markets from "./components/Nearby_Markets";
 import Expolre_Our_Sites from "./components/Parters/Expolre_Our_Sites";
 import Screen_Printers from "./components/Parters/Screen_Printers";
 import Hero_Section from "./components/Hero_Section";
@@ -18,6 +17,9 @@ import Navbar from "./components/Navbar";
 import About_Dealbank from "./components/About_Dealbank";
 import HowWeDoIt from "./components/How_We_Do_It";
 import InternshipProgram from "./components/Internship_Program";
+import MarketSlider from './components/All_Markets';
+
+
 
 const FuturisticSearch = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -166,8 +168,8 @@ export default function Home() {
         <FuturisticSearch />
       </div>
 
-      <div className="mt-12 px-6 lg:px-20">
-        <Nearby_Markets />
+      <div className="px-6 max-sm:px-0">
+        <MarketSlider />
       </div>
 
       <About_Dealbank />
@@ -192,21 +194,3 @@ export default function Home() {
     </div>
   );
 }
-
-// Add these styles to your globals.css
-const globalStyles = `
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slideDown {
-  animation: slideDown 0.3s ease-out forwards;
-}
-`;

@@ -1,12 +1,21 @@
+// pages/AllMarkets.js
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SearchSection from '../components/AllMarkets/SearchFunc';
-import MarketSlider from '../components/All_Markets';
+import MarketListView from '../components/All_Markets_ListView';
 
 const Page = () => {
+
+  const [searchQuery, setSearchQuery] = useState(null);
+
+  const handleDataFromChild = (data) => {
+    setSearchQuery(data);
+    console.log('Data received from child: ', data);
+  }
+
   return (
     <div className="font-sans mt-20">
       <Navbar heading="DealBank" />
@@ -39,11 +48,11 @@ const Page = () => {
 
       {/* Search Section */}
       <div className="relative -mt-24">
-        <SearchSection />
+        <SearchSection Location_And_Search_Data={handleDataFromChild} />
       </div>
 
       {/* Market Section */}
-      <MarketSlider />
+      <MarketListView searchQuery={searchQuery} />
 
       <Footer />
     </div>

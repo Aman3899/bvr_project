@@ -1,79 +1,103 @@
-"use client"; // Ensure this directive is at the top for client-side rendering
+"use client";
 
 import React from "react";
 import Image from "next/image";
-import Slider from "react-slick"; // Import Slick Slider
-import "slick-carousel/slick/slick.css"; // Import Slick CSS
-import "slick-carousel/slick/slick-theme.css"; // Import Slick Theme CSS
-import { motion } from "framer-motion"; // For smooth animations
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { motion } from "framer-motion";
 
-const MobileNetworksSlideshow = () => {
+// Shared slider settings
+const createSliderSettings = (customSpeed = 3000) => ({
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: customSpeed,
+    pauseOnHover: true,
+    arrows: true,
+    responsive: [
+        {
+            breakpoint: 640,
+            settings: {
+                slidesToShow: 1,
+                dots: true,
+                arrows: false, // Hide arrows on mobile
+            },
+        },
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 2,
+                dots: true,
+            },
+        },
+        {
+            breakpoint: 1536,
+            settings: {
+                slidesToShow: 3,
+            },
+        },
+    ],
+});
+
+// Shared card component
+const SliderCard = ({ name, logo, alt }) => (
+    <motion.div
+        className="px-2 py-4 h-full"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.98 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+    >
+        <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 h-full overflow-hidden border border-gray-100">
+            <div className="relative p-6 flex flex-col h-full">
+                <div className="relative w-full h-48 sm:h-64 mb-4 bg-gray-50 rounded-lg overflow-hidden">
+                    <Image
+                        src={logo}
+                        alt={alt}
+                        fill
+                        className="object-contain p-4 transform hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mt-auto">
+                    {name}
+                </h3>
+            </div>
+        </div>
+    </motion.div>
+);
+
+// Enhanced MobileNetworks component
+export const MobileNetworksSlideshow = () => {
+    
     const mobileNetworks = [
-        { name: "Verizon", logo: "/marketplace-hero.jpeg", alt: "Verizon Logo" },
-        { name: "AT&T", logo: "/marketplace-hero.jpeg", alt: "AT&T Logo" },
-        { name: "Jazz", logo: "/marketplace-hero.jpeg", alt: "Jazz Logo" },
-        { name: "Jio", logo: "/marketplace-hero.jpeg", alt: "Jio Logo" },
+        { name: "Airtel Malawi", logo: "/logos/airtel_malawi.jpg", alt: "Airtel Malawi Logo" },
+        { name: "TNM (Telekom Networks Malawi)", logo: "/logos/tnm.jpg", alt: "TNM Logo" },
+        { name: "Access Communications Limited", logo: "/logos/access.png", alt: "Access Communications Limited Logo" },
+        { name: "Malawi Digital Broadcast Network Limited", logo: "/logos/mdbnl.jpg", alt: "MDBNL Logo" },
     ];
 
-    // Settings for the Slick Slider
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2500,
-        responsive: [
-            {
-                breakpoint: 640, // For mobile devices
-                settings: {
-                    slidesToShow: 1, // Show 1 slide on mobile
-                },
-            },
-            {
-                breakpoint: 1024, // For tablets and larger devices
-                settings: {
-                    slidesToShow: 2, // Show 2 slides on tablets
-                },
-            },
-        ],
-    };
-
     return (
-        <div className="bg-gray-50 py-8 px-4 max-sm:py-3 max-sm:px-0">
-            <div className="w-full mx-auto space-y-8">
-                <h2 className="text-3xl font-bold text-center text-gray-800">
-                    Mobile Networks
-                </h2>
-                <Slider {...settings}>
+        <section className="pt-5 lg:pt-10 px-4 bg-gradient-to-b from-gray-50 to-white">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+                        Mobile Networks
+                    </h2>
+                    <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+                </div>
+                <Slider {...createSliderSettings(2500)} className="network-slider">
                     {mobileNetworks.map((network, index) => (
-                        <motion.div
-                            key={index}
-                            className="p-4"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center space-y-4 border border-gray-200">
-                                <Image
-                                    width={1920}
-                                    height={1080}
-                                    src={network.logo}
-                                    alt={network.alt}
-                                    className="object-contain rounded-md"
-                                />
-                                <p className="text-lg font-semibold text-gray-700 text-center">
-                                    {network.name}
-                                </p>
-                            </div>
-                        </motion.div>
+                        <SliderCard key={index} {...network} />
                     ))}
                 </Slider>
             </div>
-        </div>
+        </section>
     );
 };
 

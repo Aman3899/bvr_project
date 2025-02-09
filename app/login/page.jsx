@@ -4,17 +4,118 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+
+
+
+const ProcessingAlert = () => (
+    <Alert className="border-blue-200 bg-blue-50 fixed top-4 right-4 w-80 animate-in fade-in slide-in-from-top-2">
+        <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+        <AlertTitle className="text-blue-800 ml-2">Processing</AlertTitle>
+        <AlertDescription className="text-blue-600 ml-2">
+            Please wait while we verify your credentials...
+        </AlertDescription>
+    </Alert>
+);
+
+// Success Alert Dialog Component
+const SuccessAlert = ({ isOpen, onClose, message }) => (
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+        <AlertDialogContent className="bg-white">
+            <AlertDialogHeader>
+                <AlertDialogTitle className="flex items-center text-green-700">
+                    <CheckCircle2 className="h-6 w-6 mr-2 text-green-600" />
+                    Success
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-green-600">
+                    {message}
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogAction className="bg-green-600 text-white hover:bg-green-700">
+                    Continue
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+);
+
+// Error Alert Dialog Component
+const ErrorAlert = ({ isOpen, onClose, message }) => (
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
+        <AlertDialogContent className="bg-white">
+            <AlertDialogHeader>
+                <AlertDialogTitle className="flex items-center text-red-700">
+                    <XCircle className="h-6 w-6 mr-2 text-red-600" />
+                    Error
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-red-600">
+                    {message}
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogAction className="bg-red-600 text-white hover:bg-red-700">
+                    Close
+                </AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+);
 
 const Page = () => {
-    const [isSent, setIsSent] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
     const { register, formState: { errors }, handleSubmit } = useForm();
     const router = useRouter();
 
     const getLoginCredentials = async (data) => {
-        console.log(data);
-        if (data.email === "admin@gmail.com" && data.password === "admin123") {
-            console.log("Successfully Logged In!");
-            router.push("/");
+        setIsProcessing(true);
+
+        data.email = data.email.trim().toLowerCase();
+
+        try {
+            const response = await fetch("/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            setIsProcessing(false);
+
+            if (!response.ok) {
+                setAlertMessage(result.error || "Something went wrong. Please try again.");
+                setShowError(true);
+                return;
+            }
+
+            setAlertMessage(result.message || "Successfully Logged In!");
+            setShowSuccess(true);
+            setTimeout(() => {
+                router.push("/");
+            }, 1500);
+        } catch (error) {
+            setIsProcessing(false);
+            setAlertMessage("An unexpected error occurred. Please try again later.");
+            setShowError(true);
         }
     };
 
@@ -85,7 +186,7 @@ const Page = () => {
 
                     <div className="text-right">
                         <Link
-                            href="/forgetpassword"
+                            href="/forget-password"
                             className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200 hover:underline font-medium"
                         >
                             Forgot Password?
@@ -94,9 +195,13 @@ const Page = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] mt-4"
+                        disabled={isProcessing}
+                        className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl ${isProcessing
+                                ? "opacity-50 cursor-not-allowed"
+                                : "hover:from-blue-700 hover:to-purple-700 transform hover:scale-[1.02]"
+                            } transition-all duration-300 mt-4`}
                     >
-                        Sign In
+                        {isProcessing ? "Processing..." : "Sign In"}
                     </button>
                 </form>
 
@@ -112,6 +217,19 @@ const Page = () => {
                     </p>
                 </div>
             </div>
+
+            {/* Alert Components */}
+            {isProcessing && <ProcessingAlert />}
+            <SuccessAlert
+                isOpen={showSuccess}
+                onClose={() => setShowSuccess(false)}
+                message={alertMessage}
+            />
+            <ErrorAlert
+                isOpen={showError}
+                onClose={() => setShowError(false)}
+                message={alertMessage}
+            />
         </div>
     );
 };

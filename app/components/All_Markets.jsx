@@ -15,12 +15,16 @@ function getMarketplaceNameForRouting(marketplaceName) {
 const MarketSlider = () => {
 
     const markets = [
-        { name: "Farmer's Market", image: "/marketplace-image.jpeg", distance: "0.5 km" },
-        { name: "Crafts Market", image: "/marketplace-image.jpeg", distance: "1.2 km" },
-        { name: "Fish Market", image: "/marketplace-image.jpeg", distance: "0.8 km" },
-        { name: "Spice Market", image: "/marketplace-image.jpeg", distance: "1.5 km" },
-        { name: "Clothing Market", image: "/marketplace-image.jpeg", distance: "2.0 km" },
-        { name: "Food Market", image: "/marketplace-image.jpeg", distance: "0.7 km" },
+        { name: "Zigwagwa Market", distance: "2 km", image: "/marketplace-image.jpeg" },
+        { name: "Salisbury Market", distance: "3 km", image: "/marketplace-image.jpeg" },
+        { name: "Luwinga Market", distance: "5 km", image: "/marketplace-image.jpeg" },
+        { name: "Mzuzu Market", distance: "7 km", image: "/marketplace-image.jpeg" },
+        { name: "Limbe Market", distance: "4 km", image: "/marketplace-image.jpeg" },
+        { name: "Kamuzu Market", distance: "6 km", image: "/marketplace-image.jpeg" },
+        { name: "Bwaila Market", distance: "8 km", image: "/marketplace-image.jpeg" },
+        { name: "Chichiri Market", distance: "9 km", image: "/marketplace-image.jpeg" },
+        { name: "Mulanje Market", distance: "10 km", image: "/marketplace-image.jpeg" },
+        { name: "Dedza Market", distance: "11 km", image: "/marketplace-image.jpeg" },
     ];
 
     const settings = {
@@ -63,12 +67,12 @@ const MarketSlider = () => {
     };
 
     const cardVariants = {
-        hidden: { 
+        hidden: {
             opacity: 0,
             y: 20,
             scale: 0.95
         },
-        visible: { 
+        visible: {
             opacity: 1,
             y: 0,
             scale: 1,
@@ -78,7 +82,7 @@ const MarketSlider = () => {
                 damping: 10
             }
         },
-        hover: { 
+        hover: {
             scale: 1.03,
             y: -5,
             transition: {
@@ -100,13 +104,13 @@ const MarketSlider = () => {
     };
 
     return (
-        <motion.div 
-            className="px-4 py-12 max-w-7xl mx-auto mb-10"
+        <motion.div
+            className="px-4 py-12 w-full mx-auto mb-10"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            <motion.h2 
+            <motion.h2
                 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-black to-amber-500 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -126,7 +130,7 @@ const MarketSlider = () => {
                             href={"/marketplace/" + getMarketplaceNameForRouting(market.name)}
                             className="block"
                         >
-                            <motion.div 
+                            <motion.div
                                 className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                                 initial="hidden"
                                 whileInView="visible"

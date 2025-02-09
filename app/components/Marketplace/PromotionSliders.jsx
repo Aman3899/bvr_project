@@ -1,9 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -12,44 +9,17 @@ function getMarketplaceNameForRouting(marketplaceName) {
     return marketplaceName.split(" ").join("-");
 }
 
-const PromotionSliders = () => {
+const PromotionList = () => {
     const pathname = usePathname();
 
     const promotions = [
-        { id: 1, name: "Discounted Apple", price: "MWK 4500", img: "/marketplace-hero.jpeg" },
-        { id: 2, name: "Banana Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 3, name: "Discounted BlueBarries Bundle", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 4, name: "Melon Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
-        { id: 5, name: "Discounted Grapes", price: "MWK 4500", img: "/marketplace-image.jpeg" },
-        { id: 6, name: "Friuts Bundle", price: "MWK 2500", img: "/marketplace-hero.jpeg" },
+        { id: 1, name: "Discounted Apple", img: "/marketplace-hero.jpeg" },
+        { id: 2, name: "Banana Bundle", img: "/marketplace-hero.jpeg" },
+        { id: 3, name: "Discounted BlueBarries Bundle", img: "/marketplace-image.jpeg" },
+        { id: 4, name: "Melon Bundle", img: "/marketplace-hero.jpeg" },
+        { id: 5, name: "Discounted Grapes", img: "/marketplace-image.jpeg" },
+        { id: 6, name: "Friuts Bundle", img: "/marketplace-hero.jpeg" },
     ];
-
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        pauseOnHover: true,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 640,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    };
 
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -102,7 +72,7 @@ const PromotionSliders = () => {
 
     return (
         <motion.div 
-            className="px-4 py-12 max-w-7xl mx-auto"
+            className="py-12 w-full mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -115,7 +85,7 @@ const PromotionSliders = () => {
             >
                 Current Promotions
             </motion.h2>
-            <Slider {...settings} className="px-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {promotions.map((promotion) => (
                     <motion.div
                         key={promotion.id}
@@ -149,22 +119,19 @@ const PromotionSliders = () => {
                                     </motion.div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                                 </div>
-                                <div className="p-6">
-                                    <h4 className="font-semibold text-gray-800 text-xl mb-2">{promotion.name}</h4>
-                                    <div className="flex items-center justify-between">
-                                        <p className="text-red-500 font-bold text-lg">{promotion.price}</p>
-                                        <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-                                            On Sale
-                                        </span>
-                                    </div>
+                                <div className="px-6 py-4 max-sm:px-3">
+                                    <h4 className="font-semibold text-gray-800 text-xl mb-2 text-wrap">{promotion.name}</h4>
+                                    <span className="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
+                                        On Sale
+                                    </span>
                                 </div>
                             </motion.div>
                         </Link>
                     </motion.div>
                 ))}
-            </Slider>
+            </div>
         </motion.div>
     );
 };
 
-export default PromotionSliders;
+export default PromotionList;
