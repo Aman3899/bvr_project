@@ -59,7 +59,7 @@ const MarketEssentials = ({ register, errors }) => {
                     {
                         label: "Mode of Transaction",
                         icon: <RiMoneyDollarCircleLine />,
-                        name: "transactionMode",
+                        name: "modeOFTransaction",
                         options: ["Cash", "Bidding", "Both"]
                     },
                     {

@@ -3,6 +3,7 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCloudUploadAlt, FaVideo, FaImage, FaCheck, FaTimes, FaTrash, FaPlay } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
+import Image from 'next/image';
 
 const MarketMediaAndLocation = ({ register, errors, watch }) => {
     const [image, setImage] = useState(null);
@@ -145,7 +146,9 @@ const MarketMediaAndLocation = ({ register, errors, watch }) => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                             >
-                                <img 
+                                <Image
+                                    width={300}
+                                    height={200}
                                     src={imagePreview} 
                                     alt="Preview" 
                                     className="max-h-64 mx-auto rounded-lg shadow-md"

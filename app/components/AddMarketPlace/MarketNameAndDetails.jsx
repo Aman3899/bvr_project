@@ -12,11 +12,11 @@ const MarketForm = ({ register, errors }) => {
                 </label>
                 <input
                     type="text"
-                    {...register("marketName", { required: "Market name is required" })}
+                    {...register("name", { required: "Market name is required" })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 focus:ring-2 focus:ring-purple-400"
                     placeholder="Enter Market Name"
                 />
-                {errors.marketName && <p className="text-red-500 text-sm mt-1">{errors.marketName.message}</p>}
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
             </div>
 
             {/* Market Description */}
@@ -25,11 +25,11 @@ const MarketForm = ({ register, errors }) => {
                     <FaRegComment className="text-purple-600" /> Market Description
                 </label>
                 <textarea
-                    {...register("marketDescription", { required: "Market description is required" })}
+                    {...register("description", { required: "Market description is required" })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 focus:ring-2 focus:ring-purple-400"
                     placeholder="Enter Market Description"
                 ></textarea>
-                {errors.marketDescription && <p className="text-red-500 text-sm mt-1">{errors.marketDescription.message}</p>}
+                {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
             </div>
         </div>
     );

@@ -18,9 +18,36 @@ const AddMarketPlace = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
+
+    const onSubmit = async (data) => {
         console.log("Market Data:", data);
+    
+        try {
+            const response = await fetch("/api/manage_marketplaces/add_marketplace", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+    
+            const result = await response.json();
+
+            console.log("Response:", result);
+    
+            if (response.ok) {
+                alert("Market added successfully!");
+                console.log("Response:", result);
+            } else {
+                alert("Failed to add market: " + result.error);
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("An error occurred. Please try again.");
+        }
     };
+
+    
 
     return (
         <motion.div
