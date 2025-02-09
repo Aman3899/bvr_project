@@ -19,7 +19,7 @@ model User {
   username                  String    @unique
   password                  String
   isVerified                Boolean   @default(false)
-  isAdmin                   Boolean   @default(false)
+  isSeller                  Boolean   @default(false)
   forgetPasswordToken       String?
   forgetPasswordTokenExpiry DateTime?
   verifyToken               String?
@@ -27,12 +27,16 @@ model User {
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime  @updatedAt
 
+  // Relations
+  markets Market[]
+
   @@index([email, username])
   @@map("users")
 }
 
 model Market {
   id                  Int       @id @default(autoincrement())
+  userId              Int       @map("user_id")
   areaId              Int       @map("area_id")
   name                String
   description         String?
@@ -50,6 +54,7 @@ model Market {
   updatedAt           DateTime  @updatedAt @map("updated_at")
 
   // Relations
+  user                 User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   area                 Area                  @relation(fields: [areaId], references: [id], onDelete: Cascade)
   products             Product[]            
   marketFeatures       MarketFeatures?

@@ -5,7 +5,7 @@ CREATE TABLE "users" (
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "isVerified" BOOLEAN NOT NULL DEFAULT false,
-    "isAdmin" BOOLEAN NOT NULL DEFAULT false,
+    "isSeller" BOOLEAN NOT NULL DEFAULT false,
     "forgetPasswordToken" TEXT,
     "forgetPasswordTokenExpiry" TIMESTAMP(3),
     "verifyToken" TEXT,
@@ -19,6 +19,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "markets" (
     "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
     "area_id" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
@@ -31,6 +32,7 @@ CREATE TABLE "markets" (
     "operating_hours_end" TIMESTAMP(3),
     "is_open" BOOLEAN,
     "video_link" TEXT,
+    "is_approved" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -220,6 +222,9 @@ CREATE UNIQUE INDEX "regulatory_compliance_market_id_key" ON "regulatory_complia
 
 -- CreateIndex
 CREATE UNIQUE INDEX "sanitation_hygiene_market_id_key" ON "sanitation_hygiene"("market_id");
+
+-- AddForeignKey
+ALTER TABLE "markets" ADD CONSTRAINT "markets_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "markets" ADD CONSTRAINT "markets_area_id_fkey" FOREIGN KEY ("area_id") REFERENCES "areas"("id") ON DELETE CASCADE ON UPDATE CASCADE;

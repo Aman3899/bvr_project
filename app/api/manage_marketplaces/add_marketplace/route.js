@@ -5,6 +5,13 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
+    if (!body.userId) {
+      return NextResponse.json(
+        { error: 'User ID is required' },
+        { status: 400 }
+      );
+    }
+
     // Basic validation for required fields
     if (!body.name || !body.areaId) {
       return NextResponse.json(
@@ -42,8 +49,9 @@ export async function POST(request) {
       // Create the main market record
       const market = await tx.market.create({
         data: {
-          name: body.name,
+          userId: parseInt(body.userId),
           areaId: parseInt(body.areaId),
+          name: body.name,
           description: body.description,
           marketType: body.marketType,
           modeOfTransaction: body.modeOfTransaction,
