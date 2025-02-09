@@ -5,13 +5,13 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Basic validation for required fields
-    if (!body.name || !body.areaId) {
-      return NextResponse.json(
-        { error: 'Name and area ID are required fields' },
-        { status: 400 }
-      );
-    }
+    // // Basic validation for required fields
+    // if (!body.name || !body.areaId) {
+    //   return NextResponse.json(
+    //     { error: 'Name and area ID are required fields' },
+    //     { status: 400 }
+    //   );
+    // }
 
     // Validate media data if provided
     if (body.media && !Array.isArray(body.media)) {

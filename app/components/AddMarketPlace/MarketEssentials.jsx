@@ -59,7 +59,7 @@ const MarketEssentials = ({ register, errors }) => {
                     {
                         label: "Mode of Transaction",
                         icon: <RiMoneyDollarCircleLine />,
-                        name: "modeOFTransaction",
+                        name: "modeOfTransaction",
                         options: ["Cash", "Bidding", "Both"]
                     },
                     {
@@ -140,7 +140,7 @@ const MarketEssentials = ({ register, errors }) => {
                         variants={selectVariants}
                         whileHover="hover"
                         whileTap="tap"
-                        {...register("specialDays", { required: "Special Days selection is required" })}
+                        {...register("specialDayName", { required: "Special Days selection is required" })}
                     >
                         <option value="">Select Special Days</option>
                         {["Christmas", "New Year", "Easter", "Independence Day"].map(day => (

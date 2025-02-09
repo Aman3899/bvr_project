@@ -39,7 +39,7 @@ const MarketOperatingHoursAndStatus = ({ register, errors }) => {
                         <input
                             type="time"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-                            {...register("operatingHours.start", { required: "Start time is required" })}
+                            {...register("operatingHoursStart", { required: "Start time is required" })}
                         />
                         {errors.operatingHours?.start && <p className="text-red-500 text-xs mt-1">{errors.operatingHours.start.message}</p>}
                     </div>
@@ -48,7 +48,7 @@ const MarketOperatingHoursAndStatus = ({ register, errors }) => {
                         <input
                             type="time"
                             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500"
-                            {...register("operatingHours.end", { required: "End time is required" })}
+                            {...register("operatingHoursEnd", { required: "End time is required" })}
                         />
                         {errors.operatingHours?.end && <p className="text-red-500 text-xs mt-1">{errors.operatingHours.end.message}</p>}
                     </div>
@@ -68,7 +68,7 @@ const MarketOperatingHoursAndStatus = ({ register, errors }) => {
                             type="radio"
                             value="Open"
                             className="form-radio text-blue-500 focus:ring-blue-400"
-                            {...register("marketStatus", { required: "Market status is required" })}
+                            {...register("isOpen", { required: "Market status is required" })}
                         />
                         <span className="ml-2 text-sm">Open</span>
                     </label>
@@ -77,7 +77,7 @@ const MarketOperatingHoursAndStatus = ({ register, errors }) => {
                             type="radio"
                             value="Closed"
                             className="form-radio text-red-500 focus:ring-red-400"
-                            {...register("marketStatus", { required: "Market status is required" })}
+                            {...register("isOpen", { required: "Market status is required" })}
                         />
                         <span className="ml-2 text-sm">Closed</span>
                     </label>
