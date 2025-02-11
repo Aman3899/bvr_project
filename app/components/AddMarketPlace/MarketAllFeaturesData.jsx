@@ -6,13 +6,13 @@ import { GiWashingMachine } from 'react-icons/gi';
 
 const MarketFeatures = ({ register, errors }) => {
 
-    const [activeSection, setActiveSection] = useState('features');
+    const [activeSection, setActiveSection] = useState('marketFeatures');
 
     const sections = [
         { id: 'marketFeatures', title: 'Market Features', icon: <FaMapMarkerAlt />, items: ['Electricity', 'Water Supply', 'Access Roads', 'Sewage Systems', 'Waste Management Services'] },
         { id: 'amenities', title: 'Amenities', icon: <BsBank2 />, items: ['Seating Areas', 'ATMs', 'Mobile Money Services', 'Internet Connectivity', 'Information Desk'] },
-        { id: 'compliance', title: 'Regulatory Compliance', icon: <AiFillSafetyCertificate />, items: ['Business Licensing', 'Environmental Regulation', 'Tax Compliance', 'Delivery Services', 'Security Arrangements'] },
-        { id: 'hygiene', title: 'Sanitation & Hygiene', icon: <GiWashingMachine />, items: ['Public Toilets (Flush)', 'Public Toilets (Pit Latrines)', 'Showers', 'Waste Disposal Bins', 'Pest Control Services'] }
+        { id: 'regulatoryCompliance', title: 'Regulatory Compliance', icon: <AiFillSafetyCertificate />, items: ['Business Licensing', 'Environmental Regulation', 'Tax Compliance', 'Delivery Services', 'Security Arrangements'] },
+        { id: 'sanitationHygiene', title: 'Sanitation & Hygiene', icon: <GiWashingMachine />, items: ['Public Toilets (Flush)', 'Public Toilets (Pit Latrines)', 'Showers', 'Waste Disposal Bins', 'Pest Control Services'] }
     ];
 
     return (
