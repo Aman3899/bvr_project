@@ -5,14 +5,73 @@ import { AiFillSafetyCertificate } from 'react-icons/ai';
 import { GiWashingMachine } from 'react-icons/gi';
 
 const MarketFeatures = ({ register, errors }) => {
+    // State to hold the values of selected items
+    const [selectedItems, setSelectedItems] = useState({
+        marketFeatures: {
+            electricity: false,
+            waterSupply: false,
+            accessRoads: false,
+            sewageSystems: false,
+            wasteManagementServices: false,
+        },
+        amenities: {
+            seatingAreas: false,
+            atms: false,
+            mobileMoneyServices: false,
+            internetConnectivity: false,
+            informationDesk: false,
+        },
+        regulatoryCompliance: {
+            businessLicensing: false,
+            environmentalRegulation: false,
+            taxCompliance: false,
+            deliveryServices: false,
+            securityArrangements: false,
+        },
+        sanitationHygiene: {
+            ptFlush: false,
+            ptPitLatrines: false,
+            showers: false,
+            wasteDisposalBins: false,
+            pestControlServices: false,
+        },
+    });
 
-    const [activeSection, setActiveSection] = useState('marketFeatures');
+    const handleCheckboxChange = (section, item) => {
+        setSelectedItems((prevState) => ({
+            ...prevState,
+            [section]: {
+                ...prevState[section],
+                [item]: !prevState[section][item], // Toggle between true/false
+            },
+        }));
+    };
 
     const sections = [
-        { id: 'marketFeatures', title: 'Market Features', icon: <FaMapMarkerAlt />, items: ['Electricity', 'Water Supply', 'Access Roads', 'Sewage Systems', 'Waste Management Services'] },
-        { id: 'amenities', title: 'Amenities', icon: <BsBank2 />, items: ['Seating Areas', 'ATMs', 'Mobile Money Services', 'Internet Connectivity', 'Information Desk'] },
-        { id: 'regulatoryCompliance', title: 'Regulatory Compliance', icon: <AiFillSafetyCertificate />, items: ['Business Licensing', 'Environmental Regulation', 'Tax Compliance', 'Delivery Services', 'Security Arrangements'] },
-        { id: 'sanitationHygiene', title: 'Sanitation & Hygiene', icon: <GiWashingMachine />, items: ['Public Toilets (Flush)', 'Public Toilets (Pit Latrines)', 'Showers', 'Waste Disposal Bins', 'Pest Control Services'] }
+        {
+            id: 'marketFeatures',
+            title: 'Market Features',
+            icon: <FaMapMarkerAlt />,
+            items: ['electricity', 'waterSupply', 'accessRoads', 'sewageSystems', 'wasteManagementServices'],
+        },
+        {
+            id: 'amenities',
+            title: 'Amenities',
+            icon: <BsBank2 />,
+            items: ['seatingAreas', 'atms', 'mobileMoneyServices', 'internetConnectivity', 'informationDesk'],
+        },
+        {
+            id: 'regulatoryCompliance',
+            title: 'Regulatory Compliance',
+            icon: <AiFillSafetyCertificate />,
+            items: ['businessLicensing', 'environmentalRegulation', 'taxCompliance', 'deliveryServices', 'securityArrangements'],
+        },
+        {
+            id: 'sanitationHygiene',
+            title: 'Sanitation & Hygiene',
+            icon: <GiWashingMachine />,
+            items: ['ptFlush', 'ptPitLatrines', 'showers', 'wasteDisposalBins', 'pestControlServices'],
+        },
     ];
 
     return (
@@ -22,19 +81,9 @@ const MarketFeatures = ({ register, errors }) => {
                 {sections.map((section) => (
                     <button
                         key={section.id}
-                        onClick={() => setActiveSection(section.id)}
-                        className={`
-                            flex items-center gap-2 px-4 py-2 rounded-lg font-medium
-                            transition-all duration-300 transform hover:scale-105
-                            ${activeSection === section.id
-                                ? 'bg-blue-600 text-white shadow-lg'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            }
-                        `}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 bg-gray-100 text-gray-600 hover:bg-gray-200"
                     >
-                        <span className={`text-lg ${activeSection === section.id ? 'text-white' : 'text-blue-600'}`}>
-                            {section.icon}
-                        </span>
+                        <span className="text-lg text-blue-600">{section.icon}</span>
                         {section.title}
                     </button>
                 ))}
@@ -44,13 +93,7 @@ const MarketFeatures = ({ register, errors }) => {
             {sections.map((section) => (
                 <div
                     key={section.id}
-                    className={`
-                        transition-all duration-500 transform
-                        ${activeSection === section.id
-                            ? 'opacity-100 translate-x-0'
-                            : 'opacity-0 translate-x-8 hidden'
-                        }
-                    `}
+                    className="transition-all duration-500 transform opacity-100 translate-x-0"
                 >
                     <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
                         <div className="flex items-center space-x-2 mb-6">
@@ -62,26 +105,16 @@ const MarketFeatures = ({ register, errors }) => {
                             {section.items.map((item) => (
                                 <label
                                     key={item}
-                                    className={`
-                                        relative flex items-center space-x-3 p-4 rounded-xl
-                                        border-2 cursor-pointer
-                                        transform transition-all duration-300
-                                        hover:scale-[1.02]
-                                        ${errors[section.id] ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-blue-300'}
-                                    `}
+                                    className="relative flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transform transition-all duration-300 hover:scale-[1.02] border-gray-200 hover:border-blue-300"
                                 >
                                     <input
                                         type="checkbox"
-                                        {...register(section.id, {
-                                            validate: value => value?.length > 0 || `Please select at least one ${section.title}`
-                                        })}
-                                        value={item}
+                                        checked={selectedItems[section.id][item]}
+                                        onChange={() => handleCheckboxChange(section.id, item)}
                                         className="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 transition duration-150 ease-in-out"
                                     />
-                                    <span className={`text-sm font-medium ${errors[section.id] ? 'text-red-700' : 'text-gray-700'}`}>
-                                        {item}
-                                    </span>
-                                    <div className={`absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300`} />
+                                    <span className="text-sm font-medium text-gray-700">{item}</span>
+                                    <div className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-300" />
                                 </label>
                             ))}
                         </div>
