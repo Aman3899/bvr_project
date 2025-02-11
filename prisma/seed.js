@@ -63,14 +63,14 @@ async function deleteAllUsers() {
 //   });
 
 
-deleteAllUsers()
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+// deleteAllUsers()
+//   .catch((error) => {
+//     console.error(error);
+//     process.exit(1);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
 
 
 

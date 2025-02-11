@@ -45,8 +45,8 @@ model Market {
   language            String?
   accessibility       String?
   specialDayName      String?   @map("special_day_name")
-  operatingHoursStart DateTime? @map("operating_hours_start")
-  operatingHoursEnd   DateTime? @map("operating_hours_end")
+  operatingHoursStart String? @map("operating_hours_start")
+  operatingHoursEnd   String? @map("operating_hours_end")
   isOpen              Boolean?  @map("is_open")
   videoLink           String?   @map("video_link")
   isApproved          Boolean   @default(false) @map("is_approved")
