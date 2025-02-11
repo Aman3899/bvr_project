@@ -11,7 +11,7 @@ export async function middleware(req) {
 
     const protectedRoutes = [
         "/post_request",  
-        "/api/:path*",
+        // "/api/:path*",
         "/manage_marketplaces",
         "/manage_marketplaces/add_marketplace",
         "/manage_marketplaces/edit_marketplace",
@@ -67,7 +67,7 @@ export async function middleware(req) {
 export const config = {
     matcher: [
         "/post_request",  
-        "/api/:path*",
+        // "/api/:path*",
         "/manage_marketplaces",
         "/manage_marketplaces/add_marketplace",
         "/manage_marketplaces/edit_marketplace",
