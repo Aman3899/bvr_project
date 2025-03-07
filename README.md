@@ -117,3 +117,6 @@ DealBank is not liable for any indirect, incidental, or consequential damages ar
 
 ### Changes to Terms
 We reserve the right to modify or update these terms at any time. Users are encouraged to review these terms periodically.
+
+Added new feature
+Co-authored-by: Abdul Wahab <abdulwahab-57>
